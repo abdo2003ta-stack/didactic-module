@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* أضف هذا الجزء فقط لضمان عمل الألوان بشكل صحيح عند التبديل */
 @layer base {
   body {
     @apply transition-colors duration-300; 
