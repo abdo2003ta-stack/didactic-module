@@ -1,23 +1,17 @@
-@import "tailwindcss";
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* أضف هذا الجزء فقط لضمان عمل الألوان بشكل صحيح عند التبديل */
+@layer base {
+  body {
+    @apply transition-colors duration-300; 
+    /* هذا يضمن أن الخلفية تأخذ لوناً افتراضياً ولا تبقى شفافة */
+    @apply bg-slate-50 text-slate-900; 
   }
-}
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  /* عند تفعيل الكلاس dark، غير ألوان الـ body */
+  .dark body {
+    @apply bg-slate-950 text-slate-100;
+  }
 }
