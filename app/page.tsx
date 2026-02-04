@@ -17,7 +17,7 @@ import {
   Eye, 
   GitCommit, 
   MousePointer2,
-  ArrowRight // تمت إضافتها لاستخدامها في سلسلة النقل
+  ArrowRight
 } from 'lucide-react';
 
 // ------------------- TYPES -------------------
@@ -115,7 +115,6 @@ export default function DidacticModulePage() {
                     color="bg-slate-800 text-white"
                   />
                   
-                  {/* Custom Arrow Function for RTL direction */}
                   <ArrowIcon className="hidden md:block text-gray-300 dark:text-slate-600 relative z-10 bg-slate-50 dark:bg-slate-900 p-1 rounded-full" />
                   
                   <TranspositionStep 
@@ -210,135 +209,205 @@ export default function DidacticModulePage() {
           </section>
         )}
 
-        {/* ================= SECTION 2: CONCEPT MAP ================= */}
+        {/* ================= SECTION 2: CONCEPT MAP (ADVANCED VIVID) ================= */}
         {activeSection === 'conceptMap' && (
-          <section className="animate-in fade-in slide-in-from-bottom-4 duration-500 space-y-12">
+          <section className="animate-in fade-in slide-in-from-bottom-4 duration-500 space-y-16">
+            
             <SectionHeader 
               title="الخريطة المفهومية (La carte conceptuelle)" 
-              subtitle="أداة تنظيم المعرفة وبناء اللحمة المفهومية"
+              subtitle="من التمثيل البصري إلى البناء المنطقي للمعرفة"
               icon={<Share2 className="text-purple-600" size={32} />}
               colorClass="bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300"
             />
 
-            {/* Theory Intro */}
-            <div className="bg-purple-50 dark:bg-purple-900/20 p-8 rounded-3xl border border-purple-100 dark:border-purple-900 shadow-sm">
-              <div className="flex flex-col md:flex-row gap-6 items-start">
-                <div className="bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-sm text-purple-600 shrink-0">
-                  <Brain size={40} />
-                </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-purple-900 dark:text-purple-300 mb-3">التأصيل النظري: التعلم ذو المعنى</h3>
-                  <p className="text-purple-800 dark:text-purple-200 leading-8 text-lg text-justify">
-                    تستند الخريطة المفهومية إلى نظرية <strong>أوزوبل (Ausubel)</strong> وجوزيف نوفاك. الفكرة الجوهرية هي أن التعلم الحقيقي يحدث عندما يتم ربط المفاهيم الجديدة بالمفاهيم الموجودة مسبقاً في البنية المعرفية للمتعلم، مما يضمن <strong>التخزين في الذاكرة بعيدة المدى</strong> وتجنب التعلم الآلي (الصم).
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            {/* Comparison Table */}
-            <div className="grid md:grid-cols-2 gap-8">
-              <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-sm border-t-4 border-red-400 group hover:-translate-y-1 transition-transform duration-300">
-                <div className="flex items-center justify-between mb-6 border-b border-red-100 dark:border-red-900/50 pb-4">
-                  <h4 className="font-bold text-xl text-red-900 dark:text-red-400">الخريطة الذهنية (Mind Map)</h4>
-                  <span className="bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-300 text-xs font-bold px-3 py-1 rounded-full border border-red-100 dark:border-red-900">توني بوزان</span>
-                </div>
-                <ul className="space-y-4 text-slate-700 dark:text-slate-300">
-                  <ComparisonItem icon={<ArrowLeft size={18} className="text-red-400" />} text="بنية إشعاعية (مركز وأفرع)." />
-                  <ComparisonItem icon={<ArrowLeft size={18} className="text-red-400" />} text="تعتمد التداعي الحر، الألوان والصور." />
-                  <ComparisonItem icon={<ArrowLeft size={18} className="text-red-400" />} text="تخاطب الشق الأيمن (الإبداع والعاطفة)." />
-                </ul>
-              </div>
-
-              <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-lg border-t-4 border-purple-600 group hover:-translate-y-1 transition-transform duration-300 transform scale-[1.02]">
-                <div className="flex items-center justify-between mb-6 border-b border-purple-100 dark:border-purple-900/50 pb-4">
-                  <h4 className="font-bold text-xl text-purple-900 dark:text-purple-400">الخريطة المفهومية (Concept Map)</h4>
-                  <span className="bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-300 text-xs font-bold px-3 py-1 rounded-full border border-purple-100 dark:border-purple-900">جوزيف نوفاك</span>
-                </div>
-                <ul className="space-y-4 text-slate-700 dark:text-slate-300">
-                  <ComparisonItem icon={<CheckCircle size={18} className="text-purple-600" />} text="بنية هرمية (من العام إلى الخاص) أو شبكية." bold />
-                  <ComparisonItem icon={<CheckCircle size={18} className="text-purple-600" />} text="تعتمد العلاقات المنطقية والكلمات الرابطة." bold />
-                  <ComparisonItem icon={<CheckCircle size={18} className="text-purple-600" />} text="تخاطب الشق الأيسر (التحليل والمنطق)." bold />
-                </ul>
-              </div>
-            </div>
-
-            {/* PRACTICAL EXAMPLE SECTION */}
-            <div className="mt-16 pt-8 border-t border-gray-200 dark:border-gray-800">
-               <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-8 text-center flex items-center justify-center gap-3">
+            {/* Deep Comparison */}
+            <div className="space-y-6">
+              <h3 className="text-2xl font-bold text-gray-800 dark:text-white flex items-center gap-2">
                  <GitCommit className="text-purple-600" />
-                 التطبيق العملي: كيف نبنيها؟
-               </h2>
+                 التفكيك المفاهيمي: الفرق الجوهري
+              </h3>
+              
+              <div className="grid md:grid-cols-2 gap-8">
+                {/* Mind Map */}
+                <div className="relative overflow-hidden bg-white dark:bg-slate-900 border border-red-100 dark:border-red-900/30 rounded-3xl p-8 shadow-sm group hover:shadow-md transition-all">
+                   <div className="absolute top-0 right-0 w-2 h-full bg-red-400"></div>
+                   <div className="flex justify-between items-start mb-6">
+                      <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded-2xl text-red-500">
+                        <Brain size={32} />
+                      </div>
+                      <span className="text-xs font-bold bg-red-100 dark:bg-red-900/40 text-red-600 dark:text-red-300 px-3 py-1 rounded-full">توني بوزان</span>
+                   </div>
+                   <h4 className="text-xl font-bold text-gray-800 dark:text-white mb-4">الخريطة الذهنية (Mind Map)</h4>
+                   <ul className="space-y-4">
+                      <ComparisonPoint 
+                        text="بنية إشعاعية (Radial): تنطلق من مركز واحد وتتفرع في جميع الاتجاهات." 
+                        icon={<ArrowLeft size={16} className="text-red-400" />} 
+                      />
+                      <ComparisonPoint 
+                        text="تعتمد التداعي الحر (Associations)، الصور، والألوان لإثارة الإبداع." 
+                        icon={<ArrowLeft size={16} className="text-red-400" />} 
+                      />
+                      <ComparisonPoint 
+                        text="تخاطب النصف الأيمن للدماغ (الخيال، العاطفة، الصورة الكلية)." 
+                        icon={<ArrowLeft size={16} className="text-red-400" />} 
+                      />
+                   </ul>
+                </div>
+
+                {/* Concept Map */}
+                <div className="relative overflow-hidden bg-white dark:bg-slate-900 border border-purple-100 dark:border-purple-900/30 rounded-3xl p-8 shadow-lg ring-1 ring-purple-100 dark:ring-purple-900 transform md:-translate-y-2">
+                   <div className="absolute top-0 right-0 w-2 h-full bg-purple-600"></div>
+                   <div className="flex justify-between items-start mb-6">
+                      <div className="bg-purple-50 dark:bg-purple-900/20 p-3 rounded-2xl text-purple-600">
+                        <Share2 size={32} />
+                      </div>
+                      <span className="text-xs font-bold bg-purple-100 dark:bg-purple-900/40 text-purple-600 dark:text-purple-300 px-3 py-1 rounded-full">جوزيف نوفاك</span>
+                   </div>
+                   <h4 className="text-xl font-bold text-gray-800 dark:text-white mb-4">الخريطة المفهومية (Concept Map)</h4>
+                   <ul className="space-y-4">
+                      <ComparisonPoint 
+                        text="بنية هرمية (Hierarchical): من المفاهيم الأكثر شمولية (في الأعلى) إلى الأكثر دقة." 
+                        icon={<CheckCircle size={16} className="text-purple-600" />} 
+                        highlight
+                      />
+                      <ComparisonPoint 
+                        text="تعتمد الروابط المنطقية وكلمات الربط (أفعال) لبناء قضايا علمية." 
+                        icon={<CheckCircle size={16} className="text-purple-600" />} 
+                        highlight
+                      />
+                      <ComparisonPoint 
+                        text="تخاطب النصف الأيسر للدماغ (التحليل، المنطق، التسلسل)." 
+                        icon={<CheckCircle size={16} className="text-purple-600" />} 
+                        highlight
+                      />
+                   </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* The "Proposition" Formula */}
+            <div className="bg-gradient-to-r from-slate-900 to-indigo-900 rounded-3xl p-8 md:p-10 text-white shadow-2xl relative overflow-hidden">
+               <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/graphy.png')] opacity-10"></div>
+               <h3 className="relative z-10 text-center text-xl font-bold mb-8 text-indigo-200">الجوهر الديدكتيكي: معادلة بناء "القضية"</h3>
                
-               {/* 1. Methodology Steps */}
-               <div className="grid md:grid-cols-4 gap-4 mb-12">
-                  <MethodStep num="1" title="الجرد" desc="استخراج جميع المفاهيم دون ترتيب (Brainstorming)." />
-                  <MethodStep num="2" title="الفرز" desc="ترتيب المفاهيم من العام (الأشمل) إلى الخاص." />
-                  <MethodStep num="3" title="الربط" desc="رسم خطوط بين المفاهيم المترابطة." />
-                  <MethodStep num="4" title="الصياغة" desc="كتابة 'فعل' على الخط لتوضيح العلاقة." highlight />
-               </div>
-
-               {/* 2. Interactive Visual Example */}
-               <div className="bg-slate-900 rounded-[2.5rem] p-8 md:p-12 shadow-2xl relative overflow-hidden text-center">
-                  <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-slate-800 via-slate-900 to-black opacity-80"></div>
-                  
-                  <div className="relative z-10">
-                    <h3 className="text-white text-xl font-bold mb-12 bg-white/10 inline-block px-6 py-2 rounded-full backdrop-blur-sm border border-white/10">
-                      نموذج: خريطة مفهومية لدرس "النبات الأخضر"
-                    </h3>
-
-                    <div className="flex flex-col items-center max-w-4xl mx-auto">
-                      {/* Level 1: Main Concept */}
-                      <ConceptNode text="النبات الأخضر" type="main" />
-                      
-                      <div className="h-16 border-l-2 border-dashed border-gray-600 relative my-1">
-                         <MapLabel text="يحتاج كي ينمو إلى" />
-                      </div>
-
-                      {/* Level 2: Sub Concepts */}
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 w-full">
-                        
-                        {/* Branch A */}
-                        <div className="flex flex-col items-center group">
-                          <ConceptNode text="الضوء" />
-                          <div className="h-10 border-l-2 border-gray-700 relative">
-                             <MapLabel text="مصدره" />
-                          </div>
-                          <ConceptNode text="الشمس" type="sub" />
-                        </div>
-
-                        {/* Branch B */}
-                        <div className="flex flex-col items-center group">
-                          <ConceptNode text="الماء والأملاح" />
-                          <div className="h-10 border-l-2 border-gray-700 relative">
-                             <MapLabel text="يتم امتصاصه عبر" />
-                          </div>
-                          <ConceptNode text="الجذور" type="sub" />
-                        </div>
-
-                        {/* Branch C */}
-                        <div className="flex flex-col items-center group">
-                          <ConceptNode text="الهواء (CO2)" />
-                          <div className="h-10 border-l-2 border-gray-700 relative">
-                             <MapLabel text="يدخل عبر" />
-                          </div>
-                          <ConceptNode text="الأوراق" type="sub" />
-                        </div>
-                      </div>
-
-                      {/* Visual Cross Link Simulation (SVG) */}
-                      <div className="hidden md:block absolute top-0 left-0 w-full h-full pointer-events-none">
-                          <div className="absolute top-[280px] left-[30%] w-[40%] h-[20px] border-t-2 border-dotted border-purple-500/50 rounded-full"></div>
-                          <div className="absolute top-[270px] left-1/2 -translate-x-1/2 bg-slate-800 px-2 text-[10px] text-purple-400 border border-purple-500/30 rounded">عملية التركيب الضوئي</div>
-                      </div>
-                    </div>
+               <div className="flex flex-col md:flex-row items-center justify-center gap-4 relative z-10">
+                  <div className="bg-white/10 backdrop-blur-md px-6 py-4 rounded-xl border border-white/20 text-center">
+                    <span className="block text-xs text-indigo-300 mb-1">المفهوم 1</span>
+                    <strong className="text-lg">النبات</strong>
                   </div>
-                  
-                  <p className="relative z-10 text-slate-400 text-sm mt-12 max-w-2xl mx-auto">
-                    * لاحظ كيف تشكل كل ثلاثية (مفهوم + رابط + مفهوم) جملة علمية مفيدة.<br/>
-                    مثال للقضية: "النبات الأخضر .. يحتاج إلى .. الضوء".
-                  </p>
+                  <ArrowRight className="text-indigo-400 rotate-90 md:rotate-180" />
+                  <div className="bg-indigo-500 px-4 py-2 rounded-full shadow-lg shadow-indigo-500/50 text-sm font-bold">
+                    يحتاج إلى (رابط)
+                  </div>
+                  <ArrowRight className="text-indigo-400 rotate-90 md:rotate-180" />
+                  <div className="bg-white/10 backdrop-blur-md px-6 py-4 rounded-xl border border-white/20 text-center">
+                    <span className="block text-xs text-indigo-300 mb-1">المفهوم 2</span>
+                    <strong className="text-lg">الضوء</strong>
+                  </div>
+                  <div className="hidden md:block text-2xl font-bold text-indigo-300 mx-4">=</div>
+                  <div className="border-2 border-dashed border-indigo-400/50 px-6 py-4 rounded-xl text-center">
+                     <span className="block text-xs text-indigo-300 mb-1">النتيجة</span>
+                     <strong className="text-indigo-100">معنى علمي (قضية)</strong>
+                  </div>
                </div>
             </div>
+
+            {/* Vivid Interactive Example */}
+            <div className="space-y-8">
+               <h3 className="text-2xl font-bold text-gray-800 dark:text-white text-center">مثال حيوي تفاعلي (Vivid Example)</h3>
+               <p className="text-center text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
+                 مرر الفأرة فوق خطوط الربط لقراءة "الجمل العلمية". الخريطة المفهومية ليست مجرد رسم، بل هي مجموعة من الجمل المترابطة.
+               </p>
+
+               <div className="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-[3rem] p-8 md:p-12 relative min-h-[500px] flex justify-center shadow-inner overflow-hidden">
+                  {/* Background Grid */}
+                  <div className="absolute inset-0 bg-grid-slate-200 dark:bg-grid-slate-800/[0.3] [mask-image:linear-gradient(to_bottom,white,transparent)]"></div>
+
+                  <div className="relative z-10 w-full max-w-3xl flex flex-col items-center">
+                      
+                      {/* Level 1 */}
+                      <div className="mb-24 w-full flex justify-center">
+                        <VividNode text="النبات الأخضر" type="root" id="root" />
+                      </div>
+
+                      {/* Level 2 */}
+                      <div className="w-full flex justify-between gap-4 md:gap-12 relative">
+                         
+                         {/* Left Branch */}
+                         <div className="flex flex-col items-center w-1/3">
+                            <VividNode text="الضوء" type="child" id="light" />
+                            <div className="h-16 w-0.5 bg-slate-300 dark:bg-slate-700 my-2 relative group">
+                                <VividLink text="مصدره" />
+                            </div>
+                            <VividNode text="الشمس" type="leaf" id="sun" />
+                         </div>
+
+                         {/* Center Branch */}
+                         <div className="flex flex-col items-center w-1/3">
+                            <VividNode text="الماء والأملاح" type="child" id="water" />
+                            <div className="h-16 w-0.5 bg-slate-300 dark:bg-slate-700 my-2 relative">
+                                <VividLink text="تمتصه" />
+                            </div>
+                            <VividNode text="الجذور" type="leaf" id="roots" />
+                         </div>
+
+                         {/* Right Branch */}
+                         <div className="flex flex-col items-center w-1/3">
+                            <VividNode text="غاز CO2" type="child" id="gas" />
+                            <div className="h-16 w-0.5 bg-slate-300 dark:bg-slate-700 my-2 relative">
+                                <VividLink text="يمتص عبر" />
+                            </div>
+                            <VividNode text="الأوراق" type="leaf" id="leaves" />
+                         </div>
+                      </div>
+
+                      {/* SVG Connections */}
+                      <svg className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-visible">
+                         {/* Connection to Light */}
+                         <path d="M 384 55 C 384 120, 100 80, 100 160" stroke="#94a3b8" strokeWidth="2" fill="none" className="opacity-30 dark:opacity-50" />
+                         <rect x="180" y="85" width="100" height="26" rx="13" fill="#1e293b" className="fill-slate-100 dark:fill-slate-800 stroke-slate-300 dark:stroke-slate-700" strokeWidth="1" />
+                         <text x="230" y="102" textAnchor="middle" fontSize="11" className="fill-slate-600 dark:fill-slate-400 font-bold">يحتاج إلى</text>
+
+                         {/* Connection to Water */}
+                         <path d="M 384 55 L 384 160" stroke="#94a3b8" strokeWidth="2" fill="none" className="opacity-30 dark:opacity-50" />
+
+                         {/* Connection to Gas */}
+                         <path d="M 384 55 C 384 120, 660 80, 660 160" stroke="#94a3b8" strokeWidth="2" fill="none" className="opacity-30 dark:opacity-50" />
+                         <rect x="490" y="85" width="100" height="26" rx="13" fill="#1e293b" className="fill-slate-100 dark:fill-slate-800 stroke-slate-300 dark:stroke-slate-700" strokeWidth="1" />
+                         <text x="540" y="102" textAnchor="middle" fontSize="11" className="fill-slate-600 dark:fill-slate-400 font-bold">يحتاج إلى</text>
+                      </svg>
+                  </div>
+               </div>
+            </div>
+
+            {/* Construction Steps */}
+            <div className="bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-2xl p-8">
+               <h3 className="text-xl font-bold mb-6 text-gray-800 dark:text-white">منهجية الصياغة (كيف تبنيها في الفصل؟)</h3>
+               <div className="space-y-4">
+                  <ConstructionStep 
+                    num="01" 
+                    title="قائمة الجرد (Listing)" 
+                    desc="استخراج جميع المفاهيم المرتبطة بالموضوع دون ترتيب (Brainstorming)." 
+                  />
+                   <ConstructionStep 
+                    num="02" 
+                    title="الترتيب والتصنيف (Ordering)" 
+                    desc="ترتيب المفاهيم من الأكثر شمولية (General) إلى الأكثر تحديداً (Specific)." 
+                  />
+                   <ConstructionStep 
+                    num="03" 
+                    title="بناء الروابط (Linking)" 
+                    desc="رسم خطوط بين المفاهيم المترابطة. هذه الخطوة تحول القائمة إلى شبكة." 
+                  />
+                   <ConstructionStep 
+                    num="04" 
+                    title="صياغة القضايا (Propositions)" 
+                    desc="أهم خطوة: كتابة 'فعل' أو 'كلمة ربط' على كل خط لتوضيح طبيعة العلاقة." 
+                    highlight
+                  />
+               </div>
+            </div>
+
           </section>
         )}
 
@@ -376,7 +445,7 @@ export default function DidacticModulePage() {
                 </div>
               </div>
 
-              {/* Selection Criteria (The Grid) */}
+              {/* Selection Criteria */}
               <div className="h-full">
                 <div className="bg-slate-800 text-white rounded-3xl p-8 h-full flex flex-col relative overflow-hidden shadow-2xl">
                   <div className="absolute top-0 right-0 w-32 h-32 bg-teal-500 blur-[80px] opacity-20"></div>
@@ -467,8 +536,7 @@ function SectionHeader({ title, subtitle, icon, colorClass }: any) {
   );
 }
 
-// --- Components for Deep Dive (Formulation) ---
-
+// --- Deep Dive Helpers ---
 function TranspositionStep({ title, sub, desc, icon, step, color }: any) {
   return (
     <div className="flex flex-col items-center text-center group relative z-10 flex-1 min-w-[200px]">
@@ -486,7 +554,6 @@ function TranspositionStep({ title, sub, desc, icon, step, color }: any) {
 }
 
 function ArrowIcon({ className }: { className?: string }) {
-  // SVG Arrow rotated for RTL flow
   return (
     <svg 
       xmlns="http://www.w3.org/2000/svg" 
@@ -514,16 +581,54 @@ function MechanismCard({ title, desc }: any) {
   );
 }
 
-// --- Standard Helper Components ---
+// --- Advanced Concept Map Helpers ---
 
-function ComparisonItem({ icon, text, bold }: any) {
+function ComparisonPoint({ text, icon, highlight }: any) {
   return (
-    <li className="flex items-start gap-3">
-      <div className="mt-1 shrink-0 bg-slate-50 dark:bg-slate-800 p-1 rounded-full">{icon}</div>
-      <span className={`text-gray-700 dark:text-slate-300 text-sm leading-relaxed ${bold ? 'font-semibold' : ''}`}>{text}</span>
+    <li className={`flex items-start gap-3 p-2 rounded-lg transition-colors ${highlight ? 'bg-purple-50 dark:bg-purple-900/10' : ''}`}>
+      <div className="mt-1 shrink-0">{icon}</div>
+      <span className="text-gray-700 dark:text-slate-300 text-sm leading-relaxed">{text}</span>
     </li>
   );
 }
+
+function VividNode({ text, type, id }: any) {
+  const styles: any = {
+    root: "bg-purple-600 text-white text-lg font-bold px-8 py-4 rounded-2xl shadow-[0_0_30px_rgba(147,51,234,0.3)] border-4 border-purple-400/50 z-20 relative animate-pulse-slow",
+    child: "bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 font-bold px-6 py-3 rounded-xl border-2 border-slate-200 dark:border-slate-700 shadow-lg z-20 relative hover:border-purple-400 transition-colors",
+    leaf: "bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 text-sm px-4 py-2 rounded-full border border-slate-200 dark:border-slate-800 z-20 relative"
+  };
+
+  return (
+    <div id={id} className={`${styles[type]} transition-transform hover:scale-110 cursor-default select-none`}>
+      {text}
+    </div>
+  );
+}
+
+function VividLink({ text }: any) {
+  return (
+    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-[10px] font-bold px-2 py-1 rounded-full border border-slate-300 dark:border-slate-600 whitespace-nowrap z-30 shadow-sm group-hover:bg-purple-100 dark:group-hover:bg-purple-900/50 group-hover:text-purple-700 dark:group-hover:text-purple-300 transition-colors">
+      {text}
+    </div>
+  );
+}
+
+function ConstructionStep({ num, title, desc, highlight }: any) {
+  return (
+    <div className={`flex items-center gap-4 p-4 rounded-xl border transition-all ${highlight ? 'bg-purple-50 dark:bg-purple-900/20 border-purple-200 dark:border-purple-800' : 'bg-transparent border-transparent hover:bg-slate-50 dark:hover:bg-slate-800/50'}`}>
+       <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold shrink-0 ${highlight ? 'bg-purple-600 text-white' : 'bg-slate-200 dark:bg-slate-800 text-slate-500'}`}>
+         {num}
+       </div>
+       <div>
+         <h5 className="font-bold text-gray-800 dark:text-white mb-1">{title}</h5>
+         <p className="text-sm text-gray-600 dark:text-slate-400">{desc}</p>
+       </div>
+    </div>
+  );
+}
+
+// --- Didactic Means Helpers ---
 
 function FunctionCard({ icon, title, desc }: any) {
   return (
@@ -545,41 +650,6 @@ function CriteriaItem({ title, question }: any) {
         <h4 className="font-bold text-white mb-1 text-base">{title}</h4>
         <p className="text-slate-300 text-sm leading-relaxed font-light">{question}</p>
       </div>
-    </div>
-  );
-}
-
-function MethodStep({ num, title, desc, highlight }: any) {
-  return (
-    <div className={`p-4 rounded-2xl border ${highlight ? 'bg-purple-600 text-white border-purple-600' : 'bg-white dark:bg-slate-800 border-gray-100 dark:border-gray-700'} shadow-sm text-center`}>
-      <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm mx-auto mb-2 ${highlight ? 'bg-white text-purple-600' : 'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300'}`}>
-        {num}
-      </div>
-      <h5 className={`font-bold mb-1 ${!highlight && 'text-slate-800 dark:text-white'}`}>{title}</h5>
-      <p className={`text-xs ${highlight ? 'text-purple-100' : 'text-gray-500 dark:text-gray-400'}`}>{desc}</p>
-    </div>
-  );
-}
-
-// Concept Map Visual Node
-function ConceptNode({ text, type = 'normal' }: { text: string, type?: 'main' | 'normal' | 'sub' }) {
-  const styles = {
-    main: "bg-purple-600 text-white text-lg md:text-xl font-bold px-8 py-3 rounded-xl border-4 border-purple-400 shadow-[0_0_25px_rgba(168,85,247,0.4)]",
-    normal: "bg-white text-slate-900 font-bold px-6 py-3 border-2 border-slate-200 rounded-lg",
-    sub: "bg-slate-800 text-slate-200 text-sm px-5 py-2 border border-slate-600 rounded-full shadow-lg"
-  };
-
-  return (
-    <div className={`transition-transform hover:scale-105 duration-300 ${styles[type]} z-20 relative`}>
-      {text}
-    </div>
-  );
-}
-
-function MapLabel({ text }: { text: string }) {
-  return (
-    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-slate-900 text-[10px] md:text-xs text-purple-300 px-2 py-0.5 rounded border border-slate-700 whitespace-nowrap z-30 shadow-xl">
-      {text}
     </div>
   );
 }
