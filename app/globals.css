@@ -2,15 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  body {
-    @apply transition-colors duration-300; 
-    /* هذا يضمن أن الخلفية تأخذ لوناً افتراضياً ولا تبقى شفافة */
-    @apply bg-slate-50 text-slate-900; 
-  }
-
-  /* عند تفعيل الكلاس dark، غير ألوان الـ body */
-  .dark body {
-    @apply bg-slate-950 text-slate-100;
-  }
+/* ضع أكوادك هنا في الأسفل فقط */
+body {
+  background: #f8fafc; /* استخدم هذا بدلاً من @apply إذا استمرت المشكلة */
 }
