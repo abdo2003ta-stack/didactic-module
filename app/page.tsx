@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import ThemeToggle from "@/components/ThemeToggle"; 
+import ThemeToggle from "@/components/ThemeToggle"; // تأكد من وجود هذا المكون أو احذفه إذا لم يكن لديك
 import { 
   BookOpen, 
   Share2, 
@@ -18,7 +18,12 @@ import {
   GitCommit, 
   MousePointer2,
   ArrowRight,
-  Quote
+  Quote,
+  Sun,
+  Cloud,
+  CloudRain,
+  Wind,
+  Waves
 } from 'lucide-react';
 
 // ------------------- TYPES -------------------
@@ -31,6 +36,7 @@ export default function DidacticModulePage() {
   return (
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 font-sans text-slate-800 dark:text-slate-200 transition-colors duration-300" dir="rtl">
       
+      {/* زر الوضع الليلي */}
       <ThemeToggle />
 
       {/* ================= HEADER ================= */}
@@ -166,7 +172,7 @@ export default function DidacticModulePage() {
           </section>
         )}
 
-        {/* ================= SECTION 2: CONCEPT MAP (UPDATED WITH DEFINITION) ================= */}
+        {/* ================= SECTION 2: CONCEPT MAP ================= */}
         {activeSection === 'conceptMap' && (
           <section className="animate-in fade-in slide-in-from-bottom-4 duration-500 space-y-16">
             
@@ -177,7 +183,7 @@ export default function DidacticModulePage() {
               colorClass="bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300"
             />
 
-            {/* ⭐ 1. THE DEFINITION (NEW ADDITION) ⭐ */}
+            {/* 1. Definition */}
             <div className="bg-white dark:bg-slate-900 rounded-[2rem] p-8 md:p-10 shadow-lg border-r-8 border-purple-500 relative overflow-hidden group hover:shadow-xl transition-shadow">
                <div className="absolute top-0 left-0 w-full h-full bg-purple-50 dark:bg-purple-900/5 -z-10 group-hover:bg-purple-100/50 dark:group-hover:bg-purple-900/10 transition-colors"></div>
                <div className="absolute -right-6 -top-6 text-purple-200 dark:text-purple-900/20 opacity-50 transform rotate-12">
@@ -260,45 +266,20 @@ export default function DidacticModulePage() {
                </div>
             </div>
 
-            {/* 4. Vivid Interactive Example */}
-            <div className="space-y-8">
-               <h3 className="text-2xl font-bold text-gray-800 dark:text-white text-center">مثال حيوي تفاعلي (Vivid Example)</h3>
-               <p className="text-center text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
-                 مرر الفأرة فوق خطوط الربط لقراءة "الجمل العلمية". الخريطة المفهومية ليست مجرد رسم، بل هي مجموعة من الجمل المترابطة.
-               </p>
-
-               <div className="bg-slate-50 dark:bg-slate-950 border border-slate-200 dark:border-slate-800 rounded-[3rem] p-8 md:p-12 relative min-h-[500px] flex justify-center shadow-inner overflow-hidden">
-                  <div className="absolute inset-0 bg-grid-slate-200 dark:bg-grid-slate-800/[0.3] [mask-image:linear-gradient(to_bottom,white,transparent)]"></div>
-                  <div className="relative z-10 w-full max-w-3xl flex flex-col items-center">
-                      <div className="mb-24 w-full flex justify-center"><VividNode text="النبات الأخضر" type="root" id="root" /></div>
-                      <div className="w-full flex justify-between gap-4 md:gap-12 relative">
-                         <div className="flex flex-col items-center w-1/3">
-                            <VividNode text="الضوء" type="child" id="light" />
-                            <div className="h-16 w-0.5 bg-slate-300 dark:bg-slate-700 my-2 relative group"><VividLink text="مصدره" /></div>
-                            <VividNode text="الشمس" type="leaf" id="sun" />
-                         </div>
-                         <div className="flex flex-col items-center w-1/3">
-                            <VividNode text="الماء والأملاح" type="child" id="water" />
-                            <div className="h-16 w-0.5 bg-slate-300 dark:bg-slate-700 my-2 relative"><VividLink text="تمتصه" /></div>
-                            <VividNode text="الجذور" type="leaf" id="roots" />
-                         </div>
-                         <div className="flex flex-col items-center w-1/3">
-                            <VividNode text="غاز CO2" type="child" id="gas" />
-                            <div className="h-16 w-0.5 bg-slate-300 dark:bg-slate-700 my-2 relative"><VividLink text="يمتص عبر" /></div>
-                            <VividNode text="الأوراق" type="leaf" id="leaves" />
-                         </div>
-                      </div>
-                      <svg className="absolute top-0 left-0 w-full h-full pointer-events-none overflow-visible">
-                         <path d="M 384 55 C 384 120, 100 80, 100 160" stroke="#94a3b8" strokeWidth="2" fill="none" className="opacity-30 dark:opacity-50" />
-                         <rect x="180" y="85" width="100" height="26" rx="13" fill="#1e293b" className="fill-slate-100 dark:fill-slate-800 stroke-slate-300 dark:stroke-slate-700" strokeWidth="1" />
-                         <text x="230" y="102" textAnchor="middle" fontSize="11" className="fill-slate-600 dark:fill-slate-400 font-bold">يحتاج إلى</text>
-                         <path d="M 384 55 L 384 160" stroke="#94a3b8" strokeWidth="2" fill="none" className="opacity-30 dark:opacity-50" />
-                         <path d="M 384 55 C 384 120, 660 80, 660 160" stroke="#94a3b8" strokeWidth="2" fill="none" className="opacity-30 dark:opacity-50" />
-                         <rect x="490" y="85" width="100" height="26" rx="13" fill="#1e293b" className="fill-slate-100 dark:fill-slate-800 stroke-slate-300 dark:stroke-slate-700" strokeWidth="1" />
-                         <text x="540" y="102" textAnchor="middle" fontSize="11" className="fill-slate-600 dark:fill-slate-400 font-bold">يحتاج إلى</text>
-                      </svg>
-                  </div>
+            {/* 4. Vivid Interactive Example: The Water Cycle (NEW!) */}
+            <div className="space-y-8 mt-12">
+               <div className="text-center space-y-3">
+                 <h3 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-cyan-500 dark:from-blue-400 dark:to-cyan-300">
+                   مثال حيوي: دورة الماء (نظام مفاهيمي مغلق)
+                 </h3>
+                 <p className="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
+                   هنا ننتقل من الترتيب الهرمي إلى <span className="text-blue-600 dark:text-blue-400 font-bold">التفكير النسقي</span>. 
+                   حرك الفأرة فوق المراحل لترى كيف تتحول المفاهيم الجامدة إلى عملية حية.
+                 </p>
                </div>
+               
+               {/* Water Cycle Component */}
+               <InteractiveWaterCycle />
             </div>
 
             {/* 5. Construction Steps */}
@@ -308,7 +289,7 @@ export default function DidacticModulePage() {
                   <ConstructionStep num="01" title="قائمة الجرد (Listing)" desc="استخراج جميع المفاهيم المرتبطة بالموضوع دون ترتيب." />
                   <ConstructionStep num="02" title="الترتيب والتصنيف (Ordering)" desc="ترتيب المفاهيم من الأكثر شمولية إلى الأكثر تحديداً." />
                   <ConstructionStep num="03" title="بناء الروابط (Linking)" desc="رسم خطوط بين المفاهيم المترابطة لتحويل القائمة إلى شبكة." />
-                  <ConstructionStep num="04" title="صياغة القضايا (Propositions)" desc="أهم خطوة: كتابة 'فعل' أو 'كلمة ربط' على كل خط لتوضيح العلاقة." highlight />
+                  <ConstructionStep num="04" title="صياغة القضايا (Propositions)" desc="أهم خطوة: كتابة 'فعل' أو 'كلمة ربط' على كل خط لتوضيح طبيعة العلاقة." highlight />
                </div>
             </div>
 
@@ -369,7 +350,104 @@ export default function DidacticModulePage() {
   );
 }
 
+// =================== INTERACTIVE WATER CYCLE COMPONENT ===================
+
+function InteractiveWaterCycle() {
+  const [activeStage, setActiveStage] = useState<string | null>(null);
+
+  const cycleData = {
+    sun: { title: "الشمس", desc: "المحرك الحراري للنظام", color: "from-orange-400 to-red-500", shadow: "shadow-orange-500/50" },
+    ocean: { title: "المسطحات المائية", desc: "خزان المياه الرئيسي", color: "from-blue-600 to-indigo-700", shadow: "shadow-blue-600/50" },
+    vapor: { title: "بخار الماء", desc: "الحالة الغازية", color: "from-slate-300 to-slate-400", shadow: "shadow-slate-400/50" },
+    clouds: { title: "السحب", desc: "تجمع قطيرات الماء", color: "from-indigo-200 to-blue-300", shadow: "shadow-indigo-300/50" },
+    rain: { title: "التساقطات", desc: "عودة الماء للأرض", color: "from-cyan-400 to-blue-500", shadow: "shadow-cyan-400/50" },
+  };
+
+  return (
+    <div className="relative w-full h-[600px] bg-gradient-to-b from-sky-100 to-blue-50 dark:from-slate-900 dark:to-slate-950 rounded-[3rem] overflow-hidden border border-slate-200 dark:border-slate-800 shadow-2xl group select-none">
+      
+      {/* Background Ambience */}
+      <div className="absolute top-0 right-0 w-96 h-96 bg-orange-400/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 animate-pulse"></div>
+      <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-blue-600/20 to-transparent blur-xl"></div>
+
+      {/* SVG CONNECTIONS */}
+      <svg className="absolute inset-0 w-full h-full pointer-events-none z-0">
+        <defs>
+          <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" className="fill-slate-400 dark:fill-slate-600" />
+          </marker>
+        </defs>
+        <path d="M 650 100 Q 600 300 500 480" className={`transition-all duration-700 ${activeStage === 'sun' || activeStage === 'ocean' ? 'stroke-orange-400 stroke-[3] opacity-100' : 'stroke-slate-300 dark:stroke-slate-700 stroke-[2] opacity-30'}`} fill="none" markerEnd="url(#arrowhead)" strokeDasharray="10,5" />
+        <path d="M 400 480 Q 300 400 250 300" className={`transition-all duration-700 ${activeStage === 'ocean' || activeStage === 'vapor' ? 'stroke-blue-400 stroke-[3] opacity-100' : 'stroke-slate-300 dark:stroke-slate-700 stroke-[2] opacity-30'}`} fill="none" markerEnd="url(#arrowhead)" />
+        <path d="M 250 240 L 250 180" className={`transition-all duration-700 ${activeStage === 'vapor' || activeStage === 'clouds' ? 'stroke-gray-400 stroke-[3] opacity-100' : 'stroke-slate-300 dark:stroke-slate-700 stroke-[2] opacity-30'}`} fill="none" markerEnd="url(#arrowhead)" />
+        <path d="M 320 150 Q 500 150 550 250" className={`transition-all duration-700 ${activeStage === 'clouds' || activeStage === 'rain' ? 'stroke-indigo-400 stroke-[3] opacity-100' : 'stroke-slate-300 dark:stroke-slate-700 stroke-[2] opacity-30'}`} fill="none" markerEnd="url(#arrowhead)" />
+        <path d="M 550 320 Q 550 400 500 480" className={`transition-all duration-700 ${activeStage === 'rain' || activeStage === 'ocean' ? 'stroke-cyan-500 stroke-[3] opacity-100' : 'stroke-slate-300 dark:stroke-slate-700 stroke-[2] opacity-30'}`} fill="none" markerEnd="url(#arrowhead)" />
+      </svg>
+
+      {/* LABELS */}
+      <div className="absolute inset-0 z-10 pointer-events-none">
+         <Label pos="top-[35%] right-[25%]" text="تسخن (طاقة)" active={activeStage === 'sun'} color="bg-orange-100 text-orange-700 border-orange-200" />
+         <Label pos="bottom-[35%] left-[25%]" text="تبخر" active={activeStage === 'ocean'} color="bg-blue-100 text-blue-700 border-blue-200" />
+         <Label pos="top-[38%] left-[20%]" text="تكاثف" active={activeStage === 'vapor'} color="bg-slate-100 text-slate-700 border-slate-200" />
+         <Label pos="top-[25%] right-[40%]" text="تساقط" active={activeStage === 'clouds'} color="bg-indigo-100 text-indigo-700 border-indigo-200" />
+         <Label pos="bottom-[25%] right-[30%]" text="جريان" active={activeStage === 'rain'} color="bg-cyan-100 text-cyan-700 border-cyan-200" />
+      </div>
+
+      {/* NODES */}
+      <div className="relative z-20 w-full h-full">
+        {/* SUN */}
+        <div className="absolute top-10 right-10 cursor-pointer transition-transform hover:scale-110" onMouseEnter={() => setActiveStage('sun')} onMouseLeave={() => setActiveStage(null)}>
+           <CycleNode data={cycleData.sun} icon={<Sun className="animate-spin-slow w-8 h-8 md:w-10 md:h-10" />} isActive={activeStage === 'sun'} />
+        </div>
+        {/* OCEAN */}
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 cursor-pointer transition-transform hover:scale-105" onMouseEnter={() => setActiveStage('ocean')} onMouseLeave={() => setActiveStage(null)}>
+           <div className={`relative overflow-hidden w-64 h-24 rounded-3xl bg-gradient-to-r ${cycleData.ocean.color} flex items-center justify-center text-white font-bold shadow-lg border-4 border-white dark:border-slate-800 transition-all ${activeStage === 'ocean' ? cycleData.ocean.shadow + ' scale-105' : ''}`}>
+             <span className="relative z-10 text-xl flex items-center gap-2"><Waves /> {cycleData.ocean.title}</span>
+           </div>
+        </div>
+        {/* VAPOR */}
+        <div className="absolute bottom-40 left-20 cursor-pointer transition-transform hover:scale-110" onMouseEnter={() => setActiveStage('vapor')} onMouseLeave={() => setActiveStage(null)}>
+           <CycleNode data={cycleData.vapor} icon={<Wind className="w-8 h-8 md:w-10 md:h-10" />} isActive={activeStage === 'vapor'} />
+        </div>
+        {/* CLOUDS */}
+        <div className="absolute top-20 left-32 cursor-pointer transition-transform hover:scale-110" onMouseEnter={() => setActiveStage('clouds')} onMouseLeave={() => setActiveStage(null)}>
+           <CycleNode data={cycleData.clouds} icon={<Cloud className="w-8 h-8 md:w-10 md:h-10" />} isActive={activeStage === 'clouds'} />
+        </div>
+        {/* RAIN */}
+        <div className="absolute top-48 right-1/3 cursor-pointer transition-transform hover:scale-110" onMouseEnter={() => setActiveStage('rain')} onMouseLeave={() => setActiveStage(null)}>
+           <CycleNode data={cycleData.rain} icon={<CloudRain className="w-8 h-8 md:w-10 md:h-10" />} isActive={activeStage === 'rain'} />
+        </div>
+      </div>
+
+      {/* INFO PANEL */}
+      <div className="absolute bottom-6 right-6 z-30 max-w-xs">
+        <div className={`bg-white/90 dark:bg-slate-800/90 backdrop-blur p-4 rounded-2xl shadow-xl border border-white/20 transition-all duration-300 transform ${activeStage ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
+           <h4 className="text-lg font-bold text-slate-800 dark:text-white mb-1">{activeStage ? cycleData[activeStage as keyof typeof cycleData].title : '...'}</h4>
+           <p className="text-sm text-slate-600 dark:text-slate-300">{activeStage ? cycleData[activeStage as keyof typeof cycleData].desc : ''}</p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // =================== HELPER COMPONENTS ===================
+
+function CycleNode({ data, icon, isActive }: any) {
+  return (
+    <div className={`w-20 h-20 md:w-28 md:h-28 rounded-full bg-gradient-to-br ${data.color} flex flex-col items-center justify-center text-white shadow-lg border-4 border-white dark:border-slate-800 transition-all duration-300 ${isActive ? data.shadow + ' scale-110 ring-4 ring-white/30' : 'grayscale-[0.2]'}`}>
+      <div className="mb-1">{icon}</div>
+      <span className="text-xs md:text-sm font-bold text-center leading-tight px-1">{data.title}</span>
+    </div>
+  );
+}
+
+function Label({ pos, text, active, color }: any) {
+  return (
+    <div className={`absolute ${pos} px-3 py-1 rounded-full text-xs font-bold shadow-sm border transition-all duration-500 ${active ? `${color} scale-110 opacity-100` : 'bg-white/50 text-slate-400 border-transparent opacity-60'}`}>
+      {text}
+    </div>
+  );
+}
 
 function NavButton({ label, icon, isActive, onClick, activeColor }: any) {
   return (
@@ -400,8 +478,6 @@ function TranspositionStep({ title, sub, desc, icon, step, color }: any) {
 function ArrowIcon({ className }: { className?: string }) { return <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={`rotate-180 transform ${className}`}><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>; }
 function MechanismCard({ title, desc }: any) { return <div className="flex gap-4 p-5 bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow hover:border-blue-200 dark:hover:border-blue-800"><div className="mt-1 text-blue-500 shrink-0"><CheckCircle size={20} /></div><div><h4 className="font-bold text-gray-800 dark:text-white mb-2 text-lg">{title}</h4><p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">{desc}</p></div></div>; }
 function ComparisonPoint({ text, icon, highlight }: any) { return <li className={`flex items-start gap-3 p-2 rounded-lg transition-colors ${highlight ? 'bg-purple-50 dark:bg-purple-900/10' : ''}`}><div className="mt-1 shrink-0">{icon}</div><span className="text-gray-700 dark:text-slate-300 text-sm leading-relaxed">{text}</span></li>; }
-function VividNode({ text, type, id }: any) { const styles: any = { root: "bg-purple-600 text-white text-lg font-bold px-8 py-4 rounded-2xl shadow-[0_0_30px_rgba(147,51,234,0.3)] border-4 border-purple-400/50 z-20 relative animate-pulse-slow", child: "bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-200 font-bold px-6 py-3 rounded-xl border-2 border-slate-200 dark:border-slate-700 shadow-lg z-20 relative hover:border-purple-400 transition-colors", leaf: "bg-slate-100 dark:bg-slate-900 text-slate-600 dark:text-slate-400 text-sm px-4 py-2 rounded-full border border-slate-200 dark:border-slate-800 z-20 relative" }; return <div id={id} className={`${styles[type]} transition-transform hover:scale-110 cursor-default select-none`}>{text}</div>; }
-function VividLink({ text }: any) { return <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-[10px] font-bold px-2 py-1 rounded-full border border-slate-300 dark:border-slate-600 whitespace-nowrap z-30 shadow-sm group-hover:bg-purple-100 dark:group-hover:bg-purple-900/50 group-hover:text-purple-700 dark:group-hover:text-purple-300 transition-colors">{text}</div>; }
 function ConstructionStep({ num, title, desc, highlight }: any) { return <div className={`flex items-center gap-4 p-4 rounded-xl border transition-all ${highlight ? 'bg-purple-50 dark:bg-purple-900/20 border-purple-200 dark:border-purple-800' : 'bg-transparent border-transparent hover:bg-slate-50 dark:hover:bg-slate-800/50'}`}><div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold shrink-0 ${highlight ? 'bg-purple-600 text-white' : 'bg-slate-200 dark:bg-slate-800 text-slate-500'}`}>{num}</div><div><h5 className="font-bold text-gray-800 dark:text-white mb-1">{title}</h5><p className="text-sm text-gray-600 dark:text-slate-400">{desc}</p></div></div>; }
 function FunctionCard({ icon, title, desc }: any) { return <div className="flex items-center gap-4 bg-white dark:bg-slate-800 p-4 rounded-2xl border border-teal-50 dark:border-teal-900 shadow-sm hover:border-teal-300 hover:shadow-md transition-all"><div className="text-teal-600 bg-teal-50 dark:bg-teal-900/30 p-3 rounded-xl">{icon}</div><div><strong className="block text-gray-800 dark:text-white text-base mb-1">{title}</strong><span className="text-xs text-gray-500 dark:text-gray-400 leading-tight block">{desc}</span></div></div>; }
 function CriteriaItem({ title, question }: any) { return <div className="flex gap-4 p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-colors border border-white/5 backdrop-blur-sm"><div className="mt-1 text-teal-400"><CheckCircle size={20} /></div><div><h4 className="font-bold text-white mb-1 text-base">{title}</h4><p className="text-slate-300 text-sm leading-relaxed font-light">{question}</p></div></div>; }
