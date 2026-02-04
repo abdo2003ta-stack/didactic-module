@@ -6,7 +6,7 @@ import {
   Activity, Quote, ArrowRight, Sun, Moon, Sprout, Droplets, 
   Microscope, Globe, MonitorPlay, Zap, FlaskConical, Scale, 
   AlertTriangle, Target, MousePointerClick, Network, Split, GitGraph, ShieldCheck,
-  Rabbit, Cat, Leaf, Apple, Utensils
+  Rabbit, Cat, Leaf, Utensils
 } from 'lucide-react';
 
 // ------------------- TYPES -------------------
@@ -14,7 +14,7 @@ type Section = 'formulation' | 'conceptMap' | 'didacticMeans';
 
 // ------------------- MAIN COMPONENT -------------------
 export default function DidacticModulePage() {
-  const [activeSection, setActiveSection] = useState<Section>('conceptMap'); // Default to concept map as requested
+  const [activeSection, setActiveSection] = useState<Section>('formulation');
   const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
@@ -47,7 +47,7 @@ export default function DidacticModulePage() {
           </div>
           <h1 className="text-3xl md:text-5xl font-extrabold mb-6 tracking-tight">مجزوءة الديدكتيك (ابتدائي)</h1>
           <p className="text-lg md:text-xl text-indigo-100 font-light max-w-3xl mx-auto mt-4 opacity-90">
-            تطوير الممارسة الصفية: من التخطيط المنهجي إلى هندسة التعلمات
+             مقاربة تحليلية شاملة: من النقل الديدكتيكي إلى هندسة التعلمات
           </p>
           
           <div className="mt-12 flex flex-wrap justify-center gap-4">
@@ -60,17 +60,91 @@ export default function DidacticModulePage() {
 
       <main className="container mx-auto px-4 py-12 max-w-6xl min-h-[600px]">
         
-        {/* ================= SECTION 1: FORMULATION (Brief for context) ================= */}
+        {/* ================= SECTION 1: FORMULATION (RESTORED FULL VERSION) ================= */}
         {activeSection === 'formulation' && (
-          <div className="space-y-12 animate-fade-in">
-             <SectionHeader title="صياغة المفهوم" subtitle="النقل الديدكتيكي في المدرسة الابتدائية" icon={<Brain className="text-blue-600" size={32} />} colorClass="bg-blue-100 dark:bg-blue-900/30 text-blue-700" />
-             <div className="p-8 bg-white dark:bg-slate-900 rounded-3xl shadow-sm text-center">
-               <p>تم التركيز في هذا المحور على تكييف المعرفة العالمة لتناسب النمو المعرفي للطفل (مرحلة العمليات المحسوسة).</p>
-             </div>
+          <div className="space-y-16 animate-fade-in">
+            <SectionHeader 
+              title="مستوى صياغة المفهوم" 
+              subtitle="التفكيك المنهجي: من المعرفة العالمة إلى المعرفة المكتسبة"
+              icon={<Brain className="text-blue-600" size={32} />}
+              colorClass="bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300"
+            />
+
+            <div className="grid md:grid-cols-2 gap-8">
+                <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-sm border-r-4 border-blue-500 relative overflow-hidden">
+                    <div className="absolute top-0 left-0 p-4 opacity-10">
+                        <Quote size={80} className="text-blue-600" />
+                    </div>
+                    <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-4 relative z-10">التعريف الديدكتيكي</h3>
+                    <p className="text-gray-600 dark:text-gray-300 leading-8 relative z-10 text-justify">
+                        صياغة المفهوم هي سيرورة <strong>بناء ديدكتيكية</strong> تهدف إلى تحديد المستوى الذي سيُقَدَّم به المفهوم للمتعلمين. 
+                        وهي لا تعني "التبسيط المخل" للمعرفة، بل تعني <strong>تكييف</strong> المعرفة العالمة لتناسب البنية المعرفية للمتعلم.
+                    </p>
+                </div>
+
+                <div className="bg-slate-50 dark:bg-slate-800/50 p-8 rounded-3xl border border-slate-200 dark:border-slate-700 flex flex-col justify-center">
+                    <div className="flex items-center gap-3 mb-6">
+                        <div className="bg-blue-100 dark:bg-blue-900/50 p-2 rounded-lg text-blue-600"><Lightbulb size={24} /></div>
+                        <h3 className="text-xl font-bold text-gray-800 dark:text-white">مثال: مفهوم "التنفس"</h3>
+                    </div>
+                    <div className="space-y-4">
+                        <div className="flex items-start gap-4 opacity-60">
+                            <div className="mt-1"><Activity size={18} /></div>
+                            <div>
+                                <strong className="block text-sm text-gray-900 dark:text-gray-200">المستوى الجامعي:</strong>
+                                <span className="text-xs text-gray-600 dark:text-gray-400">أكسدة خلوية، حلقة كريبس، ATP.</span>
+                            </div>
+                        </div>
+                        <div className="flex justify-center text-blue-500"><ArrowRight className="rotate-90" size={20} /></div>
+                        <div className="flex items-start gap-4 bg-white dark:bg-slate-700 p-4 rounded-xl shadow-sm border border-blue-200 dark:border-blue-900/30">
+                            <div className="mt-1 text-blue-600"><CheckCircle size={18} /></div>
+                            <div>
+                                <strong className="block text-sm text-blue-700 dark:text-blue-300">المستوى المدرسي:</strong>
+                                <span className="text-sm text-gray-700 dark:text-gray-300">تبادلات غازية تضمن تزويد الجسم بالطاقة.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className="bg-white dark:bg-slate-900 rounded-[2rem] shadow-xl overflow-hidden border border-gray-100 dark:border-slate-800">
+              <div className="bg-slate-900 dark:bg-black p-8 text-center relative overflow-hidden">
+                <div className="absolute top-0 left-0 w-full h-full bg-slate-800 opacity-40"></div>
+                <h3 className="text-2xl md:text-3xl font-bold text-white mb-2 relative z-10">سلسلة النقل الديدكتيكي</h3>
+                <p className="text-blue-200 relative z-10 text-sm font-mono tracking-widest uppercase">Yves Chevallard</p>
+              </div>
+              <div className="p-8 md:p-12 bg-gradient-to-b from-white to-slate-50 dark:from-slate-900 dark:to-slate-950">
+                <div className="flex flex-col md:flex-row justify-between items-center gap-6 relative">
+                  <div className="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-gray-200 dark:bg-slate-800 -z-0 rounded-full"></div>
+                  <TranspositionStep title="المعرفة العالمة" sub="(Savoir Savant)" icon={<Brain size={24} />} step="1" color="bg-slate-800 text-white" />
+                  <ArrowIcon className="hidden md:block text-gray-300 dark:text-slate-600 relative z-10 bg-slate-50 dark:bg-slate-900 p-1 rounded-full" />
+                  <TranspositionStep title="المعرفة الواجب تدريسها" sub="(À Enseigner)" icon={<BookOpen size={24} />} step="2" color="bg-blue-600 text-white" />
+                  <ArrowIcon className="hidden md:block text-gray-300 dark:text-slate-600 relative z-10 bg-slate-50 dark:bg-slate-900 p-1 rounded-full" />
+                  <TranspositionStep title="المعرفة المُدَرَّسة" sub="(Savoir Enseigné)" icon={<Activity size={24} />} step="3" color="bg-indigo-600 text-white" />
+                  <ArrowIcon className="hidden md:block text-gray-300 dark:text-slate-600 relative z-10 bg-slate-50 dark:bg-slate-900 p-1 rounded-full" />
+                  <TranspositionStep title="المعرفة المُكتسبة" sub="(Savoir Appris)" icon={<CheckCircle size={24} />} step="4" color="bg-green-600 text-white" />
+                </div>
+              </div>
+            </div>
+
+            <div className="grid md:grid-cols-12 gap-8">
+               <div className="md:col-span-4 bg-blue-50 dark:bg-blue-950/40 p-8 rounded-3xl h-full border border-blue-100 dark:border-blue-900 relative overflow-hidden">
+                 <h3 className="text-2xl font-bold text-blue-900 dark:text-blue-100 mb-6 relative z-10">مفهوم النوسفير</h3>
+                 <p className="text-blue-800 dark:text-blue-200 leading-relaxed mb-4 relative z-10">
+                   "Noosphère" هي طبقة التفكير أو الهيئة (مفتشون، خبراء) التي تختار ما يجب تدريسه.
+                 </p>
+               </div>
+               <div className="md:col-span-8 grid gap-4">
+                  <MechanismCard title="1. نزع الطابع الشخصي" desc="فصل المعرفة عن الباحث وظروف الاكتشاف." />
+                  <MechanismCard title="2. نزع الطابع السياقي" desc="إخراج المعلومة من سياقها الأصلي لتصبح عامة." />
+                  <MechanismCard title="3. القابلية للبرمجة" desc="تقطيع المعرفة لتتناسب مع الزمن المدرسي." />
+                  <MechanismCard title="4. الإشهار أو العلنية" desc="تحديد واضح لما هو مطلوب (العقد الديدكتيكي)." />
+               </div>
+            </div>
           </div>
         )}
 
-        {/* ================= SECTION 2: CONCEPT MAP (DEEP DIVE & COMPARISON) ================= */}
+        {/* ================= SECTION 2: CONCEPT MAP (UPDATED DEEP VERSION) ================= */}
         {activeSection === 'conceptMap' && (
           <div className="space-y-16 animate-fade-in">
             <SectionHeader 
@@ -181,7 +255,7 @@ export default function DidacticModulePage() {
           </div>
         )}
 
-        {/* ================= SECTION 3: DIDACTIC MEANS (PRIMARY SCHOOL EXAMPLES) ================= */}
+        {/* ================= SECTION 3: DIDACTIC MEANS (UPDATED PRIMARY EXAMPLES) ================= */}
         {activeSection === 'didacticMeans' && (
           <div className="space-y-16 animate-fade-in">
             <SectionHeader 
@@ -232,7 +306,7 @@ export default function DidacticModulePage() {
   );
 }
 
-// =================== COMPONENT: EXPANDED PRIMARY CONCEPT MAP ===================
+// =================== HELPER COMPONENTS (ALL INCLUDED) ===================
 
 function ExpandedConceptMap() {
   const [highlight, setHighlight] = useState<string | null>(null);
@@ -245,9 +319,7 @@ function ExpandedConceptMap() {
         <div className="px-8 py-4 bg-purple-600 text-white rounded-2xl shadow-xl text-xl font-bold border-4 border-purple-400/50">
           الحيوانات (حسب التغذية)
         </div>
-        {/* Connector Line Down */}
         <div className="absolute left-1/2 -translate-x-1/2 top-full h-12 w-1 bg-slate-300 dark:bg-slate-700"></div>
-        {/* Linking Word */}
         <div className="absolute left-1/2 -translate-x-1/2 top-full mt-4 bg-white dark:bg-slate-800 px-3 py-1 rounded-full text-xs font-bold text-slate-500 border border-slate-300 z-30">
           تنقسم إلى
         </div>
@@ -255,14 +327,11 @@ function ExpandedConceptMap() {
 
       {/* Level 2: Categories */}
       <div className="relative z-10 w-full max-w-4xl flex justify-between gap-4 mb-16">
-         {/* Connector Horizontal */}
          <div className="absolute top-0 left-[16%] right-[16%] h-1 bg-slate-300 dark:bg-slate-700 -mt-4 rounded-full"></div>
-         {/* Vertical Connectors */}
          <div className="absolute top-0 left-[16%] h-4 w-1 bg-slate-300 dark:bg-slate-700 -mt-4"></div>
          <div className="absolute top-0 left-1/2 h-4 w-1 bg-slate-300 dark:bg-slate-700 -mt-4 -translate-x-1/2"></div>
          <div className="absolute top-0 right-[16%] h-4 w-1 bg-slate-300 dark:bg-slate-700 -mt-4"></div>
 
-         {/* Node 1: Herbivores */}
          <div className="flex flex-col items-center w-1/3 group">
             <div className={`p-4 rounded-2xl border-2 transition-all ${highlight === 'herb' ? 'bg-green-100 border-green-500 scale-105' : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700'}`} onMouseEnter={() => setHighlight('herb')} onMouseLeave={() => setHighlight(null)}>
                <div className="flex items-center gap-2 font-bold text-green-700 dark:text-green-400"><Leaf size={20}/> عاشبة</div>
@@ -278,7 +347,6 @@ function ExpandedConceptMap() {
             </div>
          </div>
 
-         {/* Node 2: Omnivores */}
          <div className="flex flex-col items-center w-1/3 group">
             <div className={`p-4 rounded-2xl border-2 transition-all ${highlight === 'omni' ? 'bg-orange-100 border-orange-500 scale-105' : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700'}`} onMouseEnter={() => setHighlight('omni')} onMouseLeave={() => setHighlight(null)}>
                <div className="flex items-center gap-2 font-bold text-orange-700 dark:text-orange-400"><Utensils size={20}/> قارتة</div>
@@ -294,7 +362,6 @@ function ExpandedConceptMap() {
             </div>
          </div>
 
-         {/* Node 3: Carnivores */}
          <div className="flex flex-col items-center w-1/3 group">
             <div className={`p-4 rounded-2xl border-2 transition-all ${highlight === 'carn' ? 'bg-red-100 border-red-500 scale-105' : 'bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700'}`} onMouseEnter={() => setHighlight('carn')} onMouseLeave={() => setHighlight(null)}>
                <div className="flex items-center gap-2 font-bold text-red-700 dark:text-red-400"><Rabbit size={20} className="text-red-500"/> لاحمة</div>
@@ -310,15 +377,9 @@ function ExpandedConceptMap() {
             </div>
          </div>
       </div>
-      
-      <div className="text-center text-slate-400 text-sm mt-4 bg-slate-100 dark:bg-slate-800 px-4 py-2 rounded-full">
-         <span className="font-bold">قضية مثال:</span> الحيوانات اللاحمة --تصطاد{'->'} الفرائس
-      </div>
     </div>
   );
 }
-
-// =================== COMPONENT: PRIMARY SCHOOL SCENARIOS ===================
 
 function PrimaryDidacticScenarios() {
   const [activeScenario, setActiveScenario] = useState<string>('math');
@@ -382,18 +443,15 @@ function PrimaryDidacticScenarios() {
         <h3 className="text-2xl font-bold mb-6 text-slate-800 dark:text-white flex items-center gap-2">
            {current.icon} {current.title}
         </h3>
-        
         <div className="grid gap-4">
            <div className="bg-red-50 dark:bg-red-900/10 p-4 rounded-xl border border-red-100 dark:border-red-900/30">
               <strong className="block text-red-700 dark:text-red-400 text-sm mb-1">المشكلة (العائق):</strong>
               <p className="text-slate-700 dark:text-slate-300">{current.problem}</p>
            </div>
-           
            <div className="bg-green-50 dark:bg-green-900/10 p-4 rounded-xl border border-green-100 dark:border-green-900/30">
               <strong className="block text-green-700 dark:text-green-400 text-sm mb-1">الوسيلة والحل:</strong>
               <p className="text-slate-700 dark:text-slate-300">{current.solution}</p>
            </div>
-           
            <div className="flex items-center gap-2 mt-2 text-teal-600 dark:text-teal-400 font-bold text-sm">
               <CheckCircle size={16}/> القيمة المضافة: {current.value}
            </div>
@@ -402,8 +460,6 @@ function PrimaryDidacticScenarios() {
     </div>
   );
 }
-
-// =================== HELPER COMPONENTS ===================
 
 function NavButton({ label, icon, isActive, onClick, activeColor }: any) {
   return (
@@ -420,3 +476,15 @@ function SectionHeader({ title, subtitle, icon, colorClass }: any) {
     </div>
   );
 }
+function TranspositionStep({ title, sub, icon, step, color }: any) {
+  return (
+    <div className="flex flex-col items-center text-center relative z-10 flex-1 min-w-[150px]">
+      <div className={`w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg mb-4 ${color}`}>{icon}</div>
+      <div className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-white border flex items-center justify-center font-bold text-xs">{step}</div>
+      <h4 className="font-bold text-gray-900 dark:text-white">{title}</h4>
+      <span className="text-xs font-mono text-blue-600 block">{sub}</span>
+    </div>
+  );
+}
+function MechanismCard({ title, desc }: any) { return <div className="flex gap-4 p-5 bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm"><div className="text-blue-500 shrink-0"><CheckCircle size={20} /></div><div><h4 className="font-bold text-gray-800 dark:text-white">{title}</h4><p className="text-gray-600 dark:text-gray-400 text-sm">{desc}</p></div></div>; }
+function ArrowIcon({ className }: any) { return <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={className}><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>; }
