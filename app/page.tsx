@@ -6,7 +6,7 @@ import {
   Activity, Quote, ArrowRight, Sun, Moon, Sprout, Droplets, 
   Microscope, Globe, MonitorPlay, Zap, FlaskConical, Scale, 
   AlertTriangle, Target, MousePointerClick, Network, Split, GitGraph, ShieldCheck,
-  Rabbit, Cat, Leaf, Utensils
+  Rabbit, Cat, Leaf, Utensils, Pencil
 } from 'lucide-react';
 
 // ------------------- TYPES -------------------
@@ -14,7 +14,7 @@ type Section = 'formulation' | 'conceptMap' | 'didacticMeans';
 
 // ------------------- MAIN COMPONENT -------------------
 export default function DidacticModulePage() {
-  const [activeSection, setActiveSection] = useState<Section>('formulation');
+  const [activeSection, setActiveSection] = useState<Section>('didacticMeans'); // Default to show the fix
   const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
@@ -60,7 +60,7 @@ export default function DidacticModulePage() {
 
       <main className="container mx-auto px-4 py-12 max-w-6xl min-h-[600px]">
         
-        {/* ================= SECTION 1: FORMULATION (RESTORED FULL VERSION) ================= */}
+        {/* ================= SECTION 1: FORMULATION (FULL VERSION) ================= */}
         {activeSection === 'formulation' && (
           <div className="space-y-16 animate-fade-in">
             <SectionHeader 
@@ -144,7 +144,7 @@ export default function DidacticModulePage() {
           </div>
         )}
 
-        {/* ================= SECTION 2: CONCEPT MAP (UPDATED DEEP VERSION) ================= */}
+        {/* ================= SECTION 2: CONCEPT MAP (DEEP + PRIMARY EXAMPLE) ================= */}
         {activeSection === 'conceptMap' && (
           <div className="space-y-16 animate-fade-in">
             <SectionHeader 
@@ -255,7 +255,7 @@ export default function DidacticModulePage() {
           </div>
         )}
 
-        {/* ================= SECTION 3: DIDACTIC MEANS (UPDATED PRIMARY EXAMPLES) ================= */}
+        {/* ================= SECTION 3: DIDACTIC MEANS (ADDED DEFINITION) ================= */}
         {activeSection === 'didacticMeans' && (
           <div className="space-y-16 animate-fade-in">
             <SectionHeader 
@@ -265,15 +265,48 @@ export default function DidacticModulePage() {
               colorClass="bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300"
             />
 
-            {/* Concept */}
+            {/* 1. Definition Section (NEW) */}
+            <div className="grid md:grid-cols-2 gap-8">
+               <div className="bg-teal-600 text-white p-8 rounded-3xl relative overflow-hidden shadow-xl">
+                  <div className="absolute -right-10 -top-10 bg-white/10 w-40 h-40 rounded-full blur-3xl"></div>
+                  <h3 className="text-2xl font-bold mb-6 flex items-center gap-3">
+                     <Pencil className="text-teal-200" size={28}/> التعريف الاصطلاحي
+                  </h3>
+                  <p className="leading-8 text-lg opacity-95 text-justify">
+                     هي مجموع <strong>الأدوات، المواد، والأجهزة</strong> (سواء كانت بصرية، سمعية، أو لمسية) التي يوظفها المدرس أو المتعلم داخل وضعية تعليمية؛ قصد <strong>تسهيل بناء المعرفة</strong>، تقريب المفاهيم المجردة، أو تنمية مهارات محددة.
+                  </p>
+               </div>
+               
+               <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border border-teal-100 dark:border-teal-900/30 flex flex-col justify-center">
+                  <h4 className="font-bold text-gray-800 dark:text-gray-200 mb-6 flex items-center gap-2">
+                     <MonitorPlay size={20} className="text-teal-500"/> جوهر الوسيلة
+                  </h4>
+                  <ul className="space-y-4">
+                     <li className="flex items-start gap-3">
+                        <div className="w-2 h-2 mt-2 bg-teal-500 rounded-full shrink-0"></div>
+                        <span className="text-gray-600 dark:text-gray-400 leading-relaxed">
+                           ليست غاية في حد ذاتها بل <strong>"جسر"</strong> للعبور من الملموس إلى المجرد.
+                        </span>
+                     </li>
+                     <li className="flex items-start gap-3">
+                        <div className="w-2 h-2 mt-2 bg-teal-500 rounded-full shrink-0"></div>
+                        <span className="text-gray-600 dark:text-gray-400 leading-relaxed">
+                           الشيء العادي (مثل حبة البطاطس) يتحول إلى "وسيلة ديدكتيكية" فقط <strong>لحظة الاستعمال البيداغوجي</strong> (للكشف عن النشا مثلاً).
+                        </span>
+                     </li>
+                  </ul>
+               </div>
+            </div>
+
+            {/* 2. Function & Role */}
             <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-sm border-l-8 border-teal-500">
                <h3 className="text-2xl font-bold mb-4">الدور الوظيفي في الابتدائي</h3>
                <p className="text-gray-600 dark:text-slate-300 leading-8">
-                 الطفل في المرحلة الابتدائية (7-12 سنة) يمر بمرحلة <strong>العمليات المحسوسة</strong> (بياجيه). لذلك، فإن الوسيلة الديدكتيكية ليست خياراً بل ضرورة حتمية لنقل المعرفة من مستواها المجرد إلى مستوى ملموس يدركه الطفل بحواسه.
+                 الطفل في المرحلة الابتدائية (7-12 سنة) يمر بمرحلة <strong>العمليات المحسوسة</strong> (بياجيه). لذلك، فإن الوسيلة الديدكتيكية ليست خياراً كمالياً بل ضرورة حتمية لنقل المعرفة من مستواها المجرد إلى مستوى ملموس يدركه الطفل بحواسه.
                </p>
             </div>
 
-            {/* Primary School Scenarios */}
+            {/* 3. Primary School Scenarios */}
             <div className="space-y-8">
                <div className="text-center mb-8">
                  <h3 className="text-2xl font-bold text-gray-800 dark:text-white">سيناريوهات تطبيقية من القسم</h3>
@@ -283,7 +316,7 @@ export default function DidacticModulePage() {
                <PrimaryDidacticScenarios />
             </div>
 
-            {/* Selection Criteria */}
+            {/* 4. Selection Criteria */}
             <div className="bg-slate-900 text-slate-200 rounded-3xl p-8">
                 <h3 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
                   <Target className="text-teal-400" /> معايير اختيار الوسيلة (للطفل)
@@ -306,7 +339,7 @@ export default function DidacticModulePage() {
   );
 }
 
-// =================== HELPER COMPONENTS (ALL INCLUDED) ===================
+// =================== HELPER COMPONENTS ===================
 
 function ExpandedConceptMap() {
   const [highlight, setHighlight] = useState<string | null>(null);
