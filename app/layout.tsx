@@ -1,20 +1,13 @@
 import type { Metadata } from "next";
-import { Cairo } from "next/font/google";
+import { Cairo } from "next/font/google"; // أو الخط الذي تستخدمه
 import "./globals.css";
-// 1. استيراد المكون الذي أنشأناه
-import { ThemeProvider } from "@/components/ThemeProvider";
+import { ThemeProvider } from "@/components/theme-provider"; // 👈 استدعاء المزود
 
-const cairo = Cairo({
-  subsets: ["arabic"],
-  weight: ["200", "400", "500", "700", "900"],
-});
+const font = Cairo({ subsets: ["latin"] }); // تأكد من اسم الخط عندك
 
 export const metadata: Metadata = {
-  title: "مجزوءة الديدكتيك | منصة الأستاذ عبدو",
-  description: "منصة تعليمية شاملة لتطوير الممارسة المهنية وتقديم دروس الديدكتيك بأسلوب تفاعلي حديث.",
-  icons: {
-    icon: "/favicon.ico",
-  },
+  title: "مجزوءة الديدكتيك",
+  description: "منصة تعليمية للممارسة المهنية",
 };
 
 export default function RootLayout({
@@ -23,10 +16,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    // 2. إضافة suppressHydrationWarning لمنع أخطاء التوافق
-    <html lang="ar" dir="rtl" suppressHydrationWarning>
-      <body className={cairo.className}>
-        {/* 3. تغليف المحتوى بـ ThemeProvider */}
+    <html lang="ar" dir="rtl" suppressHydrationWarning> 
+      {/* 👆 suppressHydrationWarning مهمة جداً لمنع أخطاء الثيم */}
+      <body className={`${font.className} bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-50`}>
+        {/* 👇 هنا نغلف التطبيق بالمزود */}
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
