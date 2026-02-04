@@ -14,7 +14,7 @@ type Section = 'formulation' | 'conceptMap' | 'didacticMeans';
 
 // ------------------- MAIN COMPONENT -------------------
 export default function DidacticModulePage() {
-  const [activeSection, setActiveSection] = useState<Section>('didacticMeans'); // Default to show the fix
+  const [activeSection, setActiveSection] = useState<Section>('didacticMeans');
   const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
@@ -60,7 +60,7 @@ export default function DidacticModulePage() {
 
       <main className="container mx-auto px-4 py-12 max-w-6xl min-h-[600px]">
         
-        {/* ================= SECTION 1: FORMULATION (FULL VERSION) ================= */}
+        {/* ================= SECTION 1: FORMULATION ================= */}
         {activeSection === 'formulation' && (
           <div className="space-y-16 animate-fade-in">
             <SectionHeader 
@@ -89,7 +89,7 @@ export default function DidacticModulePage() {
                     </div>
                     <div className="space-y-4">
                         <div className="flex items-start gap-4 opacity-60">
-                            <div className="mt-1"><Activity size={18} /></div>
+                            <div className="mt-1 text-slate-700 dark:text-slate-300"><Activity size={18} /></div>
                             <div>
                                 <strong className="block text-sm text-gray-900 dark:text-gray-200">المستوى الجامعي:</strong>
                                 <span className="text-xs text-gray-600 dark:text-gray-400">أكسدة خلوية، حلقة كريبس، ATP.</span>
@@ -144,7 +144,7 @@ export default function DidacticModulePage() {
           </div>
         )}
 
-        {/* ================= SECTION 2: CONCEPT MAP (DEEP + PRIMARY EXAMPLE) ================= */}
+        {/* ================= SECTION 2: CONCEPT MAP ================= */}
         {activeSection === 'conceptMap' && (
           <div className="space-y-16 animate-fade-in">
             <SectionHeader 
@@ -157,20 +157,20 @@ export default function DidacticModulePage() {
             {/* 1. Deep Definition */}
             <div className="grid md:grid-cols-2 gap-8">
                <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl border-r-4 border-purple-500 shadow-sm">
-                 <h3 className="text-2xl font-bold mb-4 flex items-center gap-2"><Lightbulb className="text-purple-600"/> التعريف العميق</h3>
+                 <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-4 flex items-center gap-2"><Lightbulb className="text-purple-600"/> التعريف العميق</h3>
                  <p className="text-gray-600 dark:text-gray-300 leading-8 text-justify">
                    هي تمثيل تخطيطي للعلاقات ذات المعنى بين المفاهيم في صورة <strong>قضايا (Propositions)</strong>. تستند إلى نظرية <strong>ديفيد أوزوبل</strong> التي تؤكد أن التعلم الحقيقي يحدث عندما ترتبط المعرفة الجديدة (المفهوم الثانوي) بشكل غير تعسفي بالمعرفة السابقة (المفهوم الجوهري) في البنية المعرفية للمتعلم، مما يحقق "التعلم ذو المعنى" بدلاً من "التعلم الصم".
                  </p>
                </div>
                <div className="bg-slate-50 dark:bg-slate-800 p-8 rounded-3xl border border-slate-200 dark:border-slate-700">
-                 <h3 className="text-xl font-bold mb-4">المعادلة البنيوية للخريطة</h3>
+                 <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-4">المعادلة البنيوية للخريطة</h3>
                  <div className="flex flex-col items-center justify-center h-full gap-4">
                     <div className="flex items-center gap-2 w-full justify-center">
-                      <div className="px-4 py-2 bg-white dark:bg-slate-700 rounded-lg shadow font-bold">مفهوم (أ)</div>
+                      <div className="px-4 py-2 bg-white dark:bg-slate-700 text-slate-800 dark:text-white rounded-lg shadow font-bold">مفهوم (أ)</div>
                       <ArrowRight className="text-purple-500" />
                       <div className="px-3 py-1 bg-purple-100 text-purple-700 rounded text-sm font-bold">رابط (فعل)</div>
                       <ArrowRight className="text-purple-500" />
-                      <div className="px-4 py-2 bg-white dark:bg-slate-700 rounded-lg shadow font-bold">مفهوم (ب)</div>
+                      <div className="px-4 py-2 bg-white dark:bg-slate-700 text-slate-800 dark:text-white rounded-lg shadow font-bold">مفهوم (ب)</div>
                     </div>
                     <div className="text-sm text-slate-500">= قضية ذات معنى (Proposition)</div>
                  </div>
@@ -197,20 +197,20 @@ export default function DidacticModulePage() {
                      <h4 className="text-xl font-bold text-red-600 mb-4 text-center">الخريطة الذهنية (Mind Map)</h4>
                      <div className="space-y-2">
                         <span className="text-xs font-bold text-slate-400 uppercase">المؤسس</span>
-                        <p className="text-sm">توني بوزان (Tony Buzan). تركز على فيزيولوجيا الدماغ (الفص الأيمن: الخيال).</p>
+                        <p className="text-sm text-slate-600 dark:text-slate-300">توني بوزان (Tony Buzan). تركز على فيزيولوجيا الدماغ (الفص الأيمن: الخيال).</p>
                      </div>
                      <div className="space-y-2">
                         <span className="text-xs font-bold text-slate-400 uppercase">البنية</span>
-                        <p className="text-sm font-bold">إشعاعية (Radial)</p>
+                        <p className="text-sm font-bold text-slate-800 dark:text-white">إشعاعية (Radial)</p>
                         <p className="text-xs text-slate-500">فكرة مركزية واحدة تتفرع منها الأفكار في جميع الاتجاهات (مثل الشمس).</p>
                      </div>
                      <div className="space-y-2">
                         <span className="text-xs font-bold text-slate-400 uppercase">الروابط</span>
-                        <p className="text-sm">تداعي الأفكار (Association). لا يشترط وجود أفعال رابطة. تعتمد على الصور والألوان.</p>
+                        <p className="text-sm text-slate-600 dark:text-slate-300">تداعي الأفكار (Association). لا يشترط وجود أفعال رابطة. تعتمد على الصور والألوان.</p>
                      </div>
                      <div className="space-y-2">
                         <span className="text-xs font-bold text-slate-400 uppercase">الهدف</span>
-                        <p className="text-sm">العصف الذهني، الإبداع، تدوين الملاحظات.</p>
+                        <p className="text-sm text-slate-600 dark:text-slate-300">العصف الذهني، الإبداع، تدوين الملاحظات.</p>
                      </div>
                   </div>
 
@@ -220,20 +220,20 @@ export default function DidacticModulePage() {
                      <h4 className="text-xl font-bold text-purple-700 dark:text-purple-400 mb-4 text-center">الخريطة المفهومية (Concept Map)</h4>
                      <div className="space-y-2">
                         <span className="text-xs font-bold text-slate-400 uppercase">المؤسس</span>
-                        <p className="text-sm">جوزيف نوفاك (Novak). تركز على علم النفس المعرفي (البنية المعرفية).</p>
+                        <p className="text-sm text-slate-600 dark:text-slate-300">جوزيف نوفاك (Novak). تركز على علم النفس المعرفي (البنية المعرفية).</p>
                      </div>
                      <div className="space-y-2">
                         <span className="text-xs font-bold text-slate-400 uppercase">البنية</span>
-                        <p className="text-sm font-bold">هرمية (Hierarchical)</p>
+                        <p className="text-sm font-bold text-slate-800 dark:text-white">هرمية (Hierarchical)</p>
                         <p className="text-xs text-slate-500">من المفهوم الأكثر شمولية (في الأعلى) إلى الأكثر خصوصية (في الأسفل).</p>
                      </div>
                      <div className="space-y-2">
                         <span className="text-xs font-bold text-slate-400 uppercase">الروابط</span>
-                        <p className="text-sm">منطقية (Logical). <span className="underline decoration-purple-400">يجب</span> وجود كلمات ربط (أفعال) لتكوين جمل مفيدة.</p>
+                        <p className="text-sm text-slate-600 dark:text-slate-300">منطقية (Logical). <span className="underline decoration-purple-400">يجب</span> وجود كلمات ربط (أفعال) لتكوين جمل مفيدة.</p>
                      </div>
                      <div className="space-y-2">
                         <span className="text-xs font-bold text-slate-400 uppercase">الهدف</span>
-                        <p className="text-sm">تنظيم المعرفة، التقويم، تشخيص التمثلات الخاطئة.</p>
+                        <p className="text-sm text-slate-600 dark:text-slate-300">تنظيم المعرفة، التقويم، تشخيص التمثلات الخاطئة.</p>
                      </div>
                   </div>
                </div>
@@ -255,7 +255,7 @@ export default function DidacticModulePage() {
           </div>
         )}
 
-        {/* ================= SECTION 3: DIDACTIC MEANS (ADDED DEFINITION) ================= */}
+        {/* ================= SECTION 3: DIDACTIC MEANS ================= */}
         {activeSection === 'didacticMeans' && (
           <div className="space-y-16 animate-fade-in">
             <SectionHeader 
@@ -265,7 +265,7 @@ export default function DidacticModulePage() {
               colorClass="bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300"
             />
 
-            {/* 1. Definition Section (NEW) */}
+            {/* 1. Definition Section */}
             <div className="grid md:grid-cols-2 gap-8">
                <div className="bg-teal-600 text-white p-8 rounded-3xl relative overflow-hidden shadow-xl">
                   <div className="absolute -right-10 -top-10 bg-white/10 w-40 h-40 rounded-full blur-3xl"></div>
@@ -300,7 +300,7 @@ export default function DidacticModulePage() {
 
             {/* 2. Function & Role */}
             <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-sm border-l-8 border-teal-500">
-               <h3 className="text-2xl font-bold mb-4">الدور الوظيفي في الابتدائي</h3>
+               <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">الدور الوظيفي في الابتدائي</h3>
                <p className="text-gray-600 dark:text-slate-300 leading-8">
                  الطفل في المرحلة الابتدائية (7-12 سنة) يمر بمرحلة <strong>العمليات المحسوسة</strong> (بياجيه). لذلك، فإن الوسيلة الديدكتيكية ليست خياراً كمالياً بل ضرورة حتمية لنقل المعرفة من مستواها المجرد إلى مستوى ملموس يدركه الطفل بحواسه.
                </p>
@@ -374,8 +374,8 @@ function ExpandedConceptMap() {
             <div className="mt-4 p-3 bg-green-50 dark:bg-green-900/20 rounded-xl text-center w-3/4">
                <span className="block text-sm font-bold text-green-800 dark:text-green-300">العشب / النبات</span>
                <div className="mt-2 flex justify-center gap-2">
-                  <span className="text-xs bg-white dark:bg-slate-800 px-2 py-1 rounded shadow-sm">أرنب</span>
-                  <span className="text-xs bg-white dark:bg-slate-800 px-2 py-1 rounded shadow-sm">بقرة</span>
+                  <span className="text-xs bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-2 py-1 rounded shadow-sm">أرنب</span>
+                  <span className="text-xs bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-2 py-1 rounded shadow-sm">بقرة</span>
                </div>
             </div>
          </div>
@@ -389,8 +389,8 @@ function ExpandedConceptMap() {
             <div className="mt-4 p-3 bg-orange-50 dark:bg-orange-900/20 rounded-xl text-center w-3/4">
                <span className="block text-sm font-bold text-orange-800 dark:text-orange-300">كل شيء (نبات+لحم)</span>
                <div className="mt-2 flex justify-center gap-2">
-                  <span className="text-xs bg-white dark:bg-slate-800 px-2 py-1 rounded shadow-sm">دب</span>
-                  <span className="text-xs bg-white dark:bg-slate-800 px-2 py-1 rounded shadow-sm">إنسان</span>
+                  <span className="text-xs bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-2 py-1 rounded shadow-sm">دب</span>
+                  <span className="text-xs bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-2 py-1 rounded shadow-sm">إنسان</span>
                </div>
             </div>
          </div>
@@ -404,8 +404,8 @@ function ExpandedConceptMap() {
             <div className="mt-4 p-3 bg-red-50 dark:bg-red-900/20 rounded-xl text-center w-3/4">
                <span className="block text-sm font-bold text-red-800 dark:text-red-300">الفرائس (اللحم)</span>
                <div className="mt-2 flex justify-center gap-2">
-                  <span className="text-xs bg-white dark:bg-slate-800 px-2 py-1 rounded shadow-sm">أسد</span>
-                  <span className="text-xs bg-white dark:bg-slate-800 px-2 py-1 rounded shadow-sm">نمر</span>
+                  <span className="text-xs bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-2 py-1 rounded shadow-sm">أسد</span>
+                  <span className="text-xs bg-white dark:bg-slate-800 text-slate-600 dark:text-slate-300 px-2 py-1 rounded shadow-sm">نمر</span>
                </div>
             </div>
          </div>
@@ -448,31 +448,31 @@ function PrimaryDidacticScenarios() {
   return (
     <div className="bg-white dark:bg-slate-900 border border-teal-100 dark:border-teal-900/30 rounded-3xl overflow-hidden shadow-lg flex flex-col md:flex-row min-h-[350px]">
       <div className="md:w-1/3 bg-slate-50 dark:bg-slate-950 p-6 flex flex-col gap-4 border-l dark:border-slate-800">
-        <button onClick={() => setActiveScenario('math')} className={`flex items-center gap-3 p-4 rounded-xl transition-all ${activeScenario === 'math' ? 'bg-white shadow-md border-r-4 border-blue-500' : 'hover:bg-slate-200'}`}>
-          <div className="bg-blue-100 p-2 rounded-lg text-blue-600"><Split size={20}/></div>
+        <button onClick={() => setActiveScenario('math')} className={`flex items-center gap-3 p-4 rounded-xl transition-all ${activeScenario === 'math' ? 'bg-white dark:bg-slate-800 shadow-md border-r-4 border-blue-500' : 'hover:bg-slate-200 dark:hover:bg-slate-900'}`}>
+          <div className="bg-blue-100 dark:bg-blue-900/40 p-2 rounded-lg text-blue-600 dark:text-blue-400"><Split size={20}/></div>
           <div className="text-right">
-             <span className="block font-bold text-slate-800 text-sm">الرياضيات</span>
-             <span className="text-xs text-slate-500">الكسور</span>
+             <span className="block font-bold text-slate-800 dark:text-slate-200 text-sm">الرياضيات</span>
+             <span className="text-xs text-slate-500 dark:text-slate-400">الكسور</span>
           </div>
         </button>
-        <button onClick={() => setActiveScenario('science')} className={`flex items-center gap-3 p-4 rounded-xl transition-all ${activeScenario === 'science' ? 'bg-white shadow-md border-r-4 border-red-500' : 'hover:bg-slate-200'}`}>
-          <div className="bg-red-100 p-2 rounded-lg text-red-600"><FlaskConical size={20}/></div>
+        <button onClick={() => setActiveScenario('science')} className={`flex items-center gap-3 p-4 rounded-xl transition-all ${activeScenario === 'science' ? 'bg-white dark:bg-slate-800 shadow-md border-r-4 border-red-500' : 'hover:bg-slate-200 dark:hover:bg-slate-900'}`}>
+          <div className="bg-red-100 dark:bg-red-900/40 p-2 rounded-lg text-red-600 dark:text-red-400"><FlaskConical size={20}/></div>
           <div className="text-right">
-             <span className="block font-bold text-slate-800 text-sm">النشاط العلمي</span>
-             <span className="text-xs text-slate-500">حالات المادة</span>
+             <span className="block font-bold text-slate-800 dark:text-slate-200 text-sm">النشاط العلمي</span>
+             <span className="text-xs text-slate-500 dark:text-slate-400">حالات المادة</span>
           </div>
         </button>
-        <button onClick={() => setActiveScenario('geo')} className={`flex items-center gap-3 p-4 rounded-xl transition-all ${activeScenario === 'geo' ? 'bg-white shadow-md border-r-4 border-green-500' : 'hover:bg-slate-200'}`}>
-          <div className="bg-green-100 p-2 rounded-lg text-green-600"><Globe size={20}/></div>
+        <button onClick={() => setActiveScenario('geo')} className={`flex items-center gap-3 p-4 rounded-xl transition-all ${activeScenario === 'geo' ? 'bg-white dark:bg-slate-800 shadow-md border-r-4 border-green-500' : 'hover:bg-slate-200 dark:hover:bg-slate-900'}`}>
+          <div className="bg-green-100 dark:bg-green-900/40 p-2 rounded-lg text-green-600 dark:text-green-400"><Globe size={20}/></div>
           <div className="text-right">
-             <span className="block font-bold text-slate-800 text-sm">الجغرافيا</span>
-             <span className="text-xs text-slate-500">الاتجاهات</span>
+             <span className="block font-bold text-slate-800 dark:text-slate-200 text-sm">الجغرافيا</span>
+             <span className="text-xs text-slate-500 dark:text-slate-400">الاتجاهات</span>
           </div>
         </button>
       </div>
       
       <div className="flex-1 p-8 flex flex-col justify-center animate-in fade-in zoom-in-95 duration-300">
-        <div className="inline-block bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full text-xs font-bold text-slate-500 mb-4 w-fit">{current.subject}</div>
+        <div className="inline-block bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full text-xs font-bold text-slate-500 dark:text-slate-400 mb-4 w-fit">{current.subject}</div>
         <h3 className="text-2xl font-bold mb-6 text-slate-800 dark:text-white flex items-center gap-2">
            {current.icon} {current.title}
         </h3>
@@ -513,9 +513,9 @@ function TranspositionStep({ title, sub, icon, step, color }: any) {
   return (
     <div className="flex flex-col items-center text-center relative z-10 flex-1 min-w-[150px]">
       <div className={`w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg mb-4 ${color}`}>{icon}</div>
-      <div className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-white border flex items-center justify-center font-bold text-xs">{step}</div>
+      <div className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-white border flex items-center justify-center font-bold text-xs text-slate-900">{step}</div>
       <h4 className="font-bold text-gray-900 dark:text-white">{title}</h4>
-      <span className="text-xs font-mono text-blue-600 block">{sub}</span>
+      <span className="text-xs font-mono text-blue-600 dark:text-blue-400 block">{sub}</span>
     </div>
   );
 }
