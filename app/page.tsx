@@ -23,7 +23,16 @@ import {
   Droplets,
   Sun,
   Sprout,
-  Flower
+  Flower,
+  Microscope,
+  Globe,
+  MonitorPlay,
+  Zap,
+  FlaskConical,
+  Scale,
+  AlertTriangle,
+  Target,
+  MousePointerClick
 } from 'lucide-react';
 
 // ------------------- TYPES -------------------
@@ -263,7 +272,6 @@ export default function DidacticModulePage() {
                  </p>
                </div>
                
-               {/* New Simple Plant Component */}
                <SimpleConceptMap />
             </div>
 
@@ -280,46 +288,113 @@ export default function DidacticModulePage() {
           </section>
         )}
 
-        {/* ================= SECTION 3: DIDACTIC MEANS ================= */}
+        {/* ================= SECTION 3: DIDACTIC MEANS (DEEP DIVE) ================= */}
         {activeSection === 'didacticMeans' && (
-          <section className="animate-in fade-in slide-in-from-bottom-4 duration-500 space-y-12">
+          <section className="animate-in fade-in slide-in-from-bottom-4 duration-500 space-y-16">
+            
+            {/* 1. Header */}
             <SectionHeader 
               title="الوسائل الديدكتيكية (Les moyens didactiques)" 
-              subtitle="الدعامات والأدوات الميسرة للتعليم والتعلم"
+              subtitle="هندسة الأدوات: من الدعامات المادية إلى الوساطة الرقمية"
               icon={<Box className="text-teal-600" size={32} />}
               colorClass="bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300"
             />
-            <div className="grid md:grid-cols-2 gap-10">
-              <div className="space-y-8">
-                <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-sm border-l-8 border-teal-500">
-                  <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-4">المفهوم الشامل</h3>
-                  <p className="text-gray-600 dark:text-slate-300 leading-relaxed text-lg text-justify">
-                    هي جميع الحوامل (Supports) المادية أو الرقمية، والأدوات المخبرية التي يوظفها المدرس. ليست "كماليات"، بل هي <strong>جزء عضوي</strong> من استراتيجية التدريس.
+
+            {/* 2. The Concept (Bridge Metaphor) */}
+            <div className="grid md:grid-cols-2 gap-8 items-center">
+               <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-sm border-r-4 border-teal-500">
+                  <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">المفهوم الجوهري</h3>
+                  <p className="text-gray-600 dark:text-slate-300 leading-8 text-justify">
+                    الوسيلة الديدكتيكية ليست مجرد "أداة إيضاح"، بل هي <strong>وسيط بيداغوجي</strong> (Médiateur) وظيفته تقليص المسافة بين <span className="text-teal-600 dark:text-teal-400 font-bold">المتعلم</span> (بتمثلاته وقدراته) وبين <span className="text-teal-600 dark:text-teal-400 font-bold">المعرفة</span> (بتجريدها وتعقيدها). 
+                    وهي تشمل كل ما يوظفه المدرس لهندسة مواقف التعلم، سواء كان مادياً (مجهر) أو رقمياً (برمجية) أو رمزياً (مبيان).
                   </p>
-                </div>
-                <div className="bg-teal-50 dark:bg-teal-900/20 rounded-3xl p-8 border border-teal-100 dark:border-teal-900">
-                   <h3 className="text-lg font-bold text-teal-900 dark:text-teal-300 mb-6 flex items-center gap-2"><Layers size={20} /> الوظائف البيداغوجية</h3>
-                   <div className="grid grid-cols-1 gap-4">
-                      <FunctionCard icon={<Activity />} title="وظيفة التحفيز" desc="إثارة فضول المتعلم وخلق الدافعية." />
-                      <FunctionCard icon={<Eye />} title="وظيفة النمذجة" desc="تقريب الظواهر المعقدة والمجردة." />
-                      <FunctionCard icon={<MousePointer2 />} title="وظيفة أداتية" desc="تدريب المتعلم على المهارات الحس-حركية." />
-                      <FunctionCard icon={<ListChecks />} title="وظيفة التقويم" desc="الكشف عن تعثرات وتمثلات المتعلمين." />
+               </div>
+               
+               {/* Bridge Visual */}
+               <div className="relative h-64 bg-slate-100 dark:bg-slate-800 rounded-3xl overflow-hidden flex items-center justify-center p-6 border border-slate-200 dark:border-slate-700">
+                  <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#14b8a6_1px,transparent_1px)] [background-size:16px_16px]"></div>
+                  <div className="flex items-center gap-4 relative z-10 w-full justify-between max-w-md">
+                     <div className="text-center">
+                        <div className="bg-slate-200 dark:bg-slate-700 p-4 rounded-full mb-2"><Brain size={32} className="text-slate-600 dark:text-slate-300"/></div>
+                        <span className="font-bold text-sm">المتعلم</span>
+                     </div>
+                     <div className="flex-1 flex flex-col items-center">
+                        <div className="h-1 w-full bg-gradient-to-r from-slate-300 via-teal-500 to-slate-300 rounded-full relative">
+                           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-teal-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg flex items-center gap-2">
+                             <Box size={12} /> الوسيلة
+                           </div>
+                        </div>
+                        <span className="text-xs text-teal-600 dark:text-teal-400 mt-2 font-medium">جسر النقل الديدكتيكي</span>
+                     </div>
+                     <div className="text-center">
+                        <div className="bg-slate-200 dark:bg-slate-700 p-4 rounded-full mb-2"><BookOpen size={32} className="text-slate-600 dark:text-slate-300"/></div>
+                        <span className="font-bold text-sm">المعرفة</span>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+            {/* 3. Classification (Types of Means) */}
+            <div className="space-y-6">
+               <h3 className="text-xl font-bold text-gray-800 dark:text-white flex items-center gap-2">
+                 <Layers className="text-teal-600" />
+                 أنواع الوسائل (تدرج من المحسوس إلى المجرد)
+               </h3>
+               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  <TypeCard 
+                    title="الوسائل الواقعية" 
+                    sub="(Objets Réels)"
+                    desc="الأشياء الحقيقية في طبيعتها دون تعديل."
+                    examples={['عينات صخور', 'نباتات حية', 'أدوات مخبرية']}
+                    icon={<FlaskConical size={24} />}
+                    color="bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700"
+                  />
+                  <TypeCard 
+                    title="الوسائل البديلة/النماذج" 
+                    sub="(Modèles & Maquettes)"
+                    desc="مجسمات تحاكي الواقع (عندما يصعب إحضار الأصل)."
+                    examples={['مجسم الكرة الأرضية', 'هيكل عظمي', 'نموذج الذرة']}
+                    icon={<Globe size={24} />}
+                    color="bg-teal-100 dark:bg-teal-900/30 text-teal-700"
+                  />
+                  <TypeCard 
+                    title="الوسائل التكنولوجية" 
+                    sub="(TICE)"
+                    desc="أدوات المحاكاة والعرض الرقمي التفاعلي."
+                    examples={['المحاكاة (Phet)', 'الواقع المعزز', 'الفيديوهات']}
+                    icon={<MonitorPlay size={24} />}
+                    color="bg-cyan-100 dark:bg-cyan-900/30 text-cyan-700"
+                  />
+               </div>
+            </div>
+
+            {/* 4. Criteria of Selection */}
+            <div className="bg-slate-900 text-slate-200 rounded-3xl p-8 relative overflow-hidden">
+                <div className="absolute top-0 right-0 w-64 h-64 bg-teal-500 blur-[100px] opacity-20"></div>
+                <div className="relative z-10">
+                   <h3 className="text-2xl font-bold text-white mb-8 flex items-center gap-3">
+                     <Target className="text-teal-400" />
+                     شبكة معايير اختيار الوسيلة
+                   </h3>
+                   <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                      <CriteriaMetric title="الملاءمة (Pertinence)" desc="هل تخدم الهدف التعلمي مباشرة أم أنها مشتتة للانتباه؟" icon={<CheckCircle />} />
+                      <CriteriaMetric title="الأمان (Sécurité)" desc="خلوها من المخاطر (مواد كيميائية، كهرباء) وتناسبها مع سن المتعلم." icon={<ShieldCheck />} />
+                      <CriteriaMetric title="الاقتصاد (Coût)" desc="ألا تتطلب وقتاً طويلاً للإعداد على حساب زمن التعلم." icon={<Scale />} />
+                      <CriteriaMetric title="القابلية (Validité)" desc="أن تكون المعلومة التي تقدمها صحيحة علمياً ومحينة." icon={<Brain />} />
                    </div>
                 </div>
-              </div>
-              <div className="h-full">
-                <div className="bg-slate-800 text-white rounded-3xl p-8 h-full flex flex-col relative overflow-hidden shadow-2xl">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-teal-500 blur-[80px] opacity-20"></div>
-                  <h3 className="text-2xl font-bold mb-8 flex items-center gap-3 relative z-10"><ShieldCheck className="text-teal-400" size={28} /> شبكة معايير الاختيار</h3>
-                  <div className="space-y-5 relative z-10 flex-grow">
-                    <CriteriaItem title="الملاءمة" question="هل تخدم الهدف التعلمي مباشرة؟" />
-                    <CriteriaItem title="المستوى" question="هل تناسب القدرات الإدراكية للمتعلمين؟" />
-                    <CriteriaItem title="الأمان" question="هل تخلو الوسيلة من أي خطر؟" />
-                    <CriteriaItem title="المقروئية" question="هل الوسيلة واضحة للجميع (صوت، صورة)؟" />
-                  </div>
-                </div>
-              </div>
             </div>
+
+            {/* 5. PRACTICAL EXAMPLES (Interactive Scenarios) */}
+            <div className="space-y-8">
+               <div className="text-center mb-8">
+                 <h3 className="text-3xl font-bold text-gray-800 dark:text-white">أمثلة تطبيقية: القيمة المضافة</h3>
+                 <p className="text-gray-500 dark:text-gray-400">كيف تغير الوسيلة الديدكتيكية مسار بناء الدرس؟</p>
+               </div>
+               
+               <DidacticScenarios />
+            </div>
+
           </section>
         )}
       </main>
@@ -334,7 +409,7 @@ export default function DidacticModulePage() {
   );
 }
 
-// =================== NEW SIMPLE CONCEPT MAP COMPONENT (TREE) ===================
+// =================== COMPONENT: SIMPLE CONCEPT MAP (TREE) ===================
 
 function SimpleConceptMap() {
   const [highlight, setHighlight] = useState<string | null>(null);
@@ -414,6 +489,110 @@ function SimpleConceptMap() {
   );
 }
 
+// =================== COMPONENT: DIDACTIC SCENARIOS ===================
+
+function DidacticScenarios() {
+  const [activeScenario, setActiveScenario] = useState('electricity');
+
+  const scenarios = {
+    electricity: {
+      title: "الفيزياء: التيار الكهربائي",
+      problem: "الكهرباء مفهوم مجرد (حركة الإلكترونات لا تُرى بالعين المجردة)، مما يصعب على المتعلم فهم قوانين الدارة.",
+      solution: "استخدام برمجية محاكاة (مثل PhET) أو تمثيل مبياني.",
+      value: "نمذجة",
+      details: "تحويل المجرد إلى محسوس: تسمح المحاكاة برؤية الشحنات وهي تتحرك، مما يسهل بناء النموذج الذهني للتيار."
+    },
+    geo: {
+      title: "الجغرافيا: التضاريس",
+      problem: "صعوبة تخيل الأبعاد الثلاثة (الارتفاع والانحدار) من خلال خريطة مسطحة (2D).",
+      solution: "استخدام الرمل الرطب (مجسم) أو برنامج Google Earth (3D).",
+      value: "تمثيل",
+      details: "الانتقال من التسطيح إلى التجسيم: يساعد المتعلم على إدراك مفهوم 'الارتفاع' و'خطوط التسوية' بشكل ملموس."
+    },
+    bio: {
+      title: "البيولوجيا: الخلية",
+      problem: "الخلية بنية مجهرية دقيقة جداً لا يمكن ملاحظة مكوناتها بالعين.",
+      solution: "المجهر الضوئي (Microscope) + تحضير عينات طرية.",
+      value: "ملاحظة",
+      details: "تنمية المهارة الحس-حركية (Manipuler): تعلم ضبط العدسات ورؤية العالم الخفي، مما يرسخ حقيقة أن الكائن الحي يتكون من خلايا."
+    }
+  };
+
+  const current = scenarios[activeScenario as keyof typeof scenarios];
+
+  return (
+    <div className="bg-white dark:bg-slate-900 border border-teal-100 dark:border-teal-900/30 rounded-3xl overflow-hidden shadow-lg flex flex-col md:flex-row min-h-[400px]">
+      
+      {/* Sidebar / Menu */}
+      <div className="md:w-1/3 bg-slate-50 dark:bg-slate-950 p-6 flex flex-col gap-4 border-l dark:border-slate-800">
+        <h4 className="font-bold text-gray-500 dark:text-gray-400 mb-2 uppercase text-xs tracking-wider">اختر المادة الدراسية</h4>
+        
+        <button onClick={() => setActiveScenario('electricity')} className={`flex items-center gap-3 p-4 rounded-xl transition-all ${activeScenario === 'electricity' ? 'bg-white dark:bg-slate-800 shadow-md border-r-4 border-yellow-400' : 'hover:bg-slate-200 dark:hover:bg-slate-800/50'}`}>
+          <div className="p-2 bg-yellow-100 dark:bg-yellow-900/20 text-yellow-600 rounded-lg"><Zap size={20} /></div>
+          <div className="text-right">
+            <span className="block font-bold text-gray-800 dark:text-gray-200">الفيزياء</span>
+            <span className="text-xs text-gray-500">التيار الكهربائي</span>
+          </div>
+        </button>
+
+        <button onClick={() => setActiveScenario('geo')} className={`flex items-center gap-3 p-4 rounded-xl transition-all ${activeScenario === 'geo' ? 'bg-white dark:bg-slate-800 shadow-md border-r-4 border-green-500' : 'hover:bg-slate-200 dark:hover:bg-slate-800/50'}`}>
+          <div className="p-2 bg-green-100 dark:bg-green-900/20 text-green-600 rounded-lg"><Globe size={20} /></div>
+          <div className="text-right">
+            <span className="block font-bold text-gray-800 dark:text-gray-200">الجغرافيا</span>
+            <span className="text-xs text-gray-500">تمثيل التضاريس</span>
+          </div>
+        </button>
+
+        <button onClick={() => setActiveScenario('bio')} className={`flex items-center gap-3 p-4 rounded-xl transition-all ${activeScenario === 'bio' ? 'bg-white dark:bg-slate-800 shadow-md border-r-4 border-red-500' : 'hover:bg-slate-200 dark:hover:bg-slate-800/50'}`}>
+          <div className="p-2 bg-red-100 dark:bg-red-900/20 text-red-600 rounded-lg"><Microscope size={20} /></div>
+          <div className="text-right">
+            <span className="block font-bold text-gray-800 dark:text-gray-200">علوم الحياة</span>
+            <span className="text-xs text-gray-500">ملاحظة الخلية</span>
+          </div>
+        </button>
+      </div>
+
+      {/* Content Area */}
+      <div className="flex-1 p-8 md:p-10 flex flex-col justify-center animate-in fade-in duration-300">
+        <div className="flex items-center gap-3 mb-6">
+           <span className="px-3 py-1 bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300 text-xs font-bold rounded-full border border-teal-200 dark:border-teal-800">دراسة حالة</span>
+           <h3 className="text-2xl font-bold text-gray-800 dark:text-white">{current.title}</h3>
+        </div>
+
+        <div className="space-y-6">
+           {/* Problem */}
+           <div className="flex gap-4">
+             <div className="mt-1 min-w-[24px]"><AlertTriangle className="text-orange-500" size={24} /></div>
+             <div>
+               <h5 className="font-bold text-gray-700 dark:text-gray-300">العائق الديدكتيكي (المشكلة):</h5>
+               <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">{current.problem}</p>
+             </div>
+           </div>
+
+           {/* Solution */}
+           <div className="flex gap-4">
+             <div className="mt-1 min-w-[24px]"><Box className="text-teal-500" size={24} /></div>
+             <div>
+               <h5 className="font-bold text-gray-700 dark:text-gray-300">الوسيلة المقترحة:</h5>
+               <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">{current.solution}</p>
+             </div>
+           </div>
+
+           {/* Value Added */}
+           <div className="bg-teal-50 dark:bg-teal-900/20 p-5 rounded-2xl border border-teal-100 dark:border-teal-900 mt-4">
+              <div className="flex items-center gap-2 mb-2 text-teal-700 dark:text-teal-300 font-bold">
+                 <MousePointerClick size={18} /> 
+                 <span>الوظيفة البيداغوجية: {current.value}</span>
+              </div>
+              <p className="text-gray-700 dark:text-slate-300 text-sm">{current.details}</p>
+           </div>
+        </div>
+      </div>
+
+    </div>
+  );
+}
+
 // =================== HELPER COMPONENTS ===================
 
 function NavButton({ label, icon, isActive, onClick, activeColor }: any) {
@@ -448,3 +627,5 @@ function ComparisonPoint({ text, icon, highlight }: any) { return <li className=
 function ConstructionStep({ num, title, desc, highlight }: any) { return <div className={`flex items-center gap-4 p-4 rounded-xl border transition-all ${highlight ? 'bg-purple-50 dark:bg-purple-900/20 border-purple-200 dark:border-purple-800' : 'bg-transparent border-transparent hover:bg-slate-50 dark:hover:bg-slate-800/50'}`}><div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold shrink-0 ${highlight ? 'bg-purple-600 text-white' : 'bg-slate-200 dark:bg-slate-800 text-slate-500'}`}>{num}</div><div><h5 className="font-bold text-gray-800 dark:text-white mb-1">{title}</h5><p className="text-sm text-gray-600 dark:text-slate-400">{desc}</p></div></div>; }
 function FunctionCard({ icon, title, desc }: any) { return <div className="flex items-center gap-4 bg-white dark:bg-slate-800 p-4 rounded-2xl border border-teal-50 dark:border-teal-900 shadow-sm hover:border-teal-300 hover:shadow-md transition-all"><div className="text-teal-600 bg-teal-50 dark:bg-teal-900/30 p-3 rounded-xl">{icon}</div><div><strong className="block text-gray-800 dark:text-white text-base mb-1">{title}</strong><span className="text-xs text-gray-500 dark:text-gray-400 leading-tight block">{desc}</span></div></div>; }
 function CriteriaItem({ title, question }: any) { return <div className="flex gap-4 p-4 rounded-xl bg-white/5 hover:bg-white/10 transition-colors border border-white/5 backdrop-blur-sm"><div className="mt-1 text-teal-400"><CheckCircle size={20} /></div><div><h4 className="font-bold text-white mb-1 text-base">{title}</h4><p className="text-slate-300 text-sm leading-relaxed font-light">{question}</p></div></div>; }
+function TypeCard({ title, sub, desc, examples, icon, color }: any) { return <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-100 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow group"><div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${color} group-hover:scale-110 transition-transform`}>{icon}</div><h4 className="font-bold text-gray-800 dark:text-white text-lg">{title}</h4><span className="text-xs text-gray-400 mb-3 block">{sub}</span><p className="text-sm text-gray-600 dark:text-gray-400 mb-4 h-12">{desc}</p><div className="space-y-2">{examples.map((ex: string, i: number) => (<div key={i} className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-800 p-2 rounded-lg"><div className="w-1.5 h-1.5 rounded-full bg-slate-300 dark:bg-slate-600"></div>{ex}</div>))}</div></div>; }
+function CriteriaMetric({ title, desc, icon }: any) { return <div className="bg-white/5 backdrop-blur-sm p-4 rounded-xl border border-white/10 hover:bg-white/10 transition-colors"><div className="text-teal-400 mb-3">{icon}</div><h4 className="font-bold text-white mb-2">{title}</h4><p className="text-xs text-slate-300 leading-relaxed opacity-80">{desc}</p></div>; }
