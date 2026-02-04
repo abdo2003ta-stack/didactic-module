@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
+import ThemeToggle from "@/components/ThemeToggle"; // زر الوضع الليلي
 import { 
   BookOpen, 
   Share2, 
@@ -26,8 +27,12 @@ export default function DidacticModulePage() {
   const [activeSection, setActiveSection] = useState<Section>('formulation');
 
   return (
-    <div className="min-h-screen bg-slate-50 font-sans text-slate-800 selection:bg-indigo-100 selection:text-indigo-900" dir="rtl">
+    // قمت بإضافة dark:bg-slate-950 ليدعم الوضع الليلي
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 font-sans text-slate-800 dark:text-slate-200 transition-colors duration-300" dir="rtl">
       
+      {/* ⭐ هنا أضفنا الزر ليظهر في الصفحة ⭐ */}
+      <ThemeToggle />
+
       {/* ================= HEADER ================= */}
       <header className="bg-gradient-to-br from-slate-900 via-indigo-900 to-blue-900 text-white shadow-2xl relative overflow-hidden">
         {/* خلفية زخرفية */}
@@ -88,27 +93,27 @@ export default function DidacticModulePage() {
 
             <div className="grid md:grid-cols-12 gap-8">
               {/* Definition Block */}
-              <div className="md:col-span-8 bg-white p-8 rounded-3xl shadow-sm border border-gray-100 relative overflow-hidden group hover:shadow-md transition-shadow">
+              <div className="md:col-span-8 bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-sm border border-gray-100 dark:border-slate-800 relative overflow-hidden group hover:shadow-md transition-shadow">
                 <div className="absolute top-0 right-0 w-2 h-full bg-blue-500"></div>
-                <h3 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3">
+                <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-6 flex items-center gap-3">
                   <Activity className="text-blue-500" />
                   ماهية النقل الديدكتيكي
                 </h3>
-                <p className="text-gray-600 leading-8 text-lg mb-8 text-justify">
+                <p className="text-gray-600 dark:text-slate-300 leading-8 text-lg mb-8 text-justify">
                   صياغة المفهوم هي عملية <strong>"إعادة بناء ديدكتيكية"</strong> للمعرفة. وتعرف بأنها السيرورة التي يتم بموجبها تحويل 
-                  <span className="bg-blue-50 text-blue-800 font-bold mx-1 px-2 py-0.5 rounded border border-blue-200">"المعرفة العالمة"</span> 
+                  <span className="bg-blue-50 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 font-bold mx-1 px-2 py-0.5 rounded border border-blue-200 dark:border-blue-800">"المعرفة العالمة"</span> 
                   (التي تتسم بالتجريد والتعقيد في المصادر الأكاديمية) إلى 
-                  <span className="bg-green-50 text-green-800 font-bold mx-1 px-2 py-0.5 rounded border border-green-200">"معرفة قابلة للتدريس"</span> 
+                  <span className="bg-green-50 dark:bg-green-900/30 text-green-800 dark:text-green-200 font-bold mx-1 px-2 py-0.5 rounded border border-green-200 dark:border-green-800">"معرفة قابلة للتدريس"</span> 
                   تتلاءم مع البنية المعرفية للمتعلم.
                 </p>
                 
-                <div className="bg-slate-50 p-6 rounded-2xl border border-slate-200 flex items-start gap-4">
-                  <div className="bg-amber-100 p-2 rounded-lg text-amber-600">
+                <div className="bg-slate-50 dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 flex items-start gap-4">
+                  <div className="bg-amber-100 dark:bg-amber-900/50 p-2 rounded-lg text-amber-600 dark:text-amber-400">
                      <Lightbulb size={24} />
                   </div>
                   <div>
-                    <h4 className="font-bold text-slate-800 mb-1">القاعدة الذهبية</h4>
-                    <p className="text-slate-600 text-sm">
+                    <h4 className="font-bold text-slate-800 dark:text-white mb-1">القاعدة الذهبية</h4>
+                    <p className="text-slate-600 dark:text-slate-300 text-sm">
                       يجب أن تحافظ الصياغة على <strong>الأمانة العلمية</strong> (عدم تحريف المعرفة) مع احترام <strong>المنطقة التقريبية للنمو</strong> للمتعلم (Vygotsky).
                     </p>
                   </div>
@@ -129,7 +134,7 @@ export default function DidacticModulePage() {
 
             {/* The 3 Levels Cards */}
             <div>
-              <h3 className="text-2xl font-bold text-gray-800 mb-8 flex items-center gap-3">
+              <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-8 flex items-center gap-3">
                 <Layers className="text-blue-600" />
                 سجلات صياغة المفهوم الثلاثة
               </h3>
@@ -147,16 +152,16 @@ export default function DidacticModulePage() {
                   subTitle="(Niveau de départ)"
                   desc="مجموع التمثلات (Représentations) والمفاهيم الأولية التي يحملها المتعلم قبل الدرس."
                   icon={<MousePointer2 size={24} className="text-blue-600" />}
-                  bgClass="bg-white border-blue-100"
-                  iconBg="bg-blue-100"
+                  bgClass="bg-white dark:bg-slate-900 border-blue-100 dark:border-blue-900"
+                  iconBg="bg-blue-100 dark:bg-blue-900"
                 />
                 <LevelCard 
                   title="المستوى المستهدف"
                   subTitle="(Niveau attendu)"
                   desc="التعريف الذي نسعى لترسيخه لدى المتعلم في نهاية الحصة (أثر مكتوب)."
                   icon={<CheckCircle size={24} className="text-green-600" />}
-                  bgClass="bg-white border-green-100"
-                  iconBg="bg-green-100"
+                  bgClass="bg-white dark:bg-slate-900 border-green-100 dark:border-green-900"
+                  iconBg="bg-green-100 dark:bg-green-900"
                 />
               </div>
             </div>
@@ -174,14 +179,14 @@ export default function DidacticModulePage() {
             />
 
             {/* Theory Intro */}
-            <div className="bg-purple-50 p-8 rounded-3xl border border-purple-100 shadow-sm">
+            <div className="bg-purple-50 dark:bg-purple-900/20 p-8 rounded-3xl border border-purple-100 dark:border-purple-900 shadow-sm">
               <div className="flex flex-col md:flex-row gap-6 items-start">
-                <div className="bg-white p-4 rounded-2xl shadow-sm text-purple-600 shrink-0">
+                <div className="bg-white dark:bg-slate-800 p-4 rounded-2xl shadow-sm text-purple-600 shrink-0">
                   <Brain size={40} />
                 </div>
                 <div>
-                  <h3 className="text-2xl font-bold text-purple-900 mb-3">التأصيل النظري: التعلم ذو المعنى</h3>
-                  <p className="text-purple-800 leading-8 text-lg text-justify">
+                  <h3 className="text-2xl font-bold text-purple-900 dark:text-purple-300 mb-3">التأصيل النظري: التعلم ذو المعنى</h3>
+                  <p className="text-purple-800 dark:text-purple-200 leading-8 text-lg text-justify">
                     تستند الخريطة المفهومية إلى نظرية <strong>أوزوبل (Ausubel)</strong> وجوزيف نوفاك. الفكرة الجوهرية هي أن التعلم الحقيقي يحدث عندما يتم ربط المفاهيم الجديدة بالمفاهيم الموجودة مسبقاً في البنية المعرفية للمتعلم، مما يضمن <strong>التخزين في الذاكرة بعيدة المدى</strong> وتجنب التعلم الآلي (الصم).
                   </p>
                 </div>
@@ -190,24 +195,24 @@ export default function DidacticModulePage() {
 
             {/* Comparison Table */}
             <div className="grid md:grid-cols-2 gap-8">
-              <div className="bg-white p-8 rounded-3xl shadow-sm border-t-4 border-red-400 group hover:-translate-y-1 transition-transform duration-300">
+              <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-sm border-t-4 border-red-400 group hover:-translate-y-1 transition-transform duration-300">
                 <div className="flex items-center justify-between mb-6 border-b border-red-100 pb-4">
-                  <h4 className="font-bold text-xl text-red-900">الخريطة الذهنية (Mind Map)</h4>
+                  <h4 className="font-bold text-xl text-red-900 dark:text-red-400">الخريطة الذهنية (Mind Map)</h4>
                   <span className="bg-red-50 text-red-600 text-xs font-bold px-3 py-1 rounded-full border border-red-100">توني بوزان</span>
                 </div>
-                <ul className="space-y-4">
+                <ul className="space-y-4 text-slate-700 dark:text-slate-300">
                   <ComparisonItem icon={<ArrowLeft size={18} className="text-red-400" />} text="بنية إشعاعية (مركز وأفرع)." />
                   <ComparisonItem icon={<ArrowLeft size={18} className="text-red-400" />} text="تعتمد التداعي الحر، الألوان والصور." />
                   <ComparisonItem icon={<ArrowLeft size={18} className="text-red-400" />} text="تخاطب الشق الأيمن (الإبداع والعاطفة)." />
                 </ul>
               </div>
 
-              <div className="bg-white p-8 rounded-3xl shadow-lg border-t-4 border-purple-600 group hover:-translate-y-1 transition-transform duration-300 transform scale-[1.02]">
+              <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-lg border-t-4 border-purple-600 group hover:-translate-y-1 transition-transform duration-300 transform scale-[1.02]">
                 <div className="flex items-center justify-between mb-6 border-b border-purple-100 pb-4">
-                  <h4 className="font-bold text-xl text-purple-900">الخريطة المفهومية (Concept Map)</h4>
+                  <h4 className="font-bold text-xl text-purple-900 dark:text-purple-400">الخريطة المفهومية (Concept Map)</h4>
                   <span className="bg-purple-50 text-purple-600 text-xs font-bold px-3 py-1 rounded-full border border-purple-100">جوزيف نوفاك</span>
                 </div>
-                <ul className="space-y-4">
+                <ul className="space-y-4 text-slate-700 dark:text-slate-300">
                   <ComparisonItem icon={<CheckCircle size={18} className="text-purple-600" />} text="بنية هرمية (من العام إلى الخاص) أو شبكية." bold />
                   <ComparisonItem icon={<CheckCircle size={18} className="text-purple-600" />} text="تعتمد العلاقات المنطقية والكلمات الرابطة." bold />
                   <ComparisonItem icon={<CheckCircle size={18} className="text-purple-600" />} text="تخاطب الشق الأيسر (التحليل والمنطق)." bold />
@@ -216,8 +221,8 @@ export default function DidacticModulePage() {
             </div>
 
             {/* PRACTICAL EXAMPLE SECTION (The Expansion) */}
-            <div className="mt-16 pt-8 border-t border-gray-200">
-               <h2 className="text-3xl font-bold text-gray-800 mb-8 text-center flex items-center justify-center gap-3">
+            <div className="mt-16 pt-8 border-t border-gray-200 dark:border-gray-800">
+               <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-8 text-center flex items-center justify-center gap-3">
                  <GitCommit className="text-purple-600" />
                  التطبيق العملي: كيف نبنيها؟
                </h2>
@@ -280,7 +285,6 @@ export default function DidacticModulePage() {
 
                       {/* Visual Cross Link Simulation (SVG) */}
                       <div className="hidden md:block absolute top-0 left-0 w-full h-full pointer-events-none">
-                         {/* Simple visual cue for cross-linking */}
                          <div className="absolute top-[280px] left-[30%] w-[40%] h-[20px] border-t-2 border-dotted border-purple-500/50 rounded-full"></div>
                          <div className="absolute top-[270px] left-1/2 -translate-x-1/2 bg-slate-800 px-2 text-[10px] text-purple-400 border border-purple-500/30 rounded">عملية التركيب الضوئي</div>
                       </div>
@@ -309,15 +313,15 @@ export default function DidacticModulePage() {
             <div className="grid md:grid-cols-2 gap-10">
               {/* Definition & Functions */}
               <div className="space-y-8">
-                <div className="bg-white p-8 rounded-3xl shadow-sm border-l-8 border-teal-500">
-                  <h3 className="text-xl font-bold text-gray-800 mb-4">المفهوم الشامل</h3>
-                  <p className="text-gray-600 leading-relaxed text-lg text-justify">
+                <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-sm border-l-8 border-teal-500">
+                  <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-4">المفهوم الشامل</h3>
+                  <p className="text-gray-600 dark:text-slate-300 leading-relaxed text-lg text-justify">
                     هي جميع الحوامل (Supports) المادية أو الرقمية، والأدوات المخبرية، والوضعيات التي يوظفها المدرس والمنهاج لتسهيل عملية التعلم. وهي ليست "كماليات" لتزيين الدرس، بل هي <strong>جزء عضوي</strong> من استراتيجية التدريس.
                   </p>
                 </div>
 
-                <div className="bg-teal-50 rounded-3xl p-8 border border-teal-100">
-                   <h3 className="text-lg font-bold text-teal-900 mb-6 flex items-center gap-2">
+                <div className="bg-teal-50 dark:bg-teal-900/20 rounded-3xl p-8 border border-teal-100 dark:border-teal-900">
+                   <h3 className="text-lg font-bold text-teal-900 dark:text-teal-300 mb-6 flex items-center gap-2">
                      <Layers size={20} />
                      الوظائف البيداغوجية المتقدمة
                    </h3>
@@ -379,7 +383,7 @@ export default function DidacticModulePage() {
             <BookOpen size={32} className="text-slate-600" />
           </div>
           <p className="mb-3 text-slate-300 font-medium">تم إعداد المحتوى بدقة علمية استناداً إلى المرجعيات الرسمية لمراكز مهن التربية والتكوين</p>
-          <p className="text-sm opacity-60">© {new Date().getFullYear()} بوابة الديدكتيك الرقمية. جميع الحقوق محفوظة.</p>
+          <p className="text-sm opacity-60">©️ {new Date().getFullYear()} بوابة الديدكتيك الرقمية. جميع الحقوق محفوظة.</p>
         </div>
       </footer>
     </div>
@@ -409,13 +413,13 @@ function NavButton({ label, icon, isActive, onClick, activeColor }: any) {
 
 function SectionHeader({ title, subtitle, icon, colorClass }: any) {
   return (
-    <div className="flex flex-col md:flex-row items-start md:items-center gap-5 border-b pb-8 border-gray-200">
+    <div className="flex flex-col md:flex-row items-start md:items-center gap-5 border-b pb-8 border-gray-200 dark:border-gray-800">
       <div className={`p-5 rounded-2xl shadow-inner ${colorClass}`}>
         {icon}
       </div>
       <div>
-        <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight">{title}</h2>
-        {subtitle && <p className="text-gray-500 mt-2 text-xl font-light">{subtitle}</p>}
+        <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 dark:text-white tracking-tight">{title}</h2>
+        {subtitle && <p className="text-gray-500 dark:text-gray-400 mt-2 text-xl font-light">{subtitle}</p>}
       </div>
     </div>
   );
@@ -423,13 +427,13 @@ function SectionHeader({ title, subtitle, icon, colorClass }: any) {
 
 function LevelCard({ title, subTitle, desc, icon, bgClass, iconBg }: any) {
   return (
-    <div className={`p-8 rounded-3xl shadow-sm border border-gray-100 transition-all hover:shadow-lg hover:-translate-y-1 ${bgClass}`}>
+    <div className={`p-8 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-800 transition-all hover:shadow-lg hover:-translate-y-1 ${bgClass}`}>
       <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 shadow-sm ${iconBg || 'bg-white/10'}`}>
         {icon}
       </div>
-      <h4 className="font-bold text-xl mb-1">{title}</h4>
-      <span className="text-xs font-mono opacity-60 block mb-4 tracking-wider">{subTitle}</span>
-      <p className="text-sm leading-relaxed opacity-80">{desc}</p>
+      <h4 className="font-bold text-xl mb-1 text-inherit">{title}</h4>
+      <span className="text-xs font-mono opacity-60 block mb-4 tracking-wider text-inherit">{subTitle}</span>
+      <p className="text-sm leading-relaxed opacity-80 text-inherit">{desc}</p>
     </div>
   );
 }
@@ -451,19 +455,19 @@ function StepItem({ number, title, desc, color }: any) {
 function ComparisonItem({ icon, text, bold }: any) {
   return (
     <li className="flex items-start gap-3">
-      <div className="mt-1 shrink-0 bg-slate-50 p-1 rounded-full">{icon}</div>
-      <span className={`text-gray-700 text-sm leading-relaxed ${bold ? 'font-semibold' : ''}`}>{text}</span>
+      <div className="mt-1 shrink-0 bg-slate-50 dark:bg-slate-800 p-1 rounded-full">{icon}</div>
+      <span className={`text-gray-700 dark:text-slate-300 text-sm leading-relaxed ${bold ? 'font-semibold' : ''}`}>{text}</span>
     </li>
   );
 }
 
 function FunctionCard({ icon, title, desc }: any) {
   return (
-    <div className="flex items-center gap-4 bg-white p-4 rounded-2xl border border-teal-50 shadow-sm hover:border-teal-300 hover:shadow-md transition-all">
-      <div className="text-teal-600 bg-teal-50 p-3 rounded-xl">{icon}</div>
+    <div className="flex items-center gap-4 bg-white dark:bg-slate-800 p-4 rounded-2xl border border-teal-50 dark:border-teal-900 shadow-sm hover:border-teal-300 hover:shadow-md transition-all">
+      <div className="text-teal-600 bg-teal-50 dark:bg-teal-900/30 p-3 rounded-xl">{icon}</div>
       <div>
-        <strong className="block text-gray-800 text-base mb-1">{title}</strong>
-        <span className="text-xs text-gray-500 leading-tight block">{desc}</span>
+        <strong className="block text-gray-800 dark:text-white text-base mb-1">{title}</strong>
+        <span className="text-xs text-gray-500 dark:text-gray-400 leading-tight block">{desc}</span>
       </div>
     </div>
   );
@@ -483,12 +487,12 @@ function CriteriaItem({ title, question }: any) {
 
 function MethodStep({ num, title, desc, highlight }: any) {
   return (
-    <div className={`p-4 rounded-2xl border ${highlight ? 'bg-purple-600 text-white border-purple-600' : 'bg-white border-gray-100'} shadow-sm text-center`}>
-      <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm mx-auto mb-2 ${highlight ? 'bg-white text-purple-600' : 'bg-purple-100 text-purple-700'}`}>
+    <div className={`p-4 rounded-2xl border ${highlight ? 'bg-purple-600 text-white border-purple-600' : 'bg-white dark:bg-slate-800 border-gray-100 dark:border-gray-700'} shadow-sm text-center`}>
+      <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm mx-auto mb-2 ${highlight ? 'bg-white text-purple-600' : 'bg-purple-100 dark:bg-purple-900 text-purple-700 dark:text-purple-300'}`}>
         {num}
       </div>
-      <h5 className="font-bold mb-1">{title}</h5>
-      <p className={`text-xs ${highlight ? 'text-purple-100' : 'text-gray-500'}`}>{desc}</p>
+      <h5 className={`font-bold mb-1 ${!highlight && 'text-slate-800 dark:text-white'}`}>{title}</h5>
+      <p className={`text-xs ${highlight ? 'text-purple-100' : 'text-gray-500 dark:text-gray-400'}`}>{desc}</p>
     </div>
   );
 }
