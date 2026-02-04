@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* هذه الإضافة تضمن أن الخلفية ستكون غامقة وجميلة دائماً */
+@layer base {
+  body {
+    @apply bg-slate-950 text-slate-50;
+  }
+}
