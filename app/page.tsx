@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import ThemeToggle from "@/components/ThemeToggle"; // تأكد من وجود هذا المكون أو احذفه إذا لم يكن لديك
+import ThemeToggle from "@/components/ThemeToggle"; // تأكد من مسار هذا المكون
 import { 
   BookOpen, 
   Share2, 
@@ -85,15 +85,64 @@ export default function DidacticModulePage() {
 
       <main className="container mx-auto px-4 py-12 max-w-6xl min-h-[600px]">
         
-        {/* ================= SECTION 1: FORMULATION ================= */}
+        {/* ================= SECTION 1: FORMULATION (UPDATED) ================= */}
         {activeSection === 'formulation' && (
           <section className="animate-in fade-in slide-in-from-bottom-4 duration-500 space-y-16">
+            
+            {/* Header */}
             <SectionHeader 
               title="مستوى صياغة المفهوم (Niveau de formulation)" 
               subtitle="التفكيك المنهجي: من المعرفة العالمة إلى المعرفة المكتسبة"
               icon={<Brain className="text-blue-600" size={32} />}
               colorClass="bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300"
             />
+
+            {/* ⭐ DEFINITION & CONCRETE EXAMPLE ⭐ */}
+            <div className="grid md:grid-cols-2 gap-8">
+                
+                {/* Definition Card */}
+                <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-sm border-r-4 border-blue-500 relative overflow-hidden">
+                    <div className="absolute top-0 left-0 p-4 opacity-10">
+                        <Quote size={80} className="text-blue-600" />
+                    </div>
+                    <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-4 relative z-10">التعريف الديدكتيكي</h3>
+                    <p className="text-gray-600 dark:text-gray-300 leading-8 relative z-10 text-justify">
+                        صياغة المفهوم هي سيرورة <strong>بناء ديدكتيكية</strong> تهدف إلى تحديد المستوى الذي سيُقَدَّم به المفهوم للمتعلمين. 
+                        وهي لا تعني "التبسيط المخل" للمعرفة، بل تعني <strong>تكييف</strong> المعرفة العالمة لتناسب البنية المعرفية للمتعلم في مرحلة عمرية محددة، مع الحفاظ على <span className="text-blue-600 dark:text-blue-400 font-bold">الأمانة العلمية</span> للمفهوم.
+                    </p>
+                </div>
+
+                {/* Concrete Example Card */}
+                <div className="bg-slate-50 dark:bg-slate-800/50 p-8 rounded-3xl border border-slate-200 dark:border-slate-700 flex flex-col justify-center">
+                    <div className="flex items-center gap-3 mb-6">
+                        <div className="bg-blue-100 dark:bg-blue-900/50 p-2 rounded-lg text-blue-600"><Lightbulb size={24} /></div>
+                        <h3 className="text-xl font-bold text-gray-800 dark:text-white">مثال تطبيقي: مفهوم "التنفس"</h3>
+                    </div>
+                    
+                    <div className="space-y-4">
+                        {/* Level 1: Savant */}
+                        <div className="flex items-start gap-4 opacity-60">
+                            <div className="mt-1"><Activity size={18} /></div>
+                            <div>
+                                <strong className="block text-sm text-gray-900 dark:text-gray-200">المستوى الجامعي (العالم):</strong>
+                                <span className="text-xs text-gray-600 dark:text-gray-400">أكسدة خلوية، حلقة كريبس، ATP (معقد ومجرد).</span>
+                            </div>
+                        </div>
+                        
+                        {/* Arrow Down */}
+                        <div className="flex justify-center text-blue-500"><ArrowRight className="rotate-90" size={20} /></div>
+
+                        {/* Level 2: Enseigne */}
+                        <div className="flex items-start gap-4 bg-white dark:bg-slate-700 p-4 rounded-xl shadow-sm border border-blue-200 dark:border-blue-900/30">
+                            <div className="mt-1 text-blue-600"><CheckCircle size={18} /></div>
+                            <div>
+                                <strong className="block text-sm text-blue-700 dark:text-blue-300">المستوى الابتدائي (المدرسي):</strong>
+                                <span className="text-sm text-gray-700 dark:text-gray-300">حركات تنفسية (شهيق/زفير) وتبادلات غازية تضمن تزويد الجسم بالطاقة.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
             {/* Didactic Transposition Chain */}
             <div className="bg-white dark:bg-slate-900 rounded-[2rem] shadow-xl overflow-hidden border border-gray-100 dark:border-slate-800">
