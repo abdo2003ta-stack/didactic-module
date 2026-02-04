@@ -32,7 +32,10 @@ import {
   Scale,
   AlertTriangle,
   Target,
-  MousePointerClick
+  MousePointerClick,
+  Network,
+  Split,
+  GitGraph
 } from 'lucide-react';
 
 // ------------------- TYPES -------------------
@@ -179,110 +182,166 @@ export default function DidacticModulePage() {
           </section>
         )}
 
-        {/* ================= SECTION 2: CONCEPT MAP ================= */}
+        {/* ================= SECTION 2: CONCEPT MAP (RESTORED DEPTH) ================= */}
         {activeSection === 'conceptMap' && (
           <section className="animate-in fade-in slide-in-from-bottom-4 duration-500 space-y-16">
             
             <SectionHeader 
               title="الخريطة المفهومية (La carte conceptuelle)" 
-              subtitle="من التمثيل البصري إلى البناء المنطقي للمعرفة"
+              subtitle="استراتيجية ما وراء معرفية: من الحفظ الميكانيكي إلى التعلم ذي المعنى"
               icon={<Share2 className="text-purple-600" size={32} />}
               colorClass="bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300"
             />
 
-            {/* Definition */}
-            <div className="bg-white dark:bg-slate-900 rounded-[2rem] p-8 md:p-10 shadow-lg border-r-8 border-purple-500 relative overflow-hidden group hover:shadow-xl transition-shadow">
-               <div className="absolute top-0 left-0 w-full h-full bg-purple-50 dark:bg-purple-900/5 -z-10 group-hover:bg-purple-100/50 dark:group-hover:bg-purple-900/10 transition-colors"></div>
-               <div className="absolute -right-6 -top-6 text-purple-200 dark:text-purple-900/20 opacity-50 transform rotate-12">
-                 <Quote size={120} />
-               </div>
-               <div className="relative z-10">
-                 <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-6 flex items-center gap-3">
-                   <Lightbulb className="text-purple-600" fill="currentColor" fillOpacity={0.2} />
-                   التعريف الاصطلاحي
+            {/* 1. Definition & Theoretical Framework (Ausubel) */}
+            <div className="grid md:grid-cols-12 gap-6">
+              <div className="md:col-span-7 bg-white dark:bg-slate-900 rounded-3xl p-8 border-r-4 border-purple-500 shadow-sm">
+                 <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-4 flex items-center gap-3">
+                   <Lightbulb className="text-purple-600" />
+                   التعريف والعمق النظري
                  </h3>
-                 <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-loose text-justify font-light">
-                   الخريطة المفهومية هي <span className="font-bold text-purple-700 dark:text-purple-400 bg-purple-100 dark:bg-purple-900/50 px-2 py-0.5 rounded">تمثيل تخطيطي هرمي</span> يبرز العلاقات بين المفاهيم. 
-                   جوهرها هو "القضية" (Proposition): أي (مفهوم 1 + كلمة ربط + مفهوم 2) = جملة ذات معنى.
+                 <p className="text-gray-600 dark:text-gray-300 leading-8 text-justify mb-6">
+                   الخريطة المفهومية (نوفاك 1970) هي تمثيل تخطيطي للعلاقات بين المفاهيم في شكل قضايا (Propositions). 
+                   تستند نظرياً إلى <span className="text-purple-700 dark:text-purple-400 font-bold">علم النفس المعرفي لأوزوبل (David Ausubel)</span>، الذي يميز بين نوعين من التعلم:
                  </p>
-               </div>
+                 <div className="space-y-3">
+                    <div className="flex gap-3 bg-green-50 dark:bg-green-900/20 p-3 rounded-xl border border-green-100 dark:border-green-800">
+                       <CheckCircle className="text-green-600 mt-1" size={20} />
+                       <div>
+                         <strong className="block text-green-800 dark:text-green-300">التعلم ذو المعنى (Meaningful Learning)</strong>
+                         <span className="text-sm text-green-700/80 dark:text-green-400">ربط المعلومات الجديدة بالمفاهيم السابقة الموجودة في البنية المعرفية للمتعلم.</span>
+                       </div>
+                    </div>
+                    <div className="flex gap-3 bg-red-50 dark:bg-red-900/20 p-3 rounded-xl border border-red-100 dark:border-red-800 opacity-70">
+                       <div className="mt-1"><AlertTriangle className="text-red-500" size={20} /></div>
+                       <div>
+                         <strong className="block text-red-800 dark:text-red-300">التعلم الميكانيكي (Rote Learning)</strong>
+                         <span className="text-sm text-red-700/80 dark:text-red-400">حفظ المعلومات حرفياً دون ربطها بالبنية المعرفية (تُنسى بسرعة).</span>
+                       </div>
+                    </div>
+                 </div>
+              </div>
+
+              {/* Proposition Formula */}
+              <div className="md:col-span-5 bg-slate-900 text-slate-200 rounded-3xl p-8 flex flex-col justify-center relative overflow-hidden">
+                 <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500 blur-[80px] opacity-20"></div>
+                 <h4 className="font-bold text-white mb-6 text-center">وحدة بناء الخريطة: "القضية"</h4>
+                 <div className="flex flex-col items-center gap-2">
+                    <div className="w-full bg-white/10 p-3 rounded-lg text-center font-bold">مفهوم 1 (الكل)</div>
+                    <ArrowIcon className="rotate-90 text-purple-400" />
+                    <div className="px-4 py-1 bg-purple-600 text-white rounded-full text-xs font-bold shadow-lg shadow-purple-900/50">كلمة ربط (فعل)</div>
+                    <ArrowIcon className="rotate-90 text-purple-400" />
+                    <div className="w-full bg-white/10 p-3 rounded-lg text-center font-bold">مفهوم 2 (الجزء)</div>
+                 </div>
+                 <p className="text-center text-xs text-slate-400 mt-4">مثال: النبات (م1) --يستهلك--> الماء (م2)</p>
+              </div>
             </div>
 
-            {/* Comparison */}
-            <div className="grid md:grid-cols-2 gap-8">
-                <div className="relative overflow-hidden bg-white dark:bg-slate-900 border border-red-100 dark:border-red-900/30 rounded-3xl p-8 shadow-sm">
-                   <div className="absolute top-0 right-0 w-2 h-full bg-red-400"></div>
-                   <div className="flex justify-between items-start mb-6">
-                      <div className="bg-red-50 dark:bg-red-900/20 p-3 rounded-2xl text-red-500"><Brain size={32} /></div>
-                      <span className="text-xs font-bold bg-red-100 dark:bg-red-900/40 text-red-600 dark:text-red-300 px-3 py-1 rounded-full">توني بوزان</span>
+            {/* 2. Structural Analysis (Hierarchy vs Cross-links) */}
+            <div className="space-y-6">
+                <h3 className="text-2xl font-bold text-gray-800 dark:text-white flex items-center gap-2">
+                   <Network className="text-purple-600" />
+                   التشريح البنيوي للخريطة
+                </h3>
+                <div className="grid md:grid-cols-2 gap-8">
+                   <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 hover:shadow-lg transition-all">
+                      <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 text-blue-600 rounded-xl flex items-center justify-center mb-4"><GitGraph /></div>
+                      <h4 className="font-bold text-lg mb-2">1. التفاضل التدريجي (Hierarchical)</h4>
+                      <p className="text-slate-600 dark:text-slate-400 text-sm mb-4">
+                         تنظيم المعرفة عمودياً من المفاهيم الأكثر شمولية (في الأعلى) إلى المفاهيم الأكثر تحديداً (في الأسفل). هذا يعكس كيفية تخزين الدماغ للمعلومات.
+                      </p>
+                      <div className="h-1 w-full bg-slate-100 dark:bg-slate-800 rounded overflow-hidden">
+                         <div className="h-full w-2/3 bg-blue-500"></div>
+                      </div>
                    </div>
-                   <h4 className="text-xl font-bold text-gray-800 dark:text-white mb-4">الخريطة الذهنية (Mind Map)</h4>
-                   <ul className="space-y-4 text-slate-700 dark:text-slate-300">
-                      <ComparisonPoint text="شكل إشعاعي (كالشمش)." icon={<ArrowLeft size={16} className="text-red-400" />} />
-                      <ComparisonPoint text="تعتمد الصور والألوان والتداعي الحر." icon={<ArrowLeft size={16} className="text-red-400" />} />
-                   </ul>
-                </div>
 
-                <div className="relative overflow-hidden bg-white dark:bg-slate-900 border border-purple-100 dark:border-purple-900/30 rounded-3xl p-8 shadow-lg ring-1 ring-purple-100 dark:ring-purple-900 transform md:-translate-y-2">
-                   <div className="absolute top-0 right-0 w-2 h-full bg-purple-600"></div>
-                   <div className="flex justify-between items-start mb-6">
-                      <div className="bg-purple-50 dark:bg-purple-900/20 p-3 rounded-2xl text-purple-600"><Share2 size={32} /></div>
-                      <span className="text-xs font-bold bg-purple-100 dark:bg-purple-900/40 text-purple-600 dark:text-purple-300 px-3 py-1 rounded-full">جوزيف نوفاك</span>
+                   <div className="bg-white dark:bg-slate-900 p-6 rounded-2xl border border-slate-200 dark:border-slate-800 hover:shadow-lg transition-all">
+                      <div className="w-12 h-12 bg-purple-100 dark:bg-purple-900/30 text-purple-600 rounded-xl flex items-center justify-center mb-4"><Split /></div>
+                      <h4 className="font-bold text-lg mb-2">2. التوفيق التكاملي (Cross-links)</h4>
+                      <p className="text-slate-600 dark:text-slate-400 text-sm mb-4">
+                         الروابط العرضية (الأفقية) بين فرعين مختلفين من الخريطة. هي <strong>أهم مؤشر</strong> على الفهم العميق والإبداع، لأنها تظهر قدرة المتعلم على دمج مجالات معرفية مختلفة.
+                      </p>
+                      <div className="h-1 w-full bg-slate-100 dark:bg-slate-800 rounded overflow-hidden">
+                         <div className="h-full w-1/3 bg-purple-500"></div>
+                      </div>
                    </div>
-                   <h4 className="text-xl font-bold text-gray-800 dark:text-white mb-4">الخريطة المفهومية (Concept Map)</h4>
-                   <ul className="space-y-4 text-slate-700 dark:text-slate-300">
-                      <ComparisonPoint text="شكل هرمي (شجري) من العام للخاص." icon={<CheckCircle size={16} className="text-purple-600" />} highlight />
-                      <ComparisonPoint text="تركز على 'كلمات الربط' لتكوين جمل مفيدة." icon={<CheckCircle size={16} className="text-purple-600" />} highlight />
-                   </ul>
                 </div>
             </div>
 
-            {/* The "Proposition" Formula */}
-            <div className="bg-gradient-to-r from-slate-900 to-indigo-900 rounded-3xl p-8 md:p-10 text-white shadow-2xl relative overflow-hidden">
-               <div className="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/graphy.png')] opacity-10"></div>
-               <h3 className="relative z-10 text-center text-xl font-bold mb-8 text-indigo-200">الجوهر الديدكتيكي: معادلة بناء "القضية"</h3>
-               <div className="flex flex-col md:flex-row items-center justify-center gap-4 relative z-10">
-                  <div className="bg-white/10 backdrop-blur-md px-6 py-4 rounded-xl border border-white/20 text-center">
-                    <span className="block text-xs text-indigo-300 mb-1">المفهوم 1</span>
-                    <strong className="text-lg">النبات</strong>
-                  </div>
-                  <ArrowRight className="text-indigo-400 rotate-90 md:rotate-180" />
-                  <div className="bg-indigo-500 px-4 py-2 rounded-full shadow-lg text-sm font-bold">يحتاج إلى (رابط)</div>
-                  <ArrowRight className="text-indigo-400 rotate-90 md:rotate-180" />
-                  <div className="bg-white/10 backdrop-blur-md px-6 py-4 rounded-xl border border-white/20 text-center">
-                    <span className="block text-xs text-indigo-300 mb-1">المفهوم 2</span>
-                    <strong className="text-lg">الضوء</strong>
-                  </div>
-                  <div className="hidden md:block text-2xl font-bold text-indigo-300 mx-4">=</div>
-                  <div className="border-2 border-dashed border-indigo-400/50 px-6 py-4 rounded-xl text-center">
-                     <span className="block text-xs text-indigo-300 mb-1">النتيجة</span>
-                     <strong className="text-indigo-100">معنى علمي (قضية)</strong>
-                  </div>
-               </div>
+            {/* 3. Comparison Table */}
+            <div className="overflow-x-auto rounded-3xl border border-slate-200 dark:border-slate-800 shadow-sm">
+              <table className="w-full text-sm text-right bg-white dark:bg-slate-900">
+                 <thead className="bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-200">
+                    <tr>
+                       <th className="p-4">وجه المقارنة</th>
+                       <th className="p-4 text-purple-700 dark:text-purple-400">الخريطة المفهومية (Concept Map)</th>
+                       <th className="p-4 text-red-600 dark:text-red-400">الخريطة الذهنية (Mind Map)</th>
+                    </tr>
+                 </thead>
+                 <tbody className="divide-y divide-slate-100 dark:divide-slate-800">
+                    <tr>
+                       <td className="p-4 font-bold">البنية</td>
+                       <td className="p-4">هرمية / شجرية (Hierarchical)</td>
+                       <td className="p-4">إشعاعية / شمسية (Radial)</td>
+                    </tr>
+                    <tr>
+                       <td className="p-4 font-bold">التركيز</td>
+                       <td className="p-4">العلاقات المنطقية والقضايا العلمية.</td>
+                       <td className="p-4">التداعي الحر للأفكار والصور والألوان.</td>
+                    </tr>
+                    <tr>
+                       <td className="p-4 font-bold">الاستعمال</td>
+                       <td className="p-4">بناء المعرفة، التقويم، التشخيص.</td>
+                       <td className="p-4">العصف الذهني، تدوين الملاحظات السريع.</td>
+                    </tr>
+                 </tbody>
+              </table>
             </div>
 
-            {/* ⭐ NEW: SIMPLE PLANT CONCEPT MAP EXAMPLE ⭐ */}
-            <div className="space-y-8 mt-12">
+            {/* 4. Plant Example (Visual) */}
+            <div className="space-y-8 mt-6">
                <div className="text-center space-y-3">
                  <h3 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-green-600 to-emerald-500 dark:from-green-400 dark:to-emerald-300">
-                   مثال تطبيقي: خريطة مفهومية لـ "النبات"
+                   نموذج تطبيقي: التفاضل والترابط
                  </h3>
                  <p className="text-gray-500 dark:text-gray-400 max-w-2xl mx-auto">
-                    هنا يتضح الفرق: لاحظ <span className="text-green-600 dark:text-green-400 font-bold">الهرمية</span> (النبات في الأعلى) و <span className="text-purple-600 dark:text-purple-400 font-bold">الروابط</span> التي تشرح العلاقة. مرر الفأرة على الأجزاء لفهم القضايا.
+                    لاحظ كيف تتفرع المفاهيم (عمودياً) وكيف يمكن أن تترابط (أفقياً).
                  </p>
                </div>
                
                <SimpleConceptMap />
             </div>
 
-            {/* Construction Steps */}
-            <div className="bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-2xl p-8">
-               <h3 className="text-xl font-bold mb-6 text-gray-800 dark:text-white">منهجية الصياغة (كيف تبنيها في الفصل؟)</h3>
-               <div className="space-y-4">
-                  <ConstructionStep num="01" title="قائمة الجرد (Listing)" desc="استخراج جميع المفاهيم المرتبطة بالموضوع دون ترتيب." />
-                  <ConstructionStep num="02" title="الترتيب والتصنيف (Ordering)" desc="ترتيب المفاهيم من الأكثر شمولية إلى الأكثر تحديداً." />
-                  <ConstructionStep num="03" title="بناء الروابط (Linking)" desc="رسم خطوط بين المفاهيم المترابطة لتحويل القائمة إلى شبكة." />
-                  <ConstructionStep num="04" title="صياغة القضايا (Propositions)" desc="أهم خطوة: كتابة 'فعل' أو 'كلمة ربط' على كل خط لتوضيح طبيعة العلاقة." highlight />
+            {/* 5. Construction Steps & Assessment */}
+            <div className="grid md:grid-cols-2 gap-8">
+               <div className="bg-white dark:bg-slate-900 border border-gray-100 dark:border-slate-800 rounded-2xl p-8">
+                  <h3 className="text-xl font-bold mb-6 text-gray-800 dark:text-white">منهجية الصياغة (البناء)</h3>
+                  <div className="space-y-4">
+                     <ConstructionStep num="01" title="قائمة الجرد (Listing)" desc="استخراج جميع المفاهيم المرتبطة بالموضوع دون ترتيب." />
+                     <ConstructionStep num="02" title="الترتيب (Ordering)" desc="ترتيب المفاهيم من الأكثر شمولية إلى الأكثر تحديداً." />
+                     <ConstructionStep num="03" title="الربط (Linking)" desc="رسم خطوط وكتابة 'أفعال' لتوضيح العلاقة." highlight />
+                  </div>
+               </div>
+
+               <div className="bg-slate-50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800 rounded-2xl p-8">
+                  <h3 className="text-xl font-bold mb-6 text-gray-800 dark:text-white flex items-center gap-2">
+                     <Target className="text-purple-500"/> معايير التقويم
+                  </h3>
+                  <p className="text-sm text-slate-500 mb-4">كيف يصحح الأستاذ خريطة المتعلم؟</p>
+                  <ul className="space-y-3">
+                     <li className="flex items-center justify-between p-3 bg-white dark:bg-slate-800 rounded-lg shadow-sm">
+                        <span className="text-sm font-medium">صحة القضايا (Propositions)</span>
+                        <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded">1 نقطة لكل علاقة</span>
+                     </li>
+                     <li className="flex items-center justify-between p-3 bg-white dark:bg-slate-800 rounded-lg shadow-sm">
+                        <span className="text-sm font-medium">التسلسل الهرمي (Hierarchy)</span>
+                        <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">5 نقاط لكل مستوى</span>
+                     </li>
+                     <li className="flex items-center justify-between p-3 bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-purple-200 dark:border-purple-900">
+                        <span className="text-sm font-medium">الروابط العرضية (Cross-links)</span>
+                        <span className="text-xs bg-purple-100 text-purple-700 px-2 py-1 rounded font-bold">10 نقاط (إبداع)</span>
+                     </li>
+                  </ul>
                </div>
             </div>
           </section>
