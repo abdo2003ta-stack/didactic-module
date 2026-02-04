@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Cairo } from "next/font/google";
 import "./globals.css";
-// 👇 تم تعديل هذا السطر ليطابق اسم الملف الموجود في صورك بالضبط
-import { ThemeProvider } from "../components/ThemeProvider"; 
+// 👇 تأكدنا من كتابة اسم الملف بحرف كبير T ليطابق ملفك
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 const font = Cairo({ subsets: ["latin"] });
 
@@ -18,11 +18,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ar" dir="rtl" suppressHydrationWarning>
-      <body className={`${font.className} bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-50`}>
+      {/* 👇 أجبرنا الخلفية تكون غامقة مباشرة هنا */}
+      <body className={`${font.className} bg-slate-950 text-slate-50`}>
         <ThemeProvider
           attribute="class"
-          defaultTheme="system"
-          enableSystem
+          defaultTheme="dark"   /* 👈 هذا هو السر! جعلناه داكناً دائماً */
+          enableSystem={false}  /* 👈 ألغينا خيار النظام */
           disableTransitionOnChange
         >
           {children}
