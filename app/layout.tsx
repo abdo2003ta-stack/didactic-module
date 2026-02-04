@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Cairo } from "next/font/google";
 import "./globals.css";
-// 👇 تم تصحيح الاسم هنا ليطابق اسم الملف عندك (ThemeProvider)
-import { ThemeProvider } from "@/components/ThemeProvider"; 
+// 👇 تم تعديل هذا السطر ليطابق اسم الملف الموجود في صورك بالضبط
+import { ThemeProvider } from "../components/ThemeProvider"; 
 
 const font = Cairo({ subsets: ["latin"] });
 
@@ -18,7 +18,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ar" dir="rtl" suppressHydrationWarning>
-      {/* 👇 تم إضافة الألوان هنا لتشغيل الوضع الليلي */}
       <body className={`${font.className} bg-white text-slate-900 dark:bg-slate-950 dark:text-slate-50`}>
         <ThemeProvider
           attribute="class"
