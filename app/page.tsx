@@ -16,7 +16,8 @@ import {
   ShieldCheck, 
   Eye, 
   GitCommit, 
-  MousePointer2 
+  MousePointer2,
+  ArrowRight // تمت إضافتها لاستخدامها في سلسلة النقل
 } from 'lucide-react';
 
 // ------------------- TYPES -------------------
@@ -27,10 +28,9 @@ export default function DidacticModulePage() {
   const [activeSection, setActiveSection] = useState<Section>('formulation');
 
   return (
-    // قمت بإضافة dark:bg-slate-950 ليدعم الوضع الليلي
     <div className="min-h-screen bg-slate-50 dark:bg-slate-950 font-sans text-slate-800 dark:text-slate-200 transition-colors duration-300" dir="rtl">
       
-      {/* ⭐ هنا أضفنا الزر ليظهر في الصفحة ⭐ */}
+      {/* ⭐ زر الوضع الليلي ⭐ */}
       <ThemeToggle />
 
       {/* ================= HEADER ================= */}
@@ -81,90 +81,132 @@ export default function DidacticModulePage() {
 
       <main className="container mx-auto px-4 py-12 max-w-6xl min-h-[600px]">
         
-        {/* ================= SECTION 1: FORMULATION ================= */}
+        {/* ================= SECTION 1: FORMULATION (DEEP DIVE + DARK MODE) ================= */}
         {activeSection === 'formulation' && (
-          <section className="animate-in fade-in slide-in-from-bottom-4 duration-500 space-y-12">
+          <section className="animate-in fade-in slide-in-from-bottom-4 duration-500 space-y-16">
+            
+            {/* 1. Header & Intro */}
             <SectionHeader 
               title="مستوى صياغة المفهوم (Niveau de formulation)" 
-              subtitle="النقل الديدكتيكي وهندسة بناء التعلمات"
+              subtitle="التفكيك المنهجي: من المعرفة العالمة إلى المعرفة المكتسبة"
               icon={<Brain className="text-blue-600" size={32} />}
-              colorClass="bg-blue-100 text-blue-700"
+              colorClass="bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300"
             />
 
-            <div className="grid md:grid-cols-12 gap-8">
-              {/* Definition Block */}
-              <div className="md:col-span-8 bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-sm border border-gray-100 dark:border-slate-800 relative overflow-hidden group hover:shadow-md transition-shadow">
-                <div className="absolute top-0 right-0 w-2 h-full bg-blue-500"></div>
-                <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-6 flex items-center gap-3">
-                  <Activity className="text-blue-500" />
-                  ماهية النقل الديدكتيكي
-                </h3>
-                <p className="text-gray-600 dark:text-slate-300 leading-8 text-lg mb-8 text-justify">
-                  صياغة المفهوم هي عملية <strong>"إعادة بناء ديدكتيكية"</strong> للمعرفة. وتعرف بأنها السيرورة التي يتم بموجبها تحويل 
-                  <span className="bg-blue-50 dark:bg-blue-900/30 text-blue-800 dark:text-blue-200 font-bold mx-1 px-2 py-0.5 rounded border border-blue-200 dark:border-blue-800">"المعرفة العالمة"</span> 
-                  (التي تتسم بالتجريد والتعقيد في المصادر الأكاديمية) إلى 
-                  <span className="bg-green-50 dark:bg-green-900/30 text-green-800 dark:text-green-200 font-bold mx-1 px-2 py-0.5 rounded border border-green-200 dark:border-green-800">"معرفة قابلة للتدريس"</span> 
-                  تتلاءم مع البنية المعرفية للمتعلم.
-                </p>
-                
-                <div className="bg-slate-50 dark:bg-slate-800 p-6 rounded-2xl border border-slate-200 dark:border-slate-700 flex items-start gap-4">
-                  <div className="bg-amber-100 dark:bg-amber-900/50 p-2 rounded-lg text-amber-600 dark:text-amber-400">
-                     <Lightbulb size={24} />
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-slate-800 dark:text-white mb-1">القاعدة الذهبية</h4>
-                    <p className="text-slate-600 dark:text-slate-300 text-sm">
-                      يجب أن تحافظ الصياغة على <strong>الأمانة العلمية</strong> (عدم تحريف المعرفة) مع احترام <strong>المنطقة التقريبية للنمو</strong> للمتعلم (Vygotsky).
-                    </p>
-                  </div>
+            {/* 2. The Core Concept: Didactic Transposition Chain */}
+            <div className="bg-white dark:bg-slate-900 rounded-[2rem] shadow-xl overflow-hidden border border-gray-100 dark:border-slate-800">
+              <div className="bg-slate-900 dark:bg-black p-8 text-center relative overflow-hidden">
+                <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-slate-800 to-black opacity-40"></div>
+                <h3 className="text-2xl md:text-3xl font-bold text-white mb-2 relative z-10">سلسلة النقل الديدكتيكي</h3>
+                <p className="text-blue-200 relative z-10 text-sm font-mono tracking-widest uppercase">Yves Chevallard</p>
+              </div>
+              
+              <div className="p-8 md:p-12 bg-gradient-to-b from-white to-slate-50 dark:from-slate-900 dark:to-slate-950">
+                <div className="flex flex-col md:flex-row justify-between items-center gap-6 relative">
+                  {/* Connecting Line (Horizontal for Desktop) */}
+                  <div className="hidden md:block absolute top-1/2 left-0 w-full h-1 bg-gray-200 dark:bg-slate-800 -z-0 rounded-full"></div>
+
+                  <TranspositionStep 
+                    title="المعرفة العالمة" 
+                    sub="(Savoir Savant)"
+                    desc="المعرفة في مهدها (الجامعات، المختبرات). تتسم بالتعقيد وعدم الاستقرار."
+                    icon={<Brain size={24} />}
+                    step="1"
+                    color="bg-slate-800 text-white"
+                  />
+                  
+                  {/* Custom Arrow Function for RTL direction */}
+                  <ArrowIcon className="hidden md:block text-gray-300 dark:text-slate-600 relative z-10 bg-slate-50 dark:bg-slate-900 p-1 rounded-full" />
+                  
+                  <TranspositionStep 
+                    title="المعرفة الواجب تدريسها" 
+                    sub="(Savoir à Enseigner)"
+                    desc="المعرفة المقررة في المنهاج (عمل واضعي البرامج / النوسفير)."
+                    icon={<BookOpen size={24} />}
+                    step="2"
+                    color="bg-blue-600 text-white"
+                  />
+                  
+                  <ArrowIcon className="hidden md:block text-gray-300 dark:text-slate-600 relative z-10 bg-slate-50 dark:bg-slate-900 p-1 rounded-full" />
+
+                  <TranspositionStep 
+                    title="المعرفة المُدَرَّسة" 
+                    sub="(Savoir Enseigné)"
+                    desc="المعرفة الفعلية التي يقدمها المدرس داخل القسم (تخضع لتأويل المدرس)."
+                    icon={<Activity size={24} />}
+                    step="3"
+                    color="bg-indigo-600 text-white"
+                  />
+
+                  <ArrowIcon className="hidden md:block text-gray-300 dark:text-slate-600 relative z-10 bg-slate-50 dark:bg-slate-900 p-1 rounded-full" />
+
+                  <TranspositionStep 
+                    title="المعرفة المُكتسبة" 
+                    sub="(Savoir Appris)"
+                    desc="ما تبقى في ذهن المتعلم بعد الدرس (التمثلات الجديدة)."
+                    icon={<CheckCircle size={24} />}
+                    step="4"
+                    color="bg-green-600 text-white"
+                  />
                 </div>
               </div>
+            </div>
 
-              {/* Sidebar Process */}
-              <div className="md:col-span-4 bg-slate-900 text-white p-8 rounded-3xl shadow-xl flex flex-col justify-center relative overflow-hidden">
-                 <div className="absolute top-0 right-0 w-full h-full bg-grid-white/[0.05]"></div>
-                 <h4 className="font-bold text-xl mb-6 text-blue-300 relative z-10 border-b border-white/10 pb-4">سيرورة الصياغة</h4>
-                 <div className="space-y-8 relative z-10">
-                    <StepItem number="1" title="المعرفة العالمة" desc="المفهوم في الجامعات والمختبرات" color="border-blue-500 text-blue-400" />
-                    <StepItem number="2" title="المعرفة المقررة" desc="المفهوم في المنهاج والكتب المدرسية" color="border-indigo-500 text-indigo-400" />
-                    <StepItem number="3" title="المعرفة المدرسة" desc="المفهوم كما يقدمه المدرس في القسم" color="border-green-500 text-green-400" />
+            {/* 3. Deep Dive: Mechanisms of Transformation */}
+            <div className="grid md:grid-cols-12 gap-8">
+               <div className="md:col-span-4 bg-blue-50 dark:bg-blue-950/40 p-8 rounded-3xl h-full border border-blue-100 dark:border-blue-900 relative overflow-hidden">
+                 <div className="absolute -right-10 -top-10 w-40 h-40 bg-blue-100 dark:bg-blue-900/20 rounded-full opacity-50 blur-2xl"></div>
+                 <h3 className="text-2xl font-bold text-blue-900 dark:text-blue-100 mb-6 relative z-10">ماذا يحدث للمعرفة؟</h3>
+                 <p className="text-blue-800 dark:text-blue-200 leading-relaxed mb-8 relative z-10">
+                   عندما ننقل مفهوماً من المختبر إلى المدرسة، فإنه يخضع لعمليات "تعرية" و"إعادة إلباس" لكي يصبح قابلاً للتدريس. هذه العمليات تسمى <strong>قواعد النقل الديدكتيكي</strong>.
+                 </p>
+                 <div className="bg-white dark:bg-slate-900 p-5 rounded-2xl shadow-sm border border-blue-200 dark:border-slate-700 relative z-10">
+                    <strong className="block text-blue-900 dark:text-blue-200 mb-2 flex items-center gap-2">
+                        <Lightbulb size={18} className="text-amber-500" />
+                        مفهوم "النوسفير" (Noosphère):
+                    </strong>
+                    <p className="text-sm text-gray-600 dark:text-gray-400 leading-snug">
+                      هي "طبقة التفكير" أو الهيئة التي تختار ما يجب تدريسه (المفتشون، الخبراء، السياسيون). هم من يقومون بالخطوة الأولى من النقل (من العالمة إلى المقررة).
+                    </p>
                  </div>
+               </div>
+
+               <div className="md:col-span-8 grid gap-4">
+                  <MechanismCard 
+                    title="1. نزع الطابع الشخصي (Dépersonnalisation)"
+                    desc="فصل المعرفة عن الباحث الذي اكتشفها وعن ظروف الاكتشاف (المعاناة، الأخطاء، الصدفة) لتقديمها كحقيقة مطلقة وجاهزة."
+                  />
+                  <MechanismCard 
+                    title="2. نزع الطابع السياقي (Décontextualisation)"
+                    desc="إخراج المعلومة من سياقها المعقد الأصلي لكي تصبح صالحة للتعميم في سياق مدرسي."
+                  />
+                  <MechanismCard 
+                    title="3. القابلية للبرمجة (Programmation)"
+                    desc="تقطيع المعرفة إلى وحدات زمنية (فصول، حصص) لتتناسب مع الإيقاع المدرسي، وهو ما قد يتعارض مع طبيعة المعرفة المتشابكة."
+                  />
+                  <MechanismCard 
+                    title="4. الإشهار أو العلنية (Publicité)"
+                    desc="تحديد واضح لما هو مطلوب من التلميذ تعلمه (العقد الديدكتيكي)، عكس البحث العلمي الذي يتميز بالغموض والمجهول."
+                  />
+               </div>
+            </div>
+
+            {/* 4. Didactic Vigilance */}
+            <div className="bg-gradient-to-r from-amber-50 to-orange-50 dark:from-amber-950/30 dark:to-orange-950/30 border-r-4 border-amber-500 p-8 rounded-2xl shadow-sm flex flex-col md:flex-row gap-6 items-center">
+              <div className="p-4 bg-white dark:bg-slate-800 rounded-full shadow-md text-amber-500 shrink-0">
+                <Eye size={32} />
+              </div>
+              <div>
+                 <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-2">اليقظة الديدكتيكية (La Vigilance Didactique)</h3>
+                 <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                   هي قدرة المدرس على الانتباه المستمر للمسافة الفاصلة بين المعرفة العالمة والمعرفة المدرسة. 
+                   <span className="block mt-2 font-semibold text-amber-900 dark:text-amber-400 text-sm md:text-base">
+                     ⚠️ الخطر: إذا ابتعدت المعرفة المدرسة كثيراً عن المعرفة العالمة، نسقط في "الخيانة العلمية". وإذا بقيت قريبة جداً، تصبح "غير قابلة للفهم" من طرف التلميذ.
+                   </span>
+                 </p>
               </div>
             </div>
 
-            {/* The 3 Levels Cards */}
-            <div>
-              <h3 className="text-2xl font-bold text-gray-800 dark:text-white mb-8 flex items-center gap-3">
-                <Layers className="text-blue-600" />
-                سجلات صياغة المفهوم الثلاثة
-              </h3>
-              <div className="grid md:grid-cols-3 gap-6">
-                <LevelCard 
-                  title="المستوى المرجعي"
-                  subTitle="(Niveau de référence)"
-                  desc="التعريف العلمي الدقيق للمفهوم كما ورد في المصادر الأكاديمية المختصة."
-                  icon={<BookOpen size={24} className="text-white" />}
-                  bgClass="bg-slate-800 text-white"
-                  iconBg="bg-slate-700"
-                />
-                <LevelCard 
-                  title="مستوى الانطلاق"
-                  subTitle="(Niveau de départ)"
-                  desc="مجموع التمثلات (Représentations) والمفاهيم الأولية التي يحملها المتعلم قبل الدرس."
-                  icon={<MousePointer2 size={24} className="text-blue-600" />}
-                  bgClass="bg-white dark:bg-slate-900 border-blue-100 dark:border-blue-900"
-                  iconBg="bg-blue-100 dark:bg-blue-900"
-                />
-                <LevelCard 
-                  title="المستوى المستهدف"
-                  subTitle="(Niveau attendu)"
-                  desc="التعريف الذي نسعى لترسيخه لدى المتعلم في نهاية الحصة (أثر مكتوب)."
-                  icon={<CheckCircle size={24} className="text-green-600" />}
-                  bgClass="bg-white dark:bg-slate-900 border-green-100 dark:border-green-900"
-                  iconBg="bg-green-100 dark:bg-green-900"
-                />
-              </div>
-            </div>
           </section>
         )}
 
@@ -175,7 +217,7 @@ export default function DidacticModulePage() {
               title="الخريطة المفهومية (La carte conceptuelle)" 
               subtitle="أداة تنظيم المعرفة وبناء اللحمة المفهومية"
               icon={<Share2 className="text-purple-600" size={32} />}
-              colorClass="bg-purple-100 text-purple-700"
+              colorClass="bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300"
             />
 
             {/* Theory Intro */}
@@ -196,9 +238,9 @@ export default function DidacticModulePage() {
             {/* Comparison Table */}
             <div className="grid md:grid-cols-2 gap-8">
               <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-sm border-t-4 border-red-400 group hover:-translate-y-1 transition-transform duration-300">
-                <div className="flex items-center justify-between mb-6 border-b border-red-100 pb-4">
+                <div className="flex items-center justify-between mb-6 border-b border-red-100 dark:border-red-900/50 pb-4">
                   <h4 className="font-bold text-xl text-red-900 dark:text-red-400">الخريطة الذهنية (Mind Map)</h4>
-                  <span className="bg-red-50 text-red-600 text-xs font-bold px-3 py-1 rounded-full border border-red-100">توني بوزان</span>
+                  <span className="bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-300 text-xs font-bold px-3 py-1 rounded-full border border-red-100 dark:border-red-900">توني بوزان</span>
                 </div>
                 <ul className="space-y-4 text-slate-700 dark:text-slate-300">
                   <ComparisonItem icon={<ArrowLeft size={18} className="text-red-400" />} text="بنية إشعاعية (مركز وأفرع)." />
@@ -208,9 +250,9 @@ export default function DidacticModulePage() {
               </div>
 
               <div className="bg-white dark:bg-slate-900 p-8 rounded-3xl shadow-lg border-t-4 border-purple-600 group hover:-translate-y-1 transition-transform duration-300 transform scale-[1.02]">
-                <div className="flex items-center justify-between mb-6 border-b border-purple-100 pb-4">
+                <div className="flex items-center justify-between mb-6 border-b border-purple-100 dark:border-purple-900/50 pb-4">
                   <h4 className="font-bold text-xl text-purple-900 dark:text-purple-400">الخريطة المفهومية (Concept Map)</h4>
-                  <span className="bg-purple-50 text-purple-600 text-xs font-bold px-3 py-1 rounded-full border border-purple-100">جوزيف نوفاك</span>
+                  <span className="bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-300 text-xs font-bold px-3 py-1 rounded-full border border-purple-100 dark:border-purple-900">جوزيف نوفاك</span>
                 </div>
                 <ul className="space-y-4 text-slate-700 dark:text-slate-300">
                   <ComparisonItem icon={<CheckCircle size={18} className="text-purple-600" />} text="بنية هرمية (من العام إلى الخاص) أو شبكية." bold />
@@ -220,7 +262,7 @@ export default function DidacticModulePage() {
               </div>
             </div>
 
-            {/* PRACTICAL EXAMPLE SECTION (The Expansion) */}
+            {/* PRACTICAL EXAMPLE SECTION */}
             <div className="mt-16 pt-8 border-t border-gray-200 dark:border-gray-800">
                <h2 className="text-3xl font-bold text-gray-800 dark:text-white mb-8 text-center flex items-center justify-center gap-3">
                  <GitCommit className="text-purple-600" />
@@ -285,8 +327,8 @@ export default function DidacticModulePage() {
 
                       {/* Visual Cross Link Simulation (SVG) */}
                       <div className="hidden md:block absolute top-0 left-0 w-full h-full pointer-events-none">
-                         <div className="absolute top-[280px] left-[30%] w-[40%] h-[20px] border-t-2 border-dotted border-purple-500/50 rounded-full"></div>
-                         <div className="absolute top-[270px] left-1/2 -translate-x-1/2 bg-slate-800 px-2 text-[10px] text-purple-400 border border-purple-500/30 rounded">عملية التركيب الضوئي</div>
+                          <div className="absolute top-[280px] left-[30%] w-[40%] h-[20px] border-t-2 border-dotted border-purple-500/50 rounded-full"></div>
+                          <div className="absolute top-[270px] left-1/2 -translate-x-1/2 bg-slate-800 px-2 text-[10px] text-purple-400 border border-purple-500/30 rounded">عملية التركيب الضوئي</div>
                       </div>
                     </div>
                   </div>
@@ -307,7 +349,7 @@ export default function DidacticModulePage() {
               title="الوسائل الديدكتيكية (Les moyens didactiques)" 
               subtitle="الدعامات والأدوات الميسرة للتعليم والتعلم"
               icon={<Box className="text-teal-600" size={32} />}
-              colorClass="bg-teal-100 text-teal-700"
+              colorClass="bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300"
             />
 
             <div className="grid md:grid-cols-2 gap-10">
@@ -383,7 +425,7 @@ export default function DidacticModulePage() {
             <BookOpen size={32} className="text-slate-600" />
           </div>
           <p className="mb-3 text-slate-300 font-medium">تم إعداد المحتوى بدقة علمية استناداً إلى المرجعيات الرسمية لمراكز مهن التربية والتكوين</p>
-          <p className="text-sm opacity-60">©️ {new Date().getFullYear()} بوابة الديدكتيك الرقمية. جميع الحقوق محفوظة.</p>
+          <p className="text-sm opacity-60">© {new Date().getFullYear()} بوابة الديدكتيك الرقمية. جميع الحقوق محفوظة.</p>
         </div>
       </footer>
     </div>
@@ -425,32 +467,54 @@ function SectionHeader({ title, subtitle, icon, colorClass }: any) {
   );
 }
 
-function LevelCard({ title, subTitle, desc, icon, bgClass, iconBg }: any) {
+// --- Components for Deep Dive (Formulation) ---
+
+function TranspositionStep({ title, sub, desc, icon, step, color }: any) {
   return (
-    <div className={`p-8 rounded-3xl shadow-sm border border-gray-100 dark:border-gray-800 transition-all hover:shadow-lg hover:-translate-y-1 ${bgClass}`}>
-      <div className={`w-14 h-14 rounded-2xl flex items-center justify-center mb-6 shadow-sm ${iconBg || 'bg-white/10'}`}>
+    <div className="flex flex-col items-center text-center group relative z-10 flex-1 min-w-[200px]">
+      <div className={`w-16 h-16 rounded-2xl flex items-center justify-center shadow-lg mb-4 transition-transform group-hover:scale-110 ${color}`}>
         {icon}
       </div>
-      <h4 className="font-bold text-xl mb-1 text-inherit">{title}</h4>
-      <span className="text-xs font-mono opacity-60 block mb-4 tracking-wider text-inherit">{subTitle}</span>
-      <p className="text-sm leading-relaxed opacity-80 text-inherit">{desc}</p>
+      <div className="absolute -top-3 -right-3 w-8 h-8 rounded-full bg-white dark:bg-slate-800 border-2 border-gray-100 dark:border-gray-700 flex items-center justify-center font-bold text-xs text-gray-400 shadow-sm">
+        {step}
+      </div>
+      <h4 className="font-bold text-gray-900 dark:text-white text-lg mb-1">{title}</h4>
+      <span className="text-xs font-mono text-blue-600 dark:text-blue-400 block mb-3 bg-blue-50 dark:bg-blue-900/30 px-2 py-1 rounded inline-block">{sub}</span>
+      <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed px-2">{desc}</p>
     </div>
   );
 }
 
-function StepItem({ number, title, desc, color }: any) {
+function ArrowIcon({ className }: { className?: string }) {
+  // SVG Arrow rotated for RTL flow
   return (
-    <div className="flex items-center gap-5 relative z-10 group">
-      <div className={`w-12 h-12 rounded-2xl border-2 flex items-center justify-center font-bold text-xl shadow-[0_0_15px_rgba(0,0,0,0.3)] transition-colors ${color} bg-slate-800`}>
-        {number}
+    <svg 
+      xmlns="http://www.w3.org/2000/svg" 
+      width="24" height="24" viewBox="0 0 24 24" 
+      fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" 
+      className={`rotate-180 transform ${className}`} 
+    >
+      <line x1="5" y1="12" x2="19" y2="12"></line>
+      <polyline points="12 5 19 12 12 19"></polyline>
+    </svg>
+  );
+}
+
+function MechanismCard({ title, desc }: any) {
+  return (
+    <div className="flex gap-4 p-5 bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm hover:shadow-md transition-shadow hover:border-blue-200 dark:hover:border-blue-800">
+      <div className="mt-1 text-blue-500 shrink-0">
+        <CheckCircle size={20} />
       </div>
       <div>
-        <strong className="block text-white text-lg group-hover:text-blue-200 transition-colors">{title}</strong>
-        <span className="text-xs text-slate-400 font-light">{desc}</span>
+        <h4 className="font-bold text-gray-800 dark:text-white mb-2 text-lg">{title}</h4>
+        <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">{desc}</p>
       </div>
     </div>
   );
 }
+
+// --- Standard Helper Components ---
 
 function ComparisonItem({ icon, text, bold }: any) {
   return (
