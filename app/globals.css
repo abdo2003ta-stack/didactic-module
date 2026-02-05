@@ -1,33 +1,25 @@
+@import "tailwindcss";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* 1. إعادة تعريف المتغيرات الأساسية (هذا يعيد تنسيق الموقع وشكله الجميل) */
 :root {
-  --foreground-rgb: 15, 23, 42;    /* لون النص الغامق */
-  --background-start-rgb: 255, 255, 255; /* لون الخلفية الفاتح */
-  --background-end-rgb: 255, 255, 255;
+  --background: #ffffff;
+  --foreground: #171717;
 }
 
-/* 2. تعريف متغيرات الوضع الليلي (يتم تفعيلها فقط عند وجود كلاس .dark) */
-.dark {
-  --foreground-rgb: 255, 255, 255; /* لون النص الأبيض */
-  --background-start-rgb: 2, 6, 23;    /* لون الخلفية الداكن */
-  --background-end-rgb: 2, 6, 23;
-}
-
-/* 3. تطبيق الألوان على الجسم (Body) */
 @layer base {
   body {
-    color: rgb(var(--foreground-rgb));
-    background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-    
-    /* هذا السطر مهم جداً للانتقال السلس */
+    /* الوضع النهاري: خلفية شبه بيضاء (تشبه slate-50) ونص رمادي غامق */
+    background-color: #f8fafc; 
+    color: #0f172a;
     transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* الوضع الليلي: خلفية كحلية غامقة (تشبه slate-950) ونص أبيض */
+  .dark body {
+    background-color: #020617;
+    color: #f1f5f9;
   }
 }
