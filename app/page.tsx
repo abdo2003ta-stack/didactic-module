@@ -15,7 +15,7 @@ type Section = 'formulation' | 'conceptMap' | 'didacticMeans';
 // ------------------- MAIN COMPONENT -------------------
 export default function DidacticModulePage() {
   const [activeSection, setActiveSection] = useState<Section>('didacticMeans');
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(true); // يبدأ مظلم
 
   useEffect(() => {
     if (isDark) {
