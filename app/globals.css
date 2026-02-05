@@ -9,22 +9,17 @@
   --foreground: #171717;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-/* كود CSS عادي آمن */
-body {
-  background-color: #ffffff;
-  color: #000000;
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   body {
-    background-color: #0f172a;
-    color: #ffffff;
+    /* الوضع النهاري: خلفية شبه بيضاء (تشبه slate-50) ونص رمادي غامق */
+    background-color: #f8fafc; 
+    color: #0f172a;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  /* الوضع الليلي: خلفية كحلية غامقة (تشبه slate-950) ونص أبيض */
+  .dark body {
+    background-color: #020617;
+    color: #f1f5f9;
   }
 }
