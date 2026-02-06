@@ -16,7 +16,18 @@ type Section = 'formulation' | 'conceptMap' | 'didacticMeans';
 export default function DidacticModulePage() {
   const [activeSection, setActiveSection] = useState<Section>('didacticMeans');
   const [isDark, setIsDark] = useState(true); // يبدأ مظلم
+  const [scrollProgress, setScrollProgress] = useState(0);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const totalScroll = document.documentElement.scrollTop;
+      const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scroll = `${totalScroll / windowHeight}`;
+      setScrollProgress(Number(scroll));
+    }
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
   useEffect(() => {
     if (isDark) {
       document.documentElement.classList.add('dark');
@@ -27,7 +38,12 @@ export default function DidacticModulePage() {
 
   return (
     <div className={`min-h-screen transition-colors duration-300 ${isDark ? 'bg-slate-950 text-slate-200' : 'bg-slate-50 text-slate-800'}`} dir="rtl">
-      
+      <div className="fixed top-0 left-0 w-full h-1.5 z-[60] bg-transparent">
+        <div 
+          className="h-full bg-gradient-to-r from-blue-500 via-purple-500 to-teal-500 transition-all duration-150 ease-out"
+          style={{ width: `${scrollProgress * 100}%` }}
+        ></div>
+      </div>
       {/* Theme Toggle */}
       <button 
         onClick={() => setIsDark(!isDark)}
@@ -141,6 +157,7 @@ export default function DidacticModulePage() {
                   <MechanismCard title="4. الإشهار أو العلنية" desc="تحديد واضح لما هو مطلوب (العقد الديدكتيكي)." />
                </div>
             </div>
+            <QuickQuiz section="formulation" />
           </div>
         )}
 
@@ -252,6 +269,7 @@ export default function DidacticModulePage() {
                
                <ExpandedConceptMap />
             </div>
+            <QuickQuiz section="conceptMap" />
           </div>
         )}
 
@@ -328,6 +346,7 @@ export default function DidacticModulePage() {
                    <div className="bg-white/10 p-4 rounded-xl"><h4 className="font-bold mb-2">الجاذبية</h4><p className="text-xs opacity-80">ألوان وأشكال تثير فضول الطفل.</p></div>
                 </div>
             </div>
+            <QuickQuiz section="didacticMeans" />
           </div>
         )}
       </main>
@@ -521,3 +540,89 @@ function TranspositionStep({ title, sub, icon, step, color }: any) {
 }
 function MechanismCard({ title, desc }: any) { return <div className="flex gap-4 p-5 bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm"><div className="text-blue-500 shrink-0"><CheckCircle size={20} /></div><div><h4 className="font-bold text-gray-800 dark:text-white">{title}</h4><p className="text-gray-600 dark:text-gray-400 text-sm">{desc}</p></div></div>; }
 function ArrowIcon({ className }: any) { return <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={className}><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>; }
+// ------------------- QUIZ COMPONENT -------------------
+function QuickQuiz({ section }: { section: string }) {
+  const [selected, setSelected] = useState<number | null>(null);
+  const [showResult, setShowResult] = useState(false);
+
+  useEffect(() => {
+    setSelected(null);
+    setShowResult(false);
+  }, [section]);
+
+  const quizzes: any = {
+    formulation: {
+      question: "ما المقصود بمفهوم 'النوسفير' (Noosphère)؟",
+      options: [
+        "طبقة الغلاف الجوي المحيطة بالأرض",
+        "الهيئة التي تختار المعرفة الواجب تدريسها",
+        "طريقة لتبسيط الدروس للأطفال"
+      ],
+      correct: 1,
+      feedback: "أحسنت! النوسفير هم الخبراء والمفتشون الذين يقررون المناهج."
+    },
+    conceptMap: {
+      question: "ما الفرق الجوهري بين الخريطة المفهومية والذهنية؟",
+      options: [
+        "الخريطة المفهومية تعتمد على الروابط المنطقية (أفعال)",
+        "الخريطة الذهنية تستخدم الألوان فقط",
+        "لا يوجد فرق، هما نفس الشيء"
+      ],
+      correct: 0,
+      feedback: "ممتاز! الخريطة المفهومية تتطلب 'قضايا' (جمل مفيدة) وليس مجرد تداعٍ للأفكار."
+    },
+    didacticMeans: {
+      question: "متى تصبح حبة البطاطس 'وسيلة ديدكتيكية'؟",
+      options: [
+        "عندما نأكلها في الاستراحة",
+        "عندما نستخدمها للكشف عن النشا في الدرس",
+        "عندما نرسمها على السبورة"
+      ],
+      correct: 1,
+      feedback: "صحيح! الوسيلة تكتسب صفتها من وظيفتها البيداغوجية لحظة الاستعمال."
+    }
+  };
+
+  const currentQuiz = quizzes[section];
+  if (!currentQuiz) return null;
+
+  return (
+    <div className="mt-16 bg-gradient-to-br from-slate-100 to-white dark:from-slate-800 dark:to-slate-900 p-8 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-lg relative overflow-hidden">
+      <div className="absolute top-0 right-0 p-4 opacity-10 text-6xl">?</div>
+      
+      <h3 className="text-xl font-bold mb-6 flex items-center gap-2 text-slate-800 dark:text-white">
+        <span className="bg-blue-600 text-white text-xs px-2 py-1 rounded">تقويم سريع</span>
+        {currentQuiz.question}
+      </h3>
+
+      <div className="space-y-3">
+        {currentQuiz.options.map((opt: string, idx: number) => (
+          <button
+            key={idx}
+            onClick={() => { setSelected(idx); setShowResult(true); }}
+            disabled={showResult}
+            className={`w-full text-right p-4 rounded-xl border transition-all ${
+              showResult 
+                ? idx === currentQuiz.correct 
+                  ? "bg-green-100 border-green-500 text-green-800 dark:bg-green-900/30 dark:text-green-300"
+                  : idx === selected 
+                    ? "bg-red-100 border-red-500 text-red-800 dark:bg-red-900/30 dark:text-red-300"
+                    : "opacity-50"
+                : "bg-white dark:bg-slate-800 hover:bg-slate-50 border-slate-200 dark:border-slate-700"
+            }`}
+          >
+            {opt}
+            {showResult && idx === currentQuiz.correct && <CheckCircle className="float-left text-green-600" size={20}/>}
+            {showResult && idx === selected && idx !== currentQuiz.correct && <AlertTriangle className="float-left text-red-600" size={20}/>}
+          </button>
+        ))}
+      </div>
+
+      {showResult && (
+        <div className={`mt-6 p-4 rounded-xl text-sm font-bold animate-fade-in ${selected === currentQuiz.correct ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'}`}>
+          {selected === currentQuiz.correct ? currentQuiz.feedback : "حاول مرة أخرى! راجع الفقرة أعلاه."}
+        </div>
+      )}
+    </div>
+  );
+}
