@@ -1094,113 +1094,245 @@ function DidacticGlossary() {
     </div>
   );
 }
-// ------------------- SIMULATOR COMPONENT (محاكي الوضعيات) -------------------
+// ------------------- SIMULATOR COMPONENT (المحاكي المطور + 10 وضعيات + عشوائية) -------------------
 function ProfessionalSimulator() {
+  // الحالة (State)
+  const [shuffledScenarios, setShuffledScenarios] = useState<any[]>([]);
   const [currentScenario, setCurrentScenario] = useState(0);
   const [showFeedback, setShowFeedback] = useState(false);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
+  const [isFinished, setIsFinished] = useState(false);
+  const [score, setScore] = useState(0);
 
-  const scenarios = [
+  // قاعدة بيانات الوضعيات (10 وضعيات)
+  const allScenarios = [
     {
+      id: 1,
       title: "العنف المدرسي",
-      situation: "أثناء شرحك للدرس، قام تلميذ بضرب زميله بشكل مفاجئ، مما أحدث فوضى عارمة في القسم. كيف تتصرف فوراً؟",
+      situation: "أثناء شرحك للدرس، قام تلميذ بضرب زميله بشكل مفاجئ، مما أحدث فوضى عارمة. كيف تتصرف فوراً؟",
       options: [
-        { id: 1, text: "أقوم بطرد التلميذ المعتدي فوراً لاستعادة الهدوء وحماية الآخرين.", isCorrect: false },
-        { id: 2, text: "أوقف الدرس، أتدخل لفك النزاع بحزم دون عنف، أطمئن الضحية، وأكتب تقريراً للإدارة بعد الحصة.", isCorrect: true },
-        { id: 3, text: "أتجاهل الأمر وأستمر في الشرح حتى لا يضيع وقت الحصة.", isCorrect: false }
+        { text: "أقوم بطرد التلميذ المعتدي فوراً لاستعادة الهدوء.", isCorrect: false },
+        { text: "أوقف الدرس، أتدخل لفك النزاع بحزم، أطمئن الضحية، وأحيل المعتدي للإدارة لاحقاً.", isCorrect: true },
+        { text: "أتجاهل الأمر وأستمر في الشرح.", isCorrect: false }
       ],
-      feedback: "الجواب الصحيح هو (2). الطرد ممنوع قانونياً (الهدر المدرسي). التجاهل يعتبر إخلالاً بالواجب. الإجراء السليم هو التدخل الفوري للحماية (Securité) ثم اتخاذ الإجراءات الإدارية لاحقاً (تقرير)."
+      feedback: "الجواب الصحيح هو (2). الطرد ممنوع قانونياً. الأولوية هي حماية المتعلمين (الأمن الجسدي) ثم اتخاذ الإجراءات الإدارية."
     },
     {
+      id: 2,
       title: "رفض التعلم",
-      situation: "تلميذ في الصفوف الخلفية يرفض إخراج أدواته والكتابة، ويضع رأسه على الطاولة طوال الحصة.",
+      situation: "تلميذ يرفض الكتابة ويضع رأسه على الطاولة طوال الحصة، رغم تنبيهك له.",
       options: [
-        { id: 1, text: "أجبره على الكتابة وأهدده بخصم النقط.", isCorrect: false },
-        { id: 2, text: "أتركه وشأنه ما دام لا يشوش على الآخرين.", isCorrect: false },
-        { id: 3, text: "أقترب منه بهدوء، أسأله عن السبب (قد يكون مريضاً أو يعاني مشكلة)، وأحاول تحفيزه بالمشاركة الشفهية.", isCorrect: true }
+        { text: "أجبره على الكتابة بالتهديد بخصم النقط.", isCorrect: false },
+        { text: "أتركه وشأنه ما دام هادئاً.", isCorrect: false },
+        { text: "أحاول فهم السبب بهدوء (قد يكون مريضاً) وأشركه شفهياً كبداية.", isCorrect: true }
       ],
-      feedback: "الجواب الصحيح هو (3). التهديد يولد العناد (تصعيد). التجاهل إهمال. المقاربة التربوية تقتضي فهم السبب (التواصل) وتنويع البيداغوجيا (الفارقية) لدمجه."
+      feedback: "الجواب الصحيح هو (3). التهديد يولد العناد. يجب البحث عن العائق (نفسي/صحي) وتنويع البيداغوجيا لاحتوائه."
     },
     {
+      id: 3,
       title: "الغش في الامتحان",
       situation: "ضبطت تلميذاً يستعمل الهاتف النقال للنقل أثناء فرض مراقب.",
       options: [
-        { id: 1, text: "أسحب منه الورقة والهاتف فوراً، وأمنحه صفراً، وأطرده.", isCorrect: false },
-        { id: 2, text: "أسحب منه الهاتف ووسيلة الغش، أترك له الورقة ليكمل الامتحان، وأكتب تقريراً في الموضوع للإدارة.", isCorrect: true },
-        { id: 3, text: "أنبهه شفوياً فقط وأتركه يكمل.", isCorrect: false }
+        { text: "أسحب الورقة والهاتف، أمنحه صفراً وأطرده.", isCorrect: false },
+        { text: "أسحب الهاتف ووسيلة الغش، أترك له الورقة ليكمل، وأكتب تقريراً للإدارة.", isCorrect: true },
+        { text: "أنبهه شفوياً فقط.", isCorrect: false }
       ],
-      feedback: "الجواب الصحيح هو (2). سحب الورقة والطرد إجراء غير قانوني في الفرض (يحرم التلميذ من حقه في التمدرس). الإجراء هو حجز وسيلة الغش ورفع تقرير لمجلس الانضباط ليتخذ القرار."
+      feedback: "الجواب الصحيح هو (2). حرمان التلميذ من إكمال الفرض غير قانوني. الإجراء هو حجز الأداة ورفع تقرير لمجلس الانضباط."
+    },
+    {
+      id: 4,
+      title: "التأخر المتكرر",
+      situation: "تلميذ يصل دائماً متأخراً بـ 15 دقيقة ويطرق الباب ليدخل.",
+      options: [
+        { text: "أمنعه من الدخول ليتعلم الانضباط.", isCorrect: false },
+        { text: "أقبله بشرط إحضار إذن الدخول، وأناقش حالته مع الإدارة والولي لاحقاً.", isCorrect: true },
+        { text: "أدخله دون أي تعليق.", isCorrect: false }
+      ],
+      feedback: "الجواب الصحيح هو (2). لا يجوز حرمان التلميذ من الحصة (الحق في التمدرس)، لكن يجب ضبط الغياب إدارياً ومعالجة الأسباب."
+    },
+    {
+      id: 5,
+      title: "اقتحام ولي أمر",
+      situation: "اقتحم أب غاضب القسم وبدأ يصرخ محتجاً على نقطة ابنه أمام التلاميذ.",
+      options: [
+        { text: "أصرخ في وجهه وأطرده من القسم.", isCorrect: false },
+        { text: "أطلب منه بهدوء وحزم التوجه للإدارة لمناقشة الأمر، حفاظاً على حرمة القسم.", isCorrect: true },
+        { text: "أناقشه أمام التلاميذ لأبرر النقطة.", isCorrect: false }
+      ],
+      feedback: "الجواب الصحيح هو (2). يجب الحفاظ على هدوء القسم وعدم الدخول في مشاداة. الإدارة هي المكان الطبيعي للنقاش."
+    },
+    {
+      id: 6,
+      title: "الفوارق التعلمية",
+      situation: "لاحظت أن فئة من القسم تنهي التمارين بسرعة وتصاب بالملل، بينما فئة أخرى لم تبدأ بعد.",
+      options: [
+        { text: "أنتظر الفئة المتعثرة حتى تنتهي.", isCorrect: false },
+        { text: "أعتمد البيداغوجيا الفارقية: أنشطة إضافية للمتفوقين ودعم فوري للمتعثرين.", isCorrect: true },
+        { text: "أطلب من المتفوقين الخروج للاستراحة.", isCorrect: false }
+      ],
+      feedback: "الجواب الصحيح هو (2). تدبير الفوارق يتطلب تكييف الأنشطة (Differenciation) ليبقى الجميع في حالة تعلم."
+    },
+    {
+      id: 7,
+      title: "حادثة مدرسية",
+      situation: "سقط تلميذ داخل القسم وأصيب بجرح في رأسه.",
+      options: [
+        { text: "أحمله فوراً بسيارتي إلى المستشفى.", isCorrect: false },
+        { text: "أخبر المدير فوراً (للاتصال بالإسعاف) وأقدم الإسعافات الأولية البسيطة دون تحريكه بعنف.", isCorrect: true },
+        { text: "أتصل بأسرته لتأتي لأخذه.", isCorrect: false }
+      ],
+      feedback: "الجواب الصحيح هو (2). نقل المصاب مسؤولية الوقاية المدنية (لتجنب مضاعفات النقل). دورك هو الإشعار وحماية التلميذ."
+    },
+    {
+      id: 8,
+      title: "الخطأ البيداغوجي",
+      situation: "أجاب تلميذ إجابة خاطئة أثارت ضحك زملائه.",
+      options: [
+        { text: "أنهره وأطلب منه الجلوس.", isCorrect: false },
+        { text: "أتجاهل الإجابة وأطلب من تلميذ نجيب تصحيحها.", isCorrect: false },
+        { text: "أمنع الضحك، وأستثمر الخطأ لمعرفة تمثلاته وبناء المعرفة الصحيحة (بيداغوجيا الخطأ).", isCorrect: true }
+      ],
+      feedback: "الجواب الصحيح هو (3). الخطأ هو منطلق للتعلم وليس جريمة. يجب تثمين المحاولة وحماية التلميذ من التنمر."
+    },
+    {
+      id: 9,
+      title: "مشكل البصر",
+      situation: "تلميذ يكثر من الوقوف والاقتراب من السبورة لنقل الدروس.",
+      options: [
+        { text: "أامره بالجلوس في مكانه.", isCorrect: false },
+        { text: "أقوم بتقريبه للصفوف الأمامية وأنصح الإدارة باستدعاء ولي أمره لفحص بصره.", isCorrect: true },
+        { text: "أكتب بخط كبير جداً من أجله فقط.", isCorrect: false }
+      ],
+      feedback: "الجواب الصحيح هو (2). هذا مؤشر على ضعف البصر. الحل البيداغوجي الفوري هو تغيير المكان، ثم الحل الطبي."
+    },
+    {
+      id: 10,
+      title: "التنمر (Bullying)",
+      situation: "لاحظت أن مجموعة من التلاميذ يسخرون باستمرار من تلميذ انطوائي في الساحة.",
+      options: [
+        { text: "لا أتدخل، مشاكل الساحة تخص الحراسة العامة.", isCorrect: false },
+        { text: "أخصص حصة للتوعية بخطورة التنمر وأطبق ميثاق القسم.", isCorrect: true },
+        { text: "أعاقب المجموعة بالعنف.", isCorrect: false }
+      ],
+      feedback: "الجواب الصحيح هو (2). المدرس مربي قبل كل شيء. يجب معالجة الظاهرة تربوياً (التحسيس) وقانونياً (الميثاق)."
     }
   ];
 
-  const handleSelect = (idx: number) => {
-    setSelectedOption(idx);
-    setShowFeedback(true);
+  // دالة الخلط العشوائي (Fisher-Yates Shuffle)
+  const shuffleQuestions = () => {
+    const shuffled = [...allScenarios].sort(() => Math.random() - 0.5);
+    setShuffledScenarios(shuffled);
+    setCurrentScenario(0);
+    setShowFeedback(false);
+    setSelectedOption(null);
+    setIsFinished(false);
+    setScore(0);
   };
 
+  // عند تحميل المكون لأول مرة، قم بخلط الأسئلة
+  useEffect(() => {
+    shuffleQuestions();
+  }, []);
+
+  // التعامل مع اختيار الجواب
+  const handleSelect = (idx: number, isCorrect: boolean) => {
+    if (showFeedback) return; // منع تغيير الجواب بعد الاختيار
+    setSelectedOption(idx);
+    setShowFeedback(true);
+    if (isCorrect) setScore(prev => prev + 1);
+  };
+
+  // الانتقال للسؤال التالي
   const nextScenario = () => {
-    if (currentScenario < scenarios.length - 1) {
+    if (currentScenario < shuffledScenarios.length - 1) {
       setCurrentScenario(curr => curr + 1);
       setShowFeedback(false);
       setSelectedOption(null);
     } else {
-      alert("انتهت الوضعيات! أحسنت.");
-      setCurrentScenario(0);
-      setShowFeedback(false);
-      setSelectedOption(null);
+      setIsFinished(true);
     }
   };
 
-  const currentData = scenarios[currentScenario];
+  // شاشة النهاية (إعادة المحاولة)
+  if (isFinished) {
+    return (
+      <div className="max-w-3xl mx-auto animate-scale-in p-8 text-center bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 mt-8">
+        <div className="mb-6 inline-block p-6 rounded-full bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600">
+          <Briefcase size={48} />
+        </div>
+        <h2 className="text-3xl font-bold text-slate-800 dark:text-white mb-4">انتهت الجولة التدريبية!</h2>
+        <p className="text-xl text-slate-600 dark:text-slate-300 mb-8">
+          لقد أجبت بشكل صحيح على <span className="font-bold text-indigo-600 text-2xl">{score}</span> من <span className="font-bold text-2xl">{shuffledScenarios.length}</span> وضعيات.
+        </p>
+        
+        <button 
+          onClick={shuffleQuestions}
+          className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-white transition-all duration-200 bg-indigo-600 font-lg rounded-xl hover:bg-indigo-700 hover:shadow-lg hover:-translate-y-1"
+        >
+          <span className="mr-2"><Activity size={20}/></span>
+          إعادة المحاولة (وضعيات جديدة)
+          <div className="absolute inset-0 rounded-xl ring-2 ring-white/20 group-hover:ring-white/40 animate-pulse"></div>
+        </button>
+      </div>
+    );
+  }
+
+  // التأكد من وجود بيانات قبل العرض
+  if (shuffledScenarios.length === 0) return null;
+
+  const currentData = shuffledScenarios[currentScenario];
 
   return (
-    <div className="max-w-3xl mx-auto animate-fade-in p-4">
+    <div className="max-w-3xl mx-auto p-4">
       {/* بطاقة الوضعية */}
-      <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-xl overflow-hidden border-2 border-slate-100 dark:border-slate-700">
+      <div 
+        key={currentScenario} // هذا المفتاح مهم جداً لإعادة تشغيل الأنيميشن عند تغيير السؤال
+        className="bg-white dark:bg-slate-800 rounded-3xl shadow-xl overflow-hidden border-2 border-slate-100 dark:border-slate-700 animate-fade-in"
+      >
         
         {/* الرأس */}
         <div className="bg-slate-900 text-white p-6 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
           <div className="relative z-10 flex items-center justify-between">
-             <h2 className="text-2xl font-bold flex items-center gap-2">
+             <h2 className="text-xl md:text-2xl font-bold flex items-center gap-2">
                <AlertTriangle className="text-yellow-400" />
-               وضعية مهنية: {currentData.title}
+               {currentData.title}
              </h2>
-             <span className="bg-white/20 px-3 py-1 rounded-full text-sm">
-               {currentScenario + 1} / {scenarios.length}
+             <span className="bg-white/20 px-3 py-1 rounded-full text-sm font-mono">
+               {currentScenario + 1} / {shuffledScenarios.length}
              </span>
           </div>
         </div>
 
         {/* جسم الوضعية */}
-        <div className="p-8">
-          <p className="text-xl text-slate-700 dark:text-slate-300 font-medium leading-relaxed mb-8">
+        <div className="p-6 md:p-8">
+          <p className="text-lg md:text-xl text-slate-700 dark:text-slate-300 font-medium leading-relaxed mb-8">
             {currentData.situation}
           </p>
 
           {/* الخيارات */}
           <div className="space-y-4">
-            {currentData.options.map((opt, idx) => (
+            {currentData.options.map((opt: any, idx: number) => (
               <button
                 key={idx}
                 disabled={showFeedback}
-                onClick={() => handleSelect(idx)}
-                className={`w-full text-right p-5 rounded-xl border-2 transition-all flex items-center gap-4 group
+                onClick={() => handleSelect(idx, opt.isCorrect)}
+                className={`w-full text-right p-5 rounded-xl border-2 transition-all flex items-center gap-4 group relative overflow-hidden
                   ${showFeedback 
                     ? (opt.isCorrect 
                         ? 'border-green-500 bg-green-50 dark:bg-green-900/20' 
                         : (selectedOption === idx ? 'border-red-500 bg-red-50 dark:bg-red-900/20' : 'border-slate-200 opacity-50')
                       )
-                    : 'border-slate-200 dark:border-slate-700 hover:border-indigo-500 hover:shadow-md bg-white dark:bg-slate-800'
+                    : 'border-slate-200 dark:border-slate-700 hover:border-indigo-500 hover:shadow-md bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700'
                   }
                 `}
               >
-                <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm shrink-0
-                  ${showFeedback && opt.isCorrect ? 'bg-green-500 text-white' : 'bg-slate-100 text-slate-500 group-hover:bg-indigo-100 group-hover:text-indigo-600'}
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm shrink-0 transition-colors
+                  ${showFeedback && opt.isCorrect ? 'bg-green-500 text-white' : 'bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-300 group-hover:bg-indigo-100 group-hover:text-indigo-600'}
                 `}>
                   {idx + 1}
                 </div>
-                <span className="text-lg font-medium text-slate-800 dark:text-slate-200">
+                <span className="text-base md:text-lg font-medium text-slate-800 dark:text-slate-200 relative z-10">
                   {opt.text}
                 </span>
               </button>
@@ -1210,20 +1342,22 @@ function ProfessionalSimulator() {
           {/* التغذية الراجعة (التصحيح) */}
           {showFeedback && (
             <div className="mt-8 animate-scale-in">
-              <div className={`p-6 rounded-2xl border-r-4 ${currentData.options[selectedOption!].isCorrect ? 'bg-green-50 border-green-500' : 'bg-red-50 border-red-500'}`}>
-                <h4 className={`font-bold text-lg mb-2 ${currentData.options[selectedOption!].isCorrect ? 'text-green-800' : 'text-red-800'}`}>
+              <div className={`p-6 rounded-2xl border-r-4 shadow-sm ${currentData.options[selectedOption!].isCorrect ? 'bg-green-50 dark:bg-green-900/10 border-green-500' : 'bg-red-50 dark:bg-red-900/10 border-red-500'}`}>
+                <h4 className={`font-bold text-lg mb-2 flex items-center gap-2 ${currentData.options[selectedOption!].isCorrect ? 'text-green-700 dark:text-green-400' : 'text-red-700 dark:text-red-400'}`}>
+                   {currentData.options[selectedOption!].isCorrect ? <CheckCircle size={20}/> : <AlertTriangle size={20}/>}
                    {currentData.options[selectedOption!].isCorrect ? 'تصرف سليم تربوياً ✅' : 'تصرف يحتاج مراجعة ❌'}
                 </h4>
-                <p className="text-slate-700 leading-7">
+                <p className="text-slate-700 dark:text-slate-300 leading-7 text-justify">
                   {currentData.feedback}
                 </p>
               </div>
               
               <button 
                 onClick={nextScenario}
-                className="mt-6 w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-lg shadow-lg shadow-indigo-200 dark:shadow-none transition-all"
+                className="mt-6 w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-lg shadow-lg shadow-indigo-200 dark:shadow-none transition-all flex items-center justify-center gap-2 hover:-translate-y-1"
               >
-                الوضعية التالية ←
+                {currentScenario < shuffledScenarios.length - 1 ? 'الوضعية التالية' : 'إظهار النتيجة النهائية'} 
+                <ArrowRight className="rotate-180" size={20} />
               </button>
             </div>
           )}
