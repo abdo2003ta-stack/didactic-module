@@ -8,7 +8,7 @@ import {
   Microscope, Globe, MonitorPlay, Zap, FlaskConical, Scale, 
   AlertTriangle, Target, MousePointerClick, Network, Split, GitGraph, ShieldCheck, Briefcase, Trophy, RefreshCw,
   Rabbit, Cat, Leaf, Utensils, Pencil, Search, Library, X, UserCheck, Users,
-  History as HistoryIcon, Database, User
+  History as HistoryIcon, Database, User, Info
 } from 'lucide-react';
 
 // ------------------- TYPES -------------------
@@ -1558,8 +1558,6 @@ function ProfessionalSimulator() {
   );
 }
 // ------------------- COMPONENT: INTERACTIVE TRIANGLE (المثلث الديدكتيكي - مصحح) -------------------
-import React, { useState } from 'react';
-import { BookOpen, UserCheck, Users, Info } from 'lucide-react';
 
 function DidacticTriangle() {
   const [activePart, setActivePart] = useState<string | null>(null);
