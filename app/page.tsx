@@ -111,7 +111,7 @@ function DidacticModulePage() {
           </div>
           <h1 className="text-3xl md:text-5xl font-extrabold mb-6 tracking-tight"> الديدكتيك (ابتدائي)</h1>
           <p className="text-lg md:text-xl text-indigo-100 font-light max-w-3xl mx-auto mt-4 opacity-90">
-             من إعداد عبد الله الطلال
+             من إعداد عبد الله AET
           </p>
           
           <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border border-white/20 dark:border-slate-700/30 shadow-2xl rounded-full px-6 py-3 flex items-center gap-4 z-50 transition-all duration-300 hover:scale-105 hover:bg-white/90 dark:hover:bg-slate-900/90">
@@ -486,7 +486,7 @@ function DidacticModulePage() {
       </main>
       
       <footer className="bg-slate-900 text-slate-400 py-12 mt-24 border-t border-slate-800 text-center">
-         <p>© {new Date().getFullYear()} بوابة عبد الله الطلال.AET</p>
+         <p>© {new Date().getFullYear()} AET</p>
          {/* الزر العائم (FAB) - انسخ هذا الكود وضعه بدلاً من القديم */}
       
       </footer>
