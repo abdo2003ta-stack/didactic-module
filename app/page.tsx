@@ -6,11 +6,10 @@ import {
   Activity, Quote, ArrowRight, Sun, Moon, Sprout, Droplets, 
   Microscope, Globe, MonitorPlay, Zap, FlaskConical, Scale, 
   AlertTriangle, Target, MousePointerClick, Network, Split, GitGraph, ShieldCheck,
-  Rabbit, Cat, Leaf, Utensils, Pencil
+  Rabbit, Cat, Leaf, Utensils, Pencil, Search, Library // <--- تمت الإضافة هنا
 } from 'lucide-react';
-
 // ------------------- TYPES -------------------
-type Section = 'formulation' | 'conceptMap' | 'didacticMeans' | 'exam';
+type Section = 'formulation' | 'conceptMap' | 'didacticMeans' | 'exam' | 'glossary';
 
 // ------------------- MAIN COMPONENT -------------------
 export default function DidacticModulePage() {
@@ -81,6 +80,7 @@ export default function DidacticModulePage() {
             />
             
             {/* ... نهاية القائمة ... */}
+            <NavButton label="5. القاموس" icon={<Library size={18} />} isActive={activeSection === 'glossary'} onClick={() => setActiveSection('glossary')} activeColor="bg-orange-500" />
           </div>
         </div>
       </header>
@@ -378,6 +378,18 @@ export default function DidacticModulePage() {
 
             {/* هنا يتم استدعاء الأسئلة */}
             <QuickQuiz section="exam" />
+          </div>
+        )}
+        {/* ================= القسم 5: القاموس ================= */}
+        {activeSection === 'glossary' && (
+          <div className="animate-fade-in">
+             <SectionHeader 
+               title="القاموس الديدكتيكي" 
+               subtitle="مصطلحات ومفاهيم أساسية مشروحة ببساطة"
+               icon={<Library className="text-orange-500" size={32} />}
+               colorClass="bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300"
+             />
+             <DidacticGlossary />
           </div>
         )}
       </main>
@@ -880,6 +892,63 @@ function QuickQuiz({ section }: { section: string }) {
           </div>
         </div>
       )}
+    </div>
+  );
+}
+// ------------------- GLOSSARY COMPONENT (القاموس) -------------------
+function DidacticGlossary() {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const terms = [
+    { term: "النقل الديدكتيكي (Transposition)", def: "عملية تحويل المعرفة العالمة (الأكاديمية) إلى معرفة قابلة للتدريس لتناسب مستوى المتعلمين." },
+    { term: "العقد الديدكتيكي (Contrat)", def: "مجموع القواعد الضمنية التي تحدد التزامات وحقوق كل من المدرس والمتعلم تجاه المعرفة." },
+    { term: "التمثلات (Représentations)", def: "التصورات والأفكار المسبقة التي يحملها المتعلم حول موضوع معين، وقد تكون خاطئة وتشكل عائقاً." },
+    { term: "الوضعية المشكلة (Situation-Problème)", def: "سياق تعليمي يضع المتعلم أمام عائق معرفي لا يملك حلاً جاهزاً له، مما يدفعه للبحث وبناء المعرفة." },
+    { term: "الصراع المعرفي (Conflit Cognitif)", def: "حالة اضطراب تحدث عندما تصطدم مكتسبات المتعلم السابقة بمعلومات جديدة تناقضها." },
+    { term: "المنطقة القريبة للنمو (ZPD)", def: "المسافة بين ما يستطيع المتعلم فعله بمفرده وما يستطيع فعله بمساعدة (فيجوتسكي)." },
+    { term: "النوسفير (Noosphère)", def: "الغلاف الجوي المعرفي (الخبراء، المفتشون، السياسيون) الذين يختارون المعرفة الواجب تدريسها." },
+    { term: "التقويم التكويني (Formative)", def: "إجراء عملي يرافق العملية التعليمية بهدف اكتشاف التعثرات وتصحيحها فوراً." },
+    { term: "البيداغوجيا الفارقية", def: "مقاربة تربوية تأخذ بعين الاعتبار الفروق الفردية بين المتعلمين (الذكاء، الإيقاع، الميول)." },
+    { term: "المثلث الديدكتيكي", def: "نموذج يوضح العلاقات الثلاثية بين (المدرس، المتعلم، والمعرفة) والتفاعلات بينهم." },
+    { term: "العائق الإبستيمولوجي", def: "صعوبة تعترض المتعلم، تعود إلى طبيعة المعرفة نفسها أو تطورها التاريخي (باشلار)." },
+    { term: "التفويض (Dévolution)", def: "العملية التي يسلم بها المدرس مسؤولية حل المشكلة للمتعلم ليتبناها كقضية شخصية." }
+  ];
+
+  // تصفية النتائج حسب البحث
+  const filteredTerms = terms.filter(item => 
+    item.term.includes(searchTerm) || item.def.includes(searchTerm)
+  );
+
+  return (
+    <div className="animate-fade-in max-w-4xl mx-auto min-h-[500px]">
+       {/* شريط البحث */}
+       <div className="relative mb-12">
+         <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
+           <Search className="text-orange-500" size={24} />
+         </div>
+         <input 
+           type="text" 
+           placeholder="ابحث عن مصطلح (مثلاً: العقد، النقل...)" 
+           className="w-full p-4 pr-12 rounded-2xl border-2 border-orange-100 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-lg focus:outline-none focus:border-orange-500 transition-colors text-lg"
+           onChange={(e) => setSearchTerm(e.target.value)}
+         />
+       </div>
+
+       {/* شبكة البطاقات */}
+       <div className="grid md:grid-cols-2 gap-6">
+         {filteredTerms.length > 0 ? (
+           filteredTerms.map((item, idx) => (
+             <div key={idx} className="bg-white dark:bg-slate-900 p-6 rounded-2xl border-r-4 border-orange-500 shadow-sm hover:shadow-md transition-shadow">
+               <h3 className="font-bold text-lg text-slate-800 dark:text-orange-100 mb-2">{item.term}</h3>
+               <p className="text-slate-600 dark:text-slate-400 text-sm leading-7">{item.def}</p>
+             </div>
+           ))
+         ) : (
+           <div className="col-span-2 text-center text-slate-400 py-10">
+             لا توجد نتائج مطابقة لبحثك.
+           </div>
+         )}
+       </div>
     </div>
   );
 }
