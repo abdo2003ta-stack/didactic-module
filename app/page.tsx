@@ -381,20 +381,7 @@ export default function DidacticModulePage() {
           </div>
         )}
       </main>
-      <button
-        onClick={() => setActiveSection('exam')} 
-        className={`fixed bottom-6 left-6 p-4 rounded-full shadow-2xl transition-all duration-300 z-50 flex items-center gap-2 group ${
-          activeSection === 'exam' 
-            ? 'bg-slate-800 text-white scale-0' 
-            : 'bg-red-600 hover:bg-red-700 text-white hover:scale-110'
-        }`}
-      >
-        <Target size={24} />
-        <span className="max-w-0 overflow-hidden group-hover:max-w-xs transition-all duration-300 ease-in-out whitespace-nowrap font-bold text-sm">
-          الامتحان الشامل
-        </span>
-      </button>
-
+      
       <footer className="bg-slate-900 text-slate-400 py-12 mt-24 border-t border-slate-800 text-center">
          <p>© {new Date().getFullYear()} بوابة عبد الله الطلال.AET</p>
          {/* الزر العائم (FAB) - انسخ هذا الكود وضعه بدلاً من القديم */}
