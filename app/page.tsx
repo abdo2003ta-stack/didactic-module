@@ -114,9 +114,9 @@ function DidacticModulePage() {
               <BookOpen size={48} className="text-indigo-200" />
             </div>
           </div>
-          <h1 className="text-3xl md:text-5xl font-extrabold mb-6 tracking-tight">مجزوءة الديدكتيك (ابتدائي)</h1>
+          <h1 className="text-3xl md:text-5xl font-extrabold mb-6 tracking-tight"> الديدكتيك (ابتدائي)</h1>
           <p className="text-lg md:text-xl text-indigo-100 font-light max-w-3xl mx-auto mt-4 opacity-90">
-             مقاربة تحليلية شاملة: من النقل الديدكتيكي إلى هندسة التعلمات
+             من إعداد عبد الله الطلال
           </p>
           
           <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border border-white/20 dark:border-slate-700/30 shadow-2xl rounded-full px-6 py-3 flex items-center gap-4 z-50 transition-all duration-300 hover:scale-105 hover:bg-white/90 dark:hover:bg-slate-900/90">
