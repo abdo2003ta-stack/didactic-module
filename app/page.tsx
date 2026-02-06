@@ -98,12 +98,7 @@ function DidacticModulePage() {
         ></div>
       </div>
       {/* Theme Toggle */}
-      <button 
-        onClick={() => setIsDark(!isDark)}
-        className="fixed top-4 left-4 z-50 p-3 rounded-full bg-white dark:bg-slate-800 shadow-lg border border-slate-200 dark:border-slate-700 hover:scale-110 transition-transform"
-      >
-        {isDark ? <Sun size={20} className="text-yellow-400" /> : <Moon size={20} className="text-slate-600" />}
-      </button>
+      
 
       {/* ================= HEADER ================= */}
       <header className="bg-gradient-to-br from-slate-900 via-indigo-900 to-blue-900 text-white shadow-2xl relative overflow-hidden">
