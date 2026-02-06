@@ -601,51 +601,83 @@ function TranspositionStep({ title, sub, icon, step, color }: any) {
 }
 function MechanismCard({ title, desc }: any) { return <div className="flex gap-4 p-5 bg-white dark:bg-slate-900 rounded-2xl border border-gray-100 dark:border-slate-800 shadow-sm"><div className="text-blue-500 shrink-0"><CheckCircle size={20} /></div><div><h4 className="font-bold text-gray-800 dark:text-white">{title}</h4><p className="text-gray-600 dark:text-gray-400 text-sm">{desc}</p></div></div>; }
 function ArrowIcon({ className }: any) { return <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className={className}><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>; }
-// ------------------- QUIZ COMPONENT -------------------
 function QuickQuiz({ section }: { section: string }) {
+  const [currentQIndex, setCurrentQIndex] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
   const [showResult, setShowResult] = useState(false);
+  const [score, setScore] = useState(0);
+  const [isFinished, setIsFinished] = useState(false);
 
   useEffect(() => {
+    setCurrentQIndex(0);
     setSelected(null);
     setShowResult(false);
+    setScore(0);
+    setIsFinished(false);
   }, [section]);
 
   const quizzes: any = {
-    formulation: {
-      question: "ما المقصود بمفهوم 'النوسفير' (Noosphère)؟",
-      options: [
-        "طبقة الغلاف الجوي المحيطة بالأرض",
-        "الهيئة التي تختار المعرفة الواجب تدريسها",
-        "طريقة لتبسيط الدروس للأطفال"
-      ],
-      correct: 1,
-      feedback: "أحسنت! النوسفير هم الخبراء والمفتشون الذين يقررون المناهج."
-    },
-    conceptMap: {
-      question: "ما الفرق الجوهري بين الخريطة المفهومية والذهنية؟",
-      options: [
-        "الخريطة المفهومية تعتمد على الروابط المنطقية (أفعال)",
-        "الخريطة الذهنية تستخدم الألوان فقط",
-        "لا يوجد فرق، هما نفس الشيء"
-      ],
-      correct: 0,
-      feedback: "ممتاز! الخريطة المفهومية تتطلب 'قضايا' (جمل مفيدة) وليس مجرد تداعٍ للأفكار."
-    },
-    didacticMeans: {
-      question: "متى تصبح حبة البطاطس 'وسيلة ديدكتيكية'؟",
-      options: [
-        "عندما نأكلها في الاستراحة",
-        "عندما نستخدمها للكشف عن النشا في الدرس",
-        "عندما نرسمها على السبورة"
-      ],
-      correct: 1,
-      feedback: "صحيح! الوسيلة تكتسب صفتها من وظيفتها البيداغوجية لحظة الاستعمال."
-    },
-    // ... (تأكد من وجود فاصلة بعد القائمة التي تسبق هذا الكود) ...
-
+    formulation: [
+      {
+        question: "ما المقصود بمفهوم 'النوسفير' (Noosphère)؟",
+        options: ["طبقة الغلاف الجوي المحيطة بالأرض", "الهيئة التي تختار المعرفة الواجب تدريسها", "طريقة لتبسيط الدروس للأطفال"],
+        correct: 1,
+        feedback: "أحسنت! النوسفير هم الخبراء والمفتشون الذين يقررون المناهج."
+      },
+      {
+        question: "أي مرحلة تلي مباشرة 'المعرفة العالمة' في النقل الديدكتيكي؟",
+        options: ["المعرفة المكتسبة", "المعرفة المدرسة", "المعرفة الواجب تدريسها"],
+        correct: 2,
+        feedback: "صحيح! يتم تحويل المعرفة العالمة أولاً إلى معرفة واجب تدريسها."
+      },
+      {
+        question: "ماذا نعني بـ 'نزع الطابع الشخصي' عن المعرفة؟",
+        options: ["فصل المعرفة عن الباحث وظروف اكتشافها", "منع التلاميذ من التعبير عن آرائهم", "جعل الدرس مملاً وبدون روح"],
+        correct: 0,
+        feedback: "ممتاز! العلم موضوعي، لذلك يجب فصله عن ذاتية العالم."
+      }
+    ],
+    conceptMap: [
+      {
+        question: "ما الفرق الجوهري بين الخريطة المفهومية والذهنية؟",
+        options: ["الخريطة المفهومية تعتمد على الروابط المنطقية (أفعال)", "الخريطة الذهنية تستخدم الألوان فقط", "لا يوجد فرق، هما نفس الشيء"],
+        correct: 0,
+        feedback: "ممتاز! الخريطة المفهومية تتطلب 'قضايا' (جمل مفيدة)."
+      },
+      {
+        question: "من هو مؤسس نظرية الخرائط المفهومية؟",
+        options: ["توني بوزان (Tony Buzan)", "جوزيف نوفاك (Joseph Novak)", "جان بياجيه (Jean Piaget)"],
+        correct: 1,
+        feedback: "صحيح! نوفاك هو المؤسس."
+      },
+      {
+        question: "ما هي البنية الهندسية للخريطة المفهومية؟",
+        options: ["إشعاعية (من المركز للأطراف)", "هرمية (من العام إلى الخاص)", "عشوائية (بدون نظام)"],
+        correct: 1,
+        feedback: "أحسنت! تبدأ بالمفهوم الأكثر شمولاً في الأعلى."
+      }
+    ],
+    didacticMeans: [
+      {
+        question: "متى تصبح حبة البطاطس 'وسيلة ديدكتيكية'؟",
+        options: ["عندما نأكلها في الاستراحة", "عندما نستخدمها للكشف عن النشا في الدرس", "عندما نرسمها على السبورة"],
+        correct: 1,
+        feedback: "صحيح! الوسيلة تكتسب صفتها من وظيفتها البيداغوجية."
+      },
+      {
+        question: "لماذا تعتبر الوسائل ضرورية في المرحلة الابتدائية؟",
+        options: ["لأن الأطفال يحبون اللعب فقط", "لأن الطفل يمر بمرحلة العمليات المحسوسة", "لأنها تزين القسم"],
+        correct: 1,
+        feedback: "بالضبط! حسب بياجيه، الطفل يحتاج للملموس ليدرك المجرد."
+      },
+      {
+        question: "أي من التالي يعتبر معياراً أساسياً لاختيار الوسيلة؟",
+        options: ["أن تكون غالية الثمن", "أن تكون معقدة التركيب", "الأمان والمتانة"],
+        correct: 2,
+        feedback: "طبعاً! سلامة المتعلم هي الأولوية القصوى."
+      }
+    ],
     exam: [
-      // --- المستوى 1: تذكر ومفاهيم أساسية ---
       {
         question: "1. ما هو تعريف 'الديدكتيك' باختصار؟",
         options: ["علم التربية العام", "فن التدريس ومنهجية تدريس مادة معينة", "علم النفس التربوي"],
@@ -656,7 +688,7 @@ function QuickQuiz({ section }: { section: string }) {
         question: "2. ما هي أقطاب 'المثلث الديدكتيكي'؟",
         options: ["المدرس، المتعلم، الإدارة", "المدرس، المتعلم، المعرفة", "المدرسة، الأسرة، المجتمع"],
         correct: 1,
-        feedback: "أحسنت. المثلث يربط بين الفواعل الثلاثة الأساسية في العملية التعليمية."
+        feedback: "أحسنت. المثلث يربط بين الفواعل الثلاثة الأساسية."
       },
       {
         question: "3. ماذا نسمي المعرفة الموجودة في الكتب الجامعية والمراكز البحثية؟",
@@ -676,23 +708,21 @@ function QuickQuiz({ section }: { section: string }) {
         correct: 2,
         feedback: "بالضبط. الطفل يحتاج للملموس ليفهم المجرد."
       },
-
-      // --- المستوى 2: الفهم والاستيعاب ---
       {
         question: "6. ما الفرق بين الديدكتيك والبيداغوجيا؟",
-        options: ["لا يوجد فرق", "الديدكتيك يهتم بالمادة (المعرفي)، والبيداغوجيا تهتم بالعلاقة (التواصلي/التربوي)", "البيداغوجيا فرع من الديدكتيك"],
+        options: ["لا يوجد فرق", "الديدكتيك يهتم بالمادة، والبيداغوجيا تهتم بالعلاقة التربوية", "البيداغوجيا فرع من الديدكتيك"],
         correct: 1,
-        feedback: "رائع. الديدكتيك 'موضوعاتي' (Subject-specific)، والبيداغوجيا 'عامة'."
+        feedback: "رائع. الديدكتيك 'موضوعاتي'، والبيداغوجيا 'عامة'."
       },
       {
         question: "7. ماذا نقصد بـ 'العقد الديدكتيكي'؟",
-        options: ["عقد عمل يوقعه المدرس", "مجموع القواعد الضمنية التي تحدد أدوار المدرس والمتعلم تجاه المعرفة", "اتفاقية بين المدرسة والآباء"],
+        options: ["عقد عمل يوقعه المدرس", "مجموع القواعد الضمنية التي تحدد الأدوار", "اتفاقية بين المدرسة والآباء"],
         correct: 1,
         feedback: "صحيح (Brousseau). هو التوقعات المتبادلة بين الطرفين."
       },
       {
         question: "8. لماذا نعتبر 'التمثلات' (Representations) مهمة؟",
-        options: ["لأنها أخطاء يجب مسحها", "لأنها بنية تفكير المتعلم التي يجب الانطلاق منها لتصحيحها", "لأنها تدل على ذكاء التلميذ"],
+        options: ["لأنها أخطاء يجب مسحها", "لأنها بنية تفكير المتعلم التي يجب الانطلاق منها", "لأنها تدل على ذكاء التلميذ"],
         correct: 1,
         feedback: "أحسنت. التعلم هو سيرورة هدم وبناء للتمثلات."
       },
@@ -704,33 +734,31 @@ function QuickQuiz({ section }: { section: string }) {
       },
       {
         question: "10. ما هي 'اليقظة الديدكتيكية'؟",
-        options: ["أن لا ينام المدرس في القسم", "قدرة المدرس على الانتباه للصعوبات غير المتوقعة وتعديل خطته فورياً", "مراقبة المدير للمدرسين"],
+        options: ["أن لا ينام المدرس في القسم", "قدرة المدرس على الانتباه للصعوبات وتعديل خطته", "مراقبة المدير للمدرسين"],
         correct: 1,
         feedback: "صحيح. هي وعي المدرس المستمر بما يحدث لحظياً أثناء الدرس."
       },
-
-      // --- المستوى 3: التحليل والتطبيق ---
       {
         question: "11. تلميذ أجاب إجابة خاطئة، لكنها منطقية من وجهة نظره. هذا يسمى:",
         options: ["غباء", "عائقاً إبستيمولوجياً", "قلة انتباه"],
         correct: 1,
-        feedback: "صحيح (Bachelard). الخطأ هنا جزء من مسار المعرفة وليس فشلاً."
+        feedback: "صحيح (Bachelard). الخطأ هنا جزء من مسار المعرفة."
       },
       {
-        question: "12. عندما يقوم المدرس بحل التمرين بدلاً من التلميذ لأنه تأخر، فهذا يعتبر:",
+        question: "12. عندما يقوم المدرس بحل التمرين بدلاً من التلميذ، فهذا يعتبر:",
         options: ["مساعدة مشكورة", "انزلاقاً ديدكتيكياً (أثر جوردان)", "تدبيراً جيداً للوقت"],
         correct: 1,
-        feedback: "ممتاز. هذا يسمى 'أثر جوردان'، حيث يتنازل المدرس عن هدف التعلم لإنهاء الدرس."
+        feedback: "ممتاز. المدرس يتنازل عن هدف التعلم لإنهاء الدرس."
       },
       {
-        question: "13. في 'نظرية الوضعيات'، مرحلة 'الصياغة' (Formulation) تتطلب:",
-        options: ["العمل الفردي الصامت", "العمل في مجموعات لتبادل الرسائل وصياغة الحل", "كتابة الدرس في الدفتر"],
+        question: "13. في 'نظرية الوضعيات'، مرحلة 'الصياغة' تتطلب:",
+        options: ["العمل الفردي الصامت", "العمل في مجموعات لتبادل الرسائل", "كتابة الدرس في الدفتر"],
         correct: 1,
         feedback: "أحسنت. الصياغة تتطلب مرسلاً ومستقبلاً ولغة مشتركة."
       },
       {
         question: "14. عملية 'نزع السياق' (Décontextualisation) تعني:",
-        options: ["إعطاء أمثلة من الواقع", "تجريد المعلومة من ظروف اكتشافها لتصبح عامة", "نسيان الدرس"],
+        options: ["إعطاء أمثلة من الواقع", "تجريد المعلومة من ظروف اكتشافها", "نسيان الدرس"],
         correct: 1,
         feedback: "صحيح. هي الخطوة الثانية في النقل الديدكتيكي."
       },
@@ -738,15 +766,13 @@ function QuickQuiz({ section }: { section: string }) {
         question: "15. المدرس الذي يعتمد فقط على الكتاب المدرسي دون تصرف، يغفل مرحلة:",
         options: ["المعرفة العالمة", "المعرفة المدرسة (تخطيط المدرس)", "المعرفة المكتسبة"],
         correct: 1,
-        feedback: "بالضبط. الكتاب هو 'معرفة واجب تدريسها'، والمدرس يجب أن يحولها لـ 'معرفة مدرسة'."
+        feedback: "بالضبط. الكتاب هو 'معرفة واجب تدريسها'."
       },
-
-      // --- المستوى 4: التركيب والوضعيات المعقدة ---
       {
-        question: "16. مفهوم 'التفويض' (Dévolution) عند بروسو يعني:",
-        options: ["أن يشرح المدرس كل شيء", "أن يورط المدرس المتعلم في الوضعية ليتحمل مسؤولية الحل", "أن يفوض المدرس تلميذاً للشرح"],
+        question: "16. مفهوم 'التفويض' (Dévolution) يعني:",
+        options: ["أن يشرح المدرس كل شيء", "نقل مسؤولية الحل للمتعلم", "أن يفوض المدرس تلميذاً للشرح"],
         correct: 1,
-        feedback: "رائع. الديفوليوسيون هو نقل مسؤولية التعلم للمتعلم."
+        feedback: "رائع. الديفوليوسيون هو توريط المتعلم في الوضعية."
       },
       {
         question: "17. أي نوع من التقويم يهتم بـ 'توجيه' المتعلم وعلاج الثغرات أثناء الدرس؟",
@@ -758,61 +784,128 @@ function QuickQuiz({ section }: { section: string }) {
         question: "18. المثلث الديدكتيكي 'الموسع' يضيف قطباً رابعاً هو:",
         options: ["الأسرة", "الوضعية/السياق", "التكنولوجيا"],
         correct: 1,
-        feedback: "أحسنت. لا يمكن فهم التفاعل دون استحضار 'الوضعية' أو السياق."
+        feedback: "أحسنت. لا يمكن فهم التفاعل دون استحضار 'الوضعية'."
       },
       {
         question: "19. 'أثر توباز' (Effet Topaze) يحدث عندما:",
-        options: ["يصعب المدرس الأسئلة", "يلمح المدرس للإجابة حتى لا يحرج التلميذ، فيضيع التعلم", "يغادر التلميذ القسم"],
+        options: ["يصعب المدرس الأسئلة", "يلمح المدرس للإجابة حتى لا يحرج التلميذ", "يغادر التلميذ القسم"],
         correct: 1,
         feedback: "ممتاز. المدرس يقوم بالعمل بدلاً من التلميذ بشكل خفي."
       },
       {
         question: "20. الغاية القصوى من الديدكتيك هي الوصول بالمتعلم إلى:",
-        options: ["الحفظ التام", "الاستقلالية والقدرة على إعادة استثمار المعرفة (النقل الديدكتيكي الداخلي)", "الحصول على نقطة جيدة"],
+        options: ["الحفظ التام", "الاستقلالية والقدرة على إعادة استثمار المعرفة", "الحصول على نقطة جيدة"],
         correct: 1,
-        feedback: "ختامها مسك! الهدف هو أن يصبح المتعلم قادراً على استخدام المعرفة في سياقات جديدة."
+        feedback: "ختامها مسك! الهدف هو أن يصبح المتعلم قادراً على استخدام المعرفة."
       }
     ]
   };
 
-  const currentQuiz = quizzes[section];
-  if (!currentQuiz) return null;
+  const currentQuestions = quizzes[section];
+
+  // هذا السطر مهم جداً لمنع الشاشة البيضاء إذا حدث خطأ في الاسم
+  if (!currentQuestions) return <div className="p-8 text-center text-red-500">حدث خطأ في تحميل الأسئلة.</div>;
+  
+  const currentQ = currentQuestions[currentQIndex];
+
+  const handleOptionClick = (idx: number) => {
+    setSelected(idx);
+    setShowResult(true);
+    if (idx === currentQ.correct) {
+      setScore(s => s + 1);
+    }
+  };
+
+  const handleNext = () => {
+    if (currentQIndex < currentQuestions.length - 1) {
+      setCurrentQIndex(prev => prev + 1);
+      setSelected(null);
+      setShowResult(false);
+    } else {
+      setIsFinished(true);
+    }
+  };
+
+  const handleRestart = () => {
+    setCurrentQIndex(0);
+    setSelected(null);
+    setShowResult(false);
+    setScore(0);
+    setIsFinished(false);
+  };
+
+  if (isFinished) {
+    return (
+      <div className="mt-16 bg-white dark:bg-slate-900 p-8 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-lg text-center animate-fade-in">
+         <div className="inline-block p-4 rounded-full bg-yellow-100 dark:bg-yellow-900/30 text-yellow-600 mb-4">
+           <Zap size={40} />
+         </div>
+         <h3 className="text-2xl font-bold mb-2 text-slate-800 dark:text-white">أتممت الاختبار!</h3>
+         <p className="text-lg text-slate-600 dark:text-slate-300 mb-6">
+           نتيجتك: <span className="font-bold text-blue-600">{score}</span> من <span className="font-bold">{currentQuestions.length}</span>
+         </p>
+         <button onClick={handleRestart} className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-xl font-bold transition-all">
+           إعادة المحاولة
+         </button>
+      </div>
+    );
+  }
 
   return (
     <div className="mt-16 bg-gradient-to-br from-slate-100 to-white dark:from-slate-800 dark:to-slate-900 p-8 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-lg relative overflow-hidden">
-      <div className="absolute top-0 right-0 p-4 opacity-10 text-6xl">?</div>
+      <div className="absolute top-0 right-0 p-4 opacity-10 text-6xl font-serif">?</div>
       
-      <h3 className="text-xl font-bold mb-6 flex items-center gap-2 text-slate-800 dark:text-white">
-        <span className="bg-blue-600 text-white text-xs px-2 py-1 rounded">تقويم سريع</span>
-        {currentQuiz.question}
+      <div className="flex justify-between items-center mb-6">
+        <span className="bg-blue-600 text-white text-xs px-3 py-1 rounded-full font-bold">
+          سؤال {currentQIndex + 1} / {currentQuestions.length}
+        </span>
+        <span className="text-xs text-slate-400 font-bold">نقاطك: {score}</span>
+      </div>
+
+      <h3 className="text-xl font-bold mb-8 text-slate-800 dark:text-white leading-relaxed">
+        {currentQ.question}
       </h3>
 
       <div className="space-y-3">
-        {currentQuiz.options.map((opt: string, idx: number) => (
+        {currentQ.options.map((opt: string, idx: number) => (
           <button
             key={idx}
-            onClick={() => { setSelected(idx); setShowResult(true); }}
+            onClick={() => handleOptionClick(idx)}
             disabled={showResult}
-            className={`w-full text-right p-4 rounded-xl border transition-all ${
+            className={`w-full text-right p-4 rounded-xl border transition-all relative overflow-hidden ${
               showResult 
-                ? idx === currentQuiz.correct 
-                  ? "bg-green-100 border-green-500 text-green-800 dark:bg-green-900/30 dark:text-green-300"
+                ? idx === currentQ.correct 
+                  ? "bg-green-100 border-green-500 text-green-900 dark:bg-green-900/40 dark:text-green-100 font-bold"
                   : idx === selected 
-                    ? "bg-red-100 border-red-500 text-red-800 dark:bg-red-900/30 dark:text-red-300"
+                    ? "bg-red-100 border-red-500 text-red-900 dark:bg-red-900/40 dark:text-red-100"
                     : "opacity-50"
-                : "bg-white dark:bg-slate-800 hover:bg-slate-50 border-slate-200 dark:border-slate-700"
+                : "bg-white dark:bg-slate-800 hover:bg-blue-50 dark:hover:bg-slate-700 border-slate-200 dark:border-slate-700"
             }`}
           >
-            {opt}
-            {showResult && idx === currentQuiz.correct && <CheckCircle className="float-left text-green-600" size={20}/>}
-            {showResult && idx === selected && idx !== currentQuiz.correct && <AlertTriangle className="float-left text-red-600" size={20}/>}
+            <div className="flex justify-between items-center relative z-10">
+              <span>{opt}</span>
+              {showResult && idx === currentQ.correct && <CheckCircle className="text-green-600 dark:text-green-400" size={20}/>}
+              {showResult && idx === selected && idx !== currentQ.correct && <AlertTriangle className="text-red-600 dark:text-red-400" size={20}/>}
+            </div>
           </button>
         ))}
       </div>
 
       {showResult && (
-        <div className={`mt-6 p-4 rounded-xl text-sm font-bold animate-fade-in ${selected === currentQuiz.correct ? 'bg-green-50 text-green-700' : 'bg-red-50 text-red-700'}`}>
-          {selected === currentQuiz.correct ? currentQuiz.feedback : "حاول مرة أخرى! راجع الفقرة أعلاه."}
+        <div className="mt-6 animate-fade-in space-y-4">
+          <div className={`p-4 rounded-xl text-sm font-bold ${selected === currentQ.correct ? 'bg-green-50 text-green-700 dark:bg-green-900/20 dark:text-green-300' : 'bg-red-50 text-red-700 dark:bg-red-900/20 dark:text-red-300'}`}>
+            {selected === currentQ.correct ? currentQ.feedback : `خطأ! الإجابة الصحيحة هي: ${currentQ.options[currentQ.correct]}`}
+          </div>
+          
+          <div className="flex justify-end">
+            <button 
+              onClick={handleNext}
+              className="flex items-center gap-2 px-6 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-bold hover:opacity-90 transition-opacity"
+            >
+              {currentQIndex < currentQuestions.length - 1 ? 'السؤال التالي' : 'إظهار النتيجة'} 
+              <ArrowRight className="rotate-180" size={18} />
+            </button>
+          </div>
         </div>
       )}
     </div>
