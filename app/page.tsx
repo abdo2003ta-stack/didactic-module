@@ -7,11 +7,12 @@ import {
   Activity, Quote, ArrowRight, Sun, Moon, Sprout, Droplets, 
   Microscope, Globe, MonitorPlay, Zap, FlaskConical, Scale, 
   AlertTriangle, Target, MousePointerClick, Network, Split, GitGraph, ShieldCheck, Briefcase, Trophy, RefreshCw,
-  Rabbit, Cat, Leaf, Utensils, Pencil, Search, Library, X, UserCheck, Users
+  Rabbit, Cat, Leaf, Utensils, Pencil, Search, Library, X, UserCheck, Users,
+  History as HistoryIcon, Database, User
 } from 'lucide-react';
 
 // ------------------- TYPES -------------------
-type Section = 'formulation' | 'conceptMap' | 'didacticMeans' | 'exam' | 'glossary' | 'simulator' | 'triangle';
+type Section = 'formulation' | 'conceptMap' | 'didacticMeans' | 'exam' | 'glossary' | 'simulator' | 'triangle' | 'timeline';
 
 // ------------------- MAIN COMPONENT -------------------
 export default function DidacticModulePage() {
@@ -85,6 +86,7 @@ export default function DidacticModulePage() {
             <NavButton label="5. القاموس" icon={<Library size={18} />} isActive={activeSection === 'glossary'} onClick={() => setActiveSection('glossary')} activeColor="bg-orange-500" />
             <NavButton label="6. الوضعيات" icon={<Briefcase size={18} />} isActive={activeSection === 'simulator'} onClick={() => setActiveSection('simulator')} activeColor="bg-indigo-500" />
             <NavButton label="7. المثلث" icon={<Network size={18} />} isActive={activeSection === 'triangle'} onClick={() => setActiveSection('triangle')} activeColor="bg-teal-500" />
+            <NavButton label="8. التاريخ" icon={<HistoryIcon size={18} />} isActive={activeSection === 'timeline'} onClick={() => setActiveSection('timeline')} activeColor="bg-purple-500" />
           </div>
         </div>
       </header>
@@ -419,6 +421,18 @@ export default function DidacticModulePage() {
                colorClass="bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300"
              />
              <DidacticTriangle />
+          </div>
+        )}
+        {/* ================= القسم 8: خط الزمن ================= */}
+        {activeSection === 'timeline' && (
+          <div className="animate-fade-in">
+             <SectionHeader 
+               title="كرونولوجيا التربية" 
+               subtitle="تاريخ تطور نظريات التعلم عبر الزمن"
+               icon={<HistoryIcon className="text-purple-500" size={32} />}
+               colorClass="bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300"
+             />
+             <TheoriesTimeline />
           </div>
         )}
       </main>
@@ -1655,6 +1669,116 @@ function DidacticTriangle() {
                </div>
              )}
           </div>
+
+        </div>
+      </div>
+    </div>
+  );
+}
+// ------------------- COMPONENT: TIMELINE (خط الزمن للنظريات) -------------------
+function TheoriesTimeline() {
+  const theories = [
+    {
+      year: "1913",
+      title: "المدرسة السلوكية (Behaviorism)",
+      pioneers: "واطسن، بافلوف، سكينر",
+      icon: <Activity />,
+      color: "blue",
+      desc: "التعلم هو تغير في السلوك الخارجي نتيجة مثير واستجابة. العقل 'علبة سوداء'. التركيز على التعزيز والعقاب."
+    },
+    {
+      year: "1920s",
+      title: "المدرسة الجشطالتية (Gestalt)",
+      pioneers: "كوهلر، فورتيمر، كوفكا",
+      icon: <Layers />,
+      color: "purple",
+      desc: "الكل أكبر من مجموع الأجزاء. التعلم يحدث عن طريق 'الاستبصار' (الإدراك الفجائي للعلاقات بين عناصر الموقف)."
+    },
+    {
+      year: "1950s",
+      title: "المدرسة البنائية (Constructivism)",
+      pioneers: "جان بياجيه",
+      icon: <Database />,
+      color: "green",
+      desc: "المتعلم يبني المعرفة ذاتياً من خلال التفاعل مع الموضوع. المفاهيم الأساسية: التوازن، الاستيعاب، التلاءم."
+    },
+    {
+      year: "1970s",
+      title: "السوسيوبنائية (Socio-constructivism)",
+      pioneers: "فيجوتسكي، برونر",
+      icon: <Users />,
+      color: "orange",
+      desc: "التعلم بناء اجتماعي. لا يحدث النمو المعرفي إلا من خلال التفاعل مع الآخرين (الراشد أو الأقران). مفهوم: منطقة النمو القريب."
+    },
+    {
+      year: "1983",
+      title: "الذكاءات المتعددة",
+      pioneers: "هاوارد جاردنر",
+      icon: <Zap />,
+      color: "yellow",
+      desc: "الذكاء ليس واحداً، بل متعدد (لغوي، منطقي، حركي، موسيقي...). يجب تنويع طرائق التدريس لتلائم كل المتعلمين."
+    }
+  ];
+
+  return (
+    <div className="max-w-3xl mx-auto p-4 animate-fade-in">
+      <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-xl p-8 border-2 border-slate-100 dark:border-slate-700">
+        
+        {/* العنوان */}
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-slate-800 dark:text-white mb-2">رحلة عبر نظريات التعلم</h2>
+          <p className="text-slate-500">التطور التاريخي للمقاربات البيداغوجية</p>
+        </div>
+
+        {/* خط الزمن */}
+        <div className="relative border-r-4 border-slate-200 dark:border-slate-700 mr-4 md:mr-8 space-y-12">
+          
+          {theories.map((theory, idx) => (
+            <div key={idx} className="relative pr-8 md:pr-12 group">
+              
+              {/* النقطة الزمنية (Dot) */}
+              <div className={`absolute -right-[1.1rem] top-0 w-8 h-8 rounded-full border-4 border-white dark:border-slate-800 shadow-sm flex items-center justify-center
+                ${theory.color === 'blue' ? 'bg-blue-500' : ''}
+                ${theory.color === 'purple' ? 'bg-purple-500' : ''}
+                ${theory.color === 'green' ? 'bg-green-500' : ''}
+                ${theory.color === 'orange' ? 'bg-orange-500' : ''}
+                ${theory.color === 'yellow' ? 'bg-yellow-500' : ''}
+              `}>
+                 <span className="text-white w-4 h-4">{/* Icon placeholder */}</span>
+              </div>
+
+              {/* البطاقة */}
+              <div className="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-700 hover:shadow-md transition-shadow relative overflow-hidden">
+                
+                {/* زخرفة خلفية */}
+                <div className={`absolute top-0 left-0 w-1 h-full 
+                   ${theory.color === 'blue' ? 'bg-blue-500' : ''}
+                   ${theory.color === 'purple' ? 'bg-purple-500' : ''}
+                   ${theory.color === 'green' ? 'bg-green-500' : ''}
+                   ${theory.color === 'orange' ? 'bg-orange-500' : ''}
+                   ${theory.color === 'yellow' ? 'bg-yellow-500' : ''}
+                `}></div>
+
+                <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
+                  <h3 className="text-xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+                    {theory.title}
+                  </h3>
+                  <span className="inline-block px-3 py-1 bg-slate-200 dark:bg-slate-700 rounded-full text-xs font-mono font-bold text-slate-600 dark:text-slate-300 mt-2 md:mt-0 w-fit">
+                    {theory.year}
+                  </span>
+                </div>
+                
+                <div className="mb-4 flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
+                  <User size={14} />
+                  <strong>الرواد:</strong> {theory.pioneers}
+                </div>
+
+                <p className="text-slate-700 dark:text-slate-300 leading-relaxed text-sm md:text-base">
+                  {theory.desc}
+                </p>
+              </div>
+            </div>
+          ))}
 
         </div>
       </div>
