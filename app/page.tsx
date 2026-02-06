@@ -74,24 +74,20 @@ function DidacticModulePage() {
       
       {/* ستايل الحركة ضروري جداً */}
       <style>{`
-      @keyframes slide-up {
-  from { transform: translateY(100%) translateX(-50%); opacity: 0; } /* للشاشات الكبيرة */
-  to { transform: translateY(0) translateX(-50%); opacity: 1; }
-}
-
-/* تعديل خاص للهاتف لأننا لا نستخدم translate-x فيه */
-@media (max-width: 768px) {
-  @keyframes slide-up {
-    from { transform: translateY(100%); opacity: 0; }
-    to { transform: translateY(0); opacity: 1; }
-  }
-}
-
-.animate-slide-up {
-  animation: slide-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-      
-       
+        @keyframes blob {
+          0% { transform: translate(0px, 0px) scale(1); }
+          33% { transform: translate(30px, -50px) scale(1.1); }
+          66% { transform: translate(-20px, 20px) scale(0.9); }
+          100% { transform: translate(0px, 0px) scale(1); }
+        }
+        .animate-blob {
+          animation: blob 7s infinite;
+        }
+        .animation-delay-2000 {
+          animation-delay: 2s;
+        }
+        .animation-delay-4000 {
+          animation-delay: 4s;
         }
       `}</style>
     <div className={`min-h-screen transition-colors duration-300 ${isDark ? 'bg-slate-950 text-slate-200' : 'bg-slate-50 text-slate-800'}`} dir="rtl">
@@ -105,9 +101,9 @@ function DidacticModulePage() {
       
 
       {/* ================= HEADER ================= */}
-      <header className="sticky top-0 z-50 w-full bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-sm transition-all duration-300">
+      <header className="bg-gradient-to-br from-slate-900 via-indigo-900 to-blue-900 text-white shadow-2xl relative overflow-hidden">
         <div className="absolute top-0 right-0 w-96 h-96 bg-white opacity-[0.03] rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-        <div className="container mx-auto px-4 py-3 flex justify-center md:justify-between items-center gap-4 overflow-x-auto no-scrollbar">
+        <div className="container mx-auto px-4 py-12 md:py-20 text-center relative z-10">
           <div className="mb-8 flex justify-center">
             <div className="bg-white/10 p-5 rounded-2xl backdrop-blur-md border border-white/20 shadow-lg ring-4 ring-white/5">
               <BookOpen size={48} className="text-indigo-200" />
@@ -117,24 +113,24 @@ function DidacticModulePage() {
           <p className="text-lg md:text-xl text-indigo-100 font-light max-w-3xl mx-auto mt-4 opacity-90">
              من إعداد عبد الله AET
           </p>
-          <nav className="flex items-center gap-2">
-          <div className="fixed bottom-6 left-4 right-4 md:left-1/2 md:right-auto md:-translate-x-1/2 md:w-auto bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-white/40 dark:border-slate-700/50 shadow-[0_8px_30px_rgb(0,0,0,0.12)] rounded-2xl p-2 flex justify-around items-center z-50 animate-slide-up">
-            <NavButton label="صياغة المفهوم" icon={<Brain size={18} />} isActive={activeSection === 'formulation'} onClick={() => setActiveSection('formulation')} />
-            <NavButton label="الخريطة المفهومية" icon={<Share2 size={18} />} isActive={activeSection === 'conceptMap'} onClick={() => setActiveSection('conceptMap')} />
-            <NavButton label="الوسائل الديدكتيكية" icon={<Box size={18} />} isActive={activeSection === 'didacticMeans'} onClick={() => setActiveSection('didacticMeans')} />
-            <NavButton label="القاموس" icon={<Library size={18} />} isActive={activeSection === 'glossary'} onClick={() => setActiveSection('glossary')} />
-            <NavButton label="الوضعيات" icon={<Briefcase size={18} />} isActive={activeSection === 'simulator'} onClick={() => setActiveSection('simulator')} />
-            <NavButton label="المثلث" icon={<Network size={18} />} isActive={activeSection === 'triangle'} onClick={() => setActiveSection('triangle')} />
-            <NavButton label=" التاريخ" icon={<HistoryIcon size={18} />} isActive={activeSection === 'timeline'} onClick={() => setActiveSection('timeline')} />
-            <NavButton label="التنشيط" icon={<Mic size={18} />} isActive={activeSection === 'methods'} onClick={() => setActiveSection('methods')} />
+          
+          <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border border-white/20 dark:border-slate-700/30 shadow-2xl rounded-full px-6 py-3 flex items-center gap-4 z-50 transition-all duration-300 hover:scale-105 hover:bg-white/90 dark:hover:bg-slate-900/90">
+            <NavButton label="صياغة المفهوم" icon={<Brain size={18} />} isActive={activeSection === 'formulation'} onClick={() => setActiveSection('formulation')} activeColor="bg-blue-600" />
+            <NavButton label="الخريطة المفهومية" icon={<Share2 size={18} />} isActive={activeSection === 'conceptMap'} onClick={() => setActiveSection('conceptMap')} activeColor="bg-purple-600" />
+            <NavButton label="الوسائل الديدكتيكية" icon={<Box size={18} />} isActive={activeSection === 'didacticMeans'} onClick={() => setActiveSection('didacticMeans')} activeColor="bg-teal-600" />
+            <NavButton label="القاموس" icon={<Library size={18} />} isActive={activeSection === 'glossary'} onClick={() => setActiveSection('glossary')} activeColor="bg-orange-500" />
+            <NavButton label="الوضعيات" icon={<Briefcase size={18} />} isActive={activeSection === 'simulator'} onClick={() => setActiveSection('simulator')} activeColor="bg-indigo-500" />
+            <NavButton label="المثلث" icon={<Network size={18} />} isActive={activeSection === 'triangle'} onClick={() => setActiveSection('triangle')} activeColor="bg-teal-500" />
+            <NavButton label=" التاريخ" icon={<HistoryIcon size={18} />} isActive={activeSection === 'timeline'} onClick={() => setActiveSection('timeline')} activeColor="bg-purple-500" />
+            <NavButton label="التنشيط" icon={<Mic size={18} />} isActive={activeSection === 'methods'} onClick={() => setActiveSection('methods')} activeColor="bg-orange-500" />
             <NavButton 
   label="البطاقات" 
   icon={<Layers size={18} />} 
   isActive={activeSection === 'flashcards'} 
   onClick={() => setActiveSection('flashcards')} 
+  activeColor="bg-indigo-600" 
 />
           </div>
-          </nav>
         </div>
       </header>
 
@@ -656,21 +652,10 @@ function PrimaryDidacticScenarios() {
   );
 }
 
-function NavButton({ label, icon, isActive, onClick }: { label: string; icon: React.ReactNode; isActive: boolean; onClick: () => void }) {
+function NavButton({ label, icon, isActive, onClick, activeColor }: any) {
   return (
-    <button
-      onClick={onClick}
-      className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-200 font-medium whitespace-nowrap ${
-        isActive
-          ? 'bg-indigo-600 text-white shadow-md transform scale-105'
-          : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800'
-      }`}
-    >
-      {/* الأيقونة */}
-      <span>{icon}</span>
-      
-      {/* النص يظهر دائماً الآن */}
-      <span>{label}</span>
+    <button onClick={onClick} className={`flex items-center gap-2 px-6 py-3 rounded-full transition-all font-bold ${isActive ? `${activeColor} text-white shadow-lg` : 'bg-white/5 text-indigo-100 hover:bg-white/10'}`}>
+      {icon} <span>{label}</span>
     </button>
   );
 }
