@@ -21,6 +21,24 @@ const AnimatedBackground = () => (
     <div className="absolute -bottom-32 left-1/3 w-96 h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-4000"></div>
   </div>
 );
+// مكون الزر ثلاثي الأبعاد
+const PushButton = ({ onClick, children, color = "indigo", disabled = false }: { onClick?: () => void; children: React.ReactNode; color?: string; disabled?: boolean }) => {
+  return (
+    <button 
+      onClick={onClick}
+      disabled={disabled}
+      className={`relative group inline-block focus:outline-none ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+    >
+      {/* 1. طبقة الظل السفلية (العمق) */}
+      <span className={`absolute inset-0 translate-x-0 translate-y-1.5 bg-${color}-800 rounded-xl transition-transform group-hover:translate-y-2 group-active:translate-y-1.5`}></span>
+      
+      {/* 2. طبقة الزر العلوية (الواجهة) */}
+      <span className={`relative flex items-center justify-center px-6 py-3 bg-${color}-600 border-2 border-${color}-700 rounded-xl font-bold text-white transition-all transform -translate-y-1 group-hover:-translate-y-2 group-active:translate-y-0 group-active:border-b-0`}>
+        {children}
+      </span>
+    </button>
+  );
+};
 
 // ------------------- TYPES -------------------
 type Section = 'formulation' | 'conceptMap' | 'didacticMeans' | 'exam' | 'glossary' | 'simulator' | 'triangle' | 'timeline' | 'methods' | 'flashcards';
