@@ -70,6 +70,17 @@ export default function DidacticModulePage() {
             <NavButton label="1. صياغة المفهوم" icon={<Brain size={18} />} isActive={activeSection === 'formulation'} onClick={() => setActiveSection('formulation')} activeColor="bg-blue-600" />
             <NavButton label="2. الخريطة المفهومية" icon={<Share2 size={18} />} isActive={activeSection === 'conceptMap'} onClick={() => setActiveSection('conceptMap')} activeColor="bg-purple-600" />
             <NavButton label="3. الوسائل الديدكتيكية" icon={<Box size={18} />} isActive={activeSection === 'didacticMeans'} onClick={() => setActiveSection('didacticMeans')} activeColor="bg-teal-600" />
+            {/* ... الأزرار الثلاثة الموجودة سابقاً ... */}
+            
+            <NavButton 
+              label="4. الامتحان الشامل" 
+              icon={<Target size={18} />} 
+              isActive={activeSection === 'exam'} 
+              onClick={() => setActiveSection('exam')} 
+              activeColor="bg-red-600" 
+            />
+            
+            {/* ... نهاية القائمة ... */}
           </div>
         </div>
       </header>
