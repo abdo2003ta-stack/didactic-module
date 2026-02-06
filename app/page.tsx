@@ -74,6 +74,22 @@ function DidacticModulePage() {
       
       {/* ستايل الحركة ضروري جداً */}
       <style>{`
+      @keyframes slide-up {
+  from { transform: translateY(100%) translateX(-50%); opacity: 0; } /* للشاشات الكبيرة */
+  to { transform: translateY(0) translateX(-50%); opacity: 1; }
+}
+
+/* تعديل خاص للهاتف لأننا لا نستخدم translate-x فيه */
+@media (max-width: 768px) {
+  @keyframes slide-up {
+    from { transform: translateY(100%); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+}
+
+.animate-slide-up {
+  animation: slide-up 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
         @keyframes blob {
           0% { transform: translate(0px, 0px) scale(1); }
           33% { transform: translate(30px, -50px) scale(1.1); }
@@ -114,7 +130,7 @@ function DidacticModulePage() {
              من إعداد عبد الله AET
           </p>
           
-          <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border border-white/20 dark:border-slate-700/30 shadow-2xl rounded-full px-6 py-3 flex items-center gap-4 z-50 transition-all duration-300 hover:scale-105 hover:bg-white/90 dark:hover:bg-slate-900/90">
+          <div className="fixed bottom-6 left-4 right-4 md:left-1/2 md:right-auto md:-translate-x-1/2 md:w-auto bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl border border-white/40 dark:border-slate-700/50 shadow-[0_8px_30px_rgb(0,0,0,0.12)] rounded-2xl p-2 flex justify-around items-center z-50 animate-slide-up">
             <NavButton label="صياغة المفهوم" icon={<Brain size={18} />} isActive={activeSection === 'formulation'} onClick={() => setActiveSection('formulation')} activeColor="bg-blue-600" />
             <NavButton label="الخريطة المفهومية" icon={<Share2 size={18} />} isActive={activeSection === 'conceptMap'} onClick={() => setActiveSection('conceptMap')} activeColor="bg-purple-600" />
             <NavButton label="الوسائل الديدكتيكية" icon={<Box size={18} />} isActive={activeSection === 'didacticMeans'} onClick={() => setActiveSection('didacticMeans')} activeColor="bg-teal-600" />
@@ -652,10 +668,30 @@ function PrimaryDidacticScenarios() {
   );
 }
 
-function NavButton({ label, icon, isActive, onClick, activeColor }: any) {
+function NavButton({ label, icon, isActive, onClick, activeColor }: { label: string; icon: React.ReactNode; isActive: boolean; onClick: () => void; activeColor: string }) {
   return (
-    <button onClick={onClick} className={`flex items-center gap-2 px-6 py-3 rounded-full transition-all font-bold ${isActive ? `${activeColor} text-white shadow-lg` : 'bg-white/5 text-indigo-100 hover:bg-white/10'}`}>
-      {icon} <span>{label}</span>
+    <button
+      onClick={onClick}
+      className={`relative group flex items-center justify-center w-12 h-12 md:w-auto md:px-5 md:py-2.5 rounded-2xl transition-all duration-300 ${
+        isActive
+          ? 'bg-indigo-100/50 dark:bg-slate-700/50 text-indigo-600 dark:text-indigo-400 scale-110 shadow-sm'
+          : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-white/5'
+      }`}
+    >
+      {/* الأيقونة: ترتفع قليلاً عند التفعيل في الهاتف */}
+      <div className={`transition-transform duration-300 ${isActive ? '-translate-y-1 md:translate-y-0' : ''}`}>
+        {icon}
+      </div>
+
+      {/* النص: يظهر فقط في الكمبيوتر (md) ويختفي في الهاتف ليبقى التصميم نظيفاً */}
+      <span className={`hidden md:block mr-2 font-bold text-sm ${isActive ? 'opacity-100' : 'opacity-0 group-hover:opacity-100 transition-opacity'}`}>
+        {label}
+      </span>
+
+      {/* النقطة المضيئة: تظهر فقط في الهاتف أسفل الأيقونة عند التفعيل */}
+      {isActive && (
+        <span className="absolute bottom-1.5 w-1 h-1 rounded-full bg-indigo-600 dark:bg-indigo-400 md:hidden animate-pulse"></span>
+      )}
     </button>
   );
 }
