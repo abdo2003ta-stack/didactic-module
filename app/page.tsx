@@ -2140,74 +2140,90 @@ function TeachingMethods() {
       </div>
 
       {/* 2. النافذة المنبثقة (MODAL) - تظهر في المنتصف */}
+      {/* 2. النافذة المنبثقة (MODAL) - التصميم المصحح */}
       {selectedMethod && (
         <div 
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in"
-          onClick={() => setSelectedMethod(null)} // إغلاق عند الضغط في الخارج
+          className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/70 backdrop-blur-sm animate-fade-in"
+          onClick={() => setSelectedMethod(null)}
         >
-          {/* صندوق المحتوى */}
           <div 
-            className="bg-white dark:bg-slate-900 w-full max-w-2xl max-h-[85vh] rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-scale-in border border-slate-200 dark:border-slate-700"
-            onClick={(e) => e.stopPropagation()} // منع الإغلاق عند الضغط داخل الصندوق
+            className="bg-white dark:bg-slate-900 w-full max-w-2xl max-h-[85vh] rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-scale-in border border-slate-200 dark:border-slate-700 relative"
+            onClick={(e) => e.stopPropagation()}
           >
             
-            {/* رأس النافذة */}
-            <div className={`p-6 flex justify-between items-center border-b border-slate-100 dark:border-slate-800 ${getColor(selectedMethod.color).split(' ')[0]} bg-opacity-30`}>
-              <div className="flex items-center gap-3">
-                <div className={`p-2 rounded-lg bg-white/60 dark:bg-black/20 ${getColor(selectedMethod.color).split(' ')[1]}`}>
-                   {selectedMethod.icon}
+            {/* شريط ملون علوي رفيع جداً للدلالة على التصنيف */}
+            <div className={`h-2 w-full bg-${selectedMethod.color}-500`}></div>
+
+            {/* رأس النافذة: خلفية بيضاء لضمان وضوح الاسم */}
+            <div className="p-6 flex justify-between items-start bg-white dark:bg-slate-900 border-b border-slate-100 dark:border-slate-800">
+              <div className="flex items-center gap-4">
+                {/* الأيقونة داخل مربع ملون */}
+                <div className={`p-3 rounded-xl bg-${selectedMethod.color}-50 dark:bg-${selectedMethod.color}-900/20 text-${selectedMethod.color}-600 dark:text-${selectedMethod.color}-400`}>
+                   {React.cloneElement(selectedMethod.icon, { size: 28 })}
                 </div>
-                <h2 className="text-2xl font-bold text-slate-800 dark:text-white">
-                  {selectedMethod.title}
-                </h2>
+                
+                {/* العنوان والوصف - لون داكن جداً وواضح */}
+                <div>
+                  <h2 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white leading-tight">
+                    {selectedMethod.title}
+                  </h2>
+                  <span className={`text-sm font-bold text-${selectedMethod.color}-600 dark:text-${selectedMethod.color}-400 opacity-90 mt-1 block`}>
+                    تقنية تنشيط تربوية
+                  </span>
+                </div>
               </div>
-              <button onClick={() => setSelectedMethod(null)} className="p-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
-                <X size={24} className="text-slate-500" />
+
+              {/* زر الإغلاق - واضح */}
+              <button 
+                onClick={() => setSelectedMethod(null)} 
+                className="bg-slate-100 dark:bg-slate-800 p-2 rounded-full hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors text-slate-500 hover:text-red-500"
+              >
+                <X size={24} />
               </button>
             </div>
 
-            {/* جسم النافذة (قابل للتمرير) */}
-            <div className="p-6 overflow-y-auto custom-scrollbar">
+            {/* جسم النافذة */}
+            <div className="p-6 overflow-y-auto custom-scrollbar bg-slate-50/50 dark:bg-slate-900/50">
               
               {/* التعريف */}
-              <div className="mb-8">
-                <h3 className="flex items-center gap-2 text-lg font-bold text-slate-800 dark:text-white mb-3">
-                  <Lightbulb className="text-yellow-500" size={20} /> التعريف
+              <div className="mb-6 bg-white dark:bg-slate-800 p-5 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-sm">
+                <h3 className="flex items-center gap-2 text-lg font-bold text-slate-900 dark:text-white mb-3">
+                  <Lightbulb className="text-yellow-500" size={20} /> التعريف الإجرائي
                 </h3>
-                <div className="bg-slate-50 dark:bg-slate-800 p-5 rounded-2xl border border-slate-100 dark:border-slate-700 text-lg leading-relaxed text-slate-700 dark:text-slate-300">
+                <p className="text-lg leading-relaxed text-slate-700 dark:text-slate-300 font-medium">
                   {selectedMethod.details.definition}
-                </div>
+                </p>
               </div>
 
-              {/* المراحل والأهداف (جنباً إلى جنب في الشاشات الكبيرة) */}
+              {/* المحتوى الشبكي */}
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 
                 {/* المراحل */}
                 <div>
-                  <h3 className="flex items-center gap-2 text-lg font-bold text-slate-800 dark:text-white mb-3">
-                    <ListChecks className="text-indigo-500" size={20} /> المراحل الإجرائية
+                  <h3 className="flex items-center gap-2 text-lg font-bold text-slate-900 dark:text-white mb-3">
+                    <ListChecks className="text-indigo-600 dark:text-indigo-400" size={20} /> خطوات التنفيذ
                   </h3>
-                  <ul className="space-y-3">
+                  <div className="space-y-3">
                     {selectedMethod.details.steps.map((step: string, idx: number) => (
-                      <li key={idx} className="flex gap-3 items-center p-3 bg-white dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm">
-                        <span className={`flex items-center justify-center w-6 h-6 rounded-full text-xs font-bold text-white bg-${selectedMethod.color}-500 shrink-0`}>
+                      <div key={idx} className="flex gap-3 items-start p-3 bg-white dark:bg-slate-800 rounded-xl border border-slate-100 dark:border-slate-700 shadow-sm">
+                        <span className={`flex items-center justify-center w-6 h-6 rounded-full text-xs font-bold text-white bg-${selectedMethod.color}-500 shrink-0 mt-0.5`}>
                           {idx + 1}
                         </span>
-                        <span className="text-sm font-medium text-slate-700 dark:text-slate-300">{step}</span>
-                      </li>
+                        <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">{step}</span>
+                      </div>
                     ))}
-                  </ul>
+                  </div>
                 </div>
 
                 {/* الأهداف والنصيحة */}
-                <div className="space-y-6">
+                <div className="flex flex-col gap-6">
                   <div>
-                    <h3 className="flex items-center gap-2 text-lg font-bold text-slate-800 dark:text-white mb-3">
-                      <Target className="text-green-500" size={20} /> الأهداف
+                    <h3 className="flex items-center gap-2 text-lg font-bold text-slate-900 dark:text-white mb-3">
+                      <Target className="text-green-600 dark:text-green-400" size={20} /> الأهداف المتوخاة
                     </h3>
-                    <ul className="space-y-2">
+                    <ul className="bg-white dark:bg-slate-800 p-4 rounded-2xl border border-slate-100 dark:border-slate-700 space-y-2">
                       {selectedMethod.details.objectives.map((obj: string, i: number) => (
-                        <li key={i} className="flex items-start gap-2 text-sm text-slate-600 dark:text-slate-400">
+                        <li key={i} className="flex items-start gap-2 text-sm text-slate-700 dark:text-slate-300 font-medium">
                           <CheckCircle size={16} className="text-green-500 shrink-0 mt-0.5" />
                           {obj}
                         </li>
@@ -2215,23 +2231,26 @@ function TeachingMethods() {
                     </ul>
                   </div>
 
-                  <div className="bg-yellow-50 dark:bg-yellow-900/20 p-4 rounded-xl border border-yellow-200 dark:border-yellow-800">
-                    <p className="text-sm text-yellow-800 dark:text-yellow-200 italic">
-                      💡 <strong>نصيحة:</strong> {selectedMethod.details.tip}
-                    </p>
+                  <div className="bg-amber-50 dark:bg-amber-900/20 p-4 rounded-xl border border-amber-200 dark:border-amber-800 flex gap-3">
+                    <div className="text-2xl">💡</div>
+                    <div>
+                      <h4 className="font-bold text-amber-800 dark:text-amber-400 text-sm mb-1">نصيحة الممارس:</h4>
+                      <p className="text-sm text-amber-900 dark:text-amber-200 leading-snug">
+                        {selectedMethod.details.tip}
+                      </p>
+                    </div>
                   </div>
                 </div>
 
               </div>
-
             </div>
-            
           </div>
         </div>
       )}
     </div>
   );
 }
+
 // ------------------- COMPONENT: 50+ FLASHCARDS MARATHON -------------------
 
 // === قاعدة البيانات: 50 بطاقة ===
