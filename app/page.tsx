@@ -83,7 +83,7 @@ export default function DidacticModulePage() {
             
             {/* ... نهاية القائمة ... */}
             <NavButton label="5. القاموس" icon={<Library size={18} />} isActive={activeSection === 'glossary'} onClick={() => setActiveSection('glossary')} activeColor="bg-orange-500" />
-            
+            <NavButton label="6. الوضعيات" icon={<Briefcase size={18} />} isActive={activeSection === 'simulator'} onClick={() => setActiveSection('simulator')} activeColor="bg-indigo-500" />
           </div>
         </div>
       </header>
