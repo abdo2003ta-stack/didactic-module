@@ -8,7 +8,7 @@ import {
   Microscope, Globe, MonitorPlay, Zap, FlaskConical, Scale, 
   AlertTriangle, Target, MousePointerClick, Network, Split, GitGraph, ShieldCheck, Briefcase, Trophy, RefreshCw,
   Rabbit, Cat, Leaf, Utensils, Pencil, Search, Library, X, UserCheck, Users,
-  History as HistoryIcon, Database, User, Info
+  History as HistoryIcon, Database, User, Info, GraduationCap
 } from 'lucide-react';
 
 // ------------------- TYPES -------------------
@@ -1698,113 +1698,277 @@ function DidacticTriangle() {
   );
 }
 
-// ------------------- COMPONENT: TIMELINE (خط الزمن للنظريات) -------------------
+// ------------------- COMPONENT: ADVANCED TIMELINE (خط الزمن الموسوعي) -------------------
 function TheoriesTimeline() {
+  const [selectedTheory, setSelectedTheory] = useState<any>(null);
+
+  // === قاعدة بيانات النظريات المفصلة ===
   const theories = [
     {
+      id: 1,
       year: "1913",
       title: "المدرسة السلوكية (Behaviorism)",
-      pioneers: "واطسن، بافلوف، سكينر",
+      pioneers: "واطسن، بافلوف، ثورندايك، سكينر",
       icon: <Activity />,
       color: "blue",
-      desc: "التعلم هو تغير في السلوك الخارجي نتيجة مثير واستجابة. العقل 'علبة سوداء'. التركيز على التعزيز والعقاب."
+      shortDesc: "التعلم هو تغير في السلوك الخارجي نتيجة مثير واستجابة.",
+      details: {
+        principle: "تعتبر العقل 'علبة سوداء' لا يمكن دراسة ما بداخله. تركز فقط على السلوك القابل للملاحظة والقياس.",
+        concepts: [
+          "المثير والاستجابة (Stimulus-Response)",
+          "التعزيز (Renforcement): إيجابي أو سلبي لتقوية السلوك",
+          "العقاب (Punition): لإطفاء السلوك غير المرغوب",
+          "الدافعية: خارجية (طمعاً في الجائزة أو خوفاً من العقاب)",
+          "الخطأ: فشل يجب تجنبه ومعاقبته"
+        ],
+        teacherRole: "المالك للمعرفة، الملقن، والمتحكم في بيئة القسم والمثيرات.",
+        studentRole: "سلبي، متلقي، صفحة بيضاء (Tabula Rasa) يتم ملؤها بالمعلومات.",
+        application: "بيداغوجيا الأهداف، التدريس المبرمج، التمارين التكرارية (Drill and Practice)."
+      }
     },
     {
+      id: 2,
       year: "1920s",
       title: "المدرسة الجشطالتية (Gestalt)",
       pioneers: "كوهلر، فورتيمر، كوفكا",
       icon: <Layers />,
       color: "purple",
-      desc: "الكل أكبر من مجموع الأجزاء. التعلم يحدث عن طريق 'الاستبصار' (الإدراك الفجائي للعلاقات بين عناصر الموقف)."
+      shortDesc: "الكل أكبر من مجموع الأجزاء. التعلم يحدث بالاستبصار.",
+      details: {
+        principle: "التعلم لا يحدث بالتجزئة بل بإدراك البنية الكلية للموقف. العقل البشري يميل لتنظيم المدركات في شكل كليات (Gestalts).",
+        concepts: [
+          "الاستبصار (Insight): الإدراك الفجائي للحل بعد تأمل",
+          "البنية (Structure): العناصر المترابطة التي تحكم الموقف",
+          "إعادة التنظيم: تغيير النظرة لعناصر الموقف للوصول للحل",
+          "انتقال أثر التعلم: القدرة على تطبيق الحل في مواقف مشابهة"
+        ],
+        teacherRole: "ميسر، يساعد المتعلم على إدراك العلاقات بين عناصر الدرس.",
+        studentRole: "نشط عقلياً، يبحث عن الروابط والعلاقات لفهم 'البنية'.",
+        application: "طريقة القراءة الكلية (من الجملة للحرف)، حل المشكلات الرياضية والهندسية."
+      }
     },
     {
+      id: 3,
       year: "1950s",
       title: "المدرسة البنائية (Constructivism)",
-      pioneers: "جان بياجيه",
+      pioneers: "جان بياجيه (Jean Piaget)",
       icon: <Database />,
       color: "green",
-      desc: "المتعلم يبني المعرفة ذاتياً من خلال التفاعل مع الموضوع. المفاهيم الأساسية: التوازن، الاستيعاب، التلاءم."
+      shortDesc: "المتعلم يبني المعرفة ذاتياً من خلال التفاعل وتجاوز التوازن.",
+      details: {
+        principle: "المعرفة لا تُنقل بل تُبنى. النمو المعرفي يحدث عبر مراحل عمرية محددة (حس-حركي، ما قبل العمليات، العمليات المادية، المجردة).",
+        concepts: [
+          "التمثلات (Représentations): البنيات الذهنية السابقة",
+          "الاستيعاب (Assimilation): دمج معلومات جديدة في بنيات موجودة",
+          "التلاءم (Accommodation): تعديل البنيات الذهنية لتناسب الواقع الجديد",
+          "التوازن (Équilibration): المحرك الأساسي للتعلم",
+          "الخطأ: ضروري للتعلم، دليل على وجود تمثل يحتاج للتصحيح"
+        ],
+        teacherRole: "يوفر الوضعيات المشكلة، لا يعطي الحلول الجاهزة، يحترم إيقاع النمو.",
+        studentRole: "محور العملية، يبني معرفته بنفسه عبر الصراع مع الموضوع.",
+        application: "الوضعيات المشكلة، التعلم الذاتي، التجارب العلمية."
+      }
     },
     {
+      id: 4,
       year: "1970s",
       title: "السوسيوبنائية (Socio-constructivism)",
       pioneers: "فيجوتسكي، برونر",
       icon: <Users />,
       color: "orange",
-      desc: "التعلم بناء اجتماعي. لا يحدث النمو المعرفي إلا من خلال التفاعل مع الآخرين (الراشد أو الأقران). مفهوم: منطقة النمو القريب."
+      shortDesc: "التعلم بناء اجتماعي. يحدث في سياق التفاعل مع الآخرين.",
+      details: {
+        principle: "الطفل يبني معرفته ليس وحيداً (ضد بياجيه) بل بمساعدة الآخرين. كل وظيفة عليا تظهر مرتين: اجتماعياً ثم فردياً.",
+        concepts: [
+          "منطقة النمو القريب (ZPD): المسافة بين ما ينجزه المتعلم وحده وما ينجزه بمساعدة",
+          "السقالات (Étayage): الدعم المؤقت الذي يقدمه الراشد ثم يسحبه تدريجياً",
+          "الصراع السوسيومعرفي: اختلاف وجهات النظر مع الأقران يولد التعلم",
+          "الوساطة الاجتماعية"
+        ],
+        teacherRole: "وسيط، موجه، ومنظم للتفاعلات الاجتماعية داخل القسم.",
+        studentRole: "يتفاعل مع أقرانه، يناقش، يفاوض المعنى، ويبني المعرفة جماعياً.",
+        application: "العمل بالمجموعات، التعلم التعاوني، تعليم الأقران."
+      }
     },
     {
+      id: 5,
       year: "1983",
       title: "الذكاءات المتعددة",
       pioneers: "هاوارد جاردنر",
       icon: <Zap />,
       color: "yellow",
-      desc: "الذكاء ليس واحداً، بل متعدد (لغوي، منطقي، حركي، موسيقي...). يجب تنويع طرائق التدريس لتلائم كل المتعلمين."
+      shortDesc: "لا يوجد ذكاء واحد، بل ذكاءات متعددة تختلف من شخص لآخر.",
+      details: {
+        principle: "اختبارات الـ IQ ظالمة لأنها تقيس فقط الذكاء اللغوي والمنطقي. كل إنسان يمتلك 8 أنواع من الذكاء بنسب متفاوتة.",
+        concepts: [
+          "الذكاء اللغوي، المنطقي-الرياضي",
+          "الذكاء البصري-المكاني",
+          "الذكاء الجسدي-الحركي",
+          "الذكاء الموسيقي",
+          "الذكاء الاجتماعي (التعامل مع الآخرين)",
+          "الذكاء الذاتي (فهم النفس)",
+          "الذكاء الطبيعي"
+        ],
+        teacherRole: "ينوع طرق التدريس (بصري، سمعي، حركي...) لتخاطب كل أنواع الذكاءات.",
+        studentRole: "يتعلم بالطريقة التي تناسب ملفه الذكائي الخاص.",
+        application: "البيداغوجيا الفارقية، تنويع الأنشطة المدرسية."
+      }
     }
   ];
 
   return (
-    <div className="max-w-3xl mx-auto p-4 animate-fade-in">
-      <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-xl p-8 border-2 border-slate-100 dark:border-slate-700">
-        
-        {/* العنوان */}
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-slate-800 dark:text-white mb-2">رحلة عبر نظريات التعلم</h2>
-          <p className="text-slate-500">التطور التاريخي للمقاربات البيداغوجية</p>
+    <div className="max-w-4xl mx-auto p-4 animate-fade-in relative">
+      
+      {/* 1. قائمة خط الزمن */}
+      <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-xl p-6 md:p-8 border-2 border-slate-100 dark:border-slate-700">
+        <div className="text-center mb-10">
+          <h2 className="text-3xl font-bold text-slate-800 dark:text-white mb-2">تطور نظريات التعلم</h2>
+          <p className="text-slate-500">اضغط على أي نظرية لعرض التفاصيل الكاملة</p>
         </div>
 
-        {/* خط الزمن */}
-        <div className="relative border-r-4 border-slate-200 dark:border-slate-700 mr-4 md:mr-8 space-y-12">
-          
-          {theories.map((theory, idx) => (
-            <div key={idx} className="relative pr-8 md:pr-12 group">
+        <div className="relative border-r-4 border-slate-200 dark:border-slate-700 mr-4 space-y-8">
+          {theories.map((theory) => (
+            <div key={theory.id} className="relative pr-8 md:pr-12 group">
               
-              {/* النقطة الزمنية (Dot) */}
-              <div className={`absolute -right-[1.1rem] top-0 w-8 h-8 rounded-full border-4 border-white dark:border-slate-800 shadow-sm flex items-center justify-center
-                ${theory.color === 'blue' ? 'bg-blue-500' : ''}
-                ${theory.color === 'purple' ? 'bg-purple-500' : ''}
-                ${theory.color === 'green' ? 'bg-green-500' : ''}
-                ${theory.color === 'orange' ? 'bg-orange-500' : ''}
-                ${theory.color === 'yellow' ? 'bg-yellow-500' : ''}
-              `}>
-                 <span className="text-white w-4 h-4">{/* Icon placeholder */}</span>
-              </div>
+              {/* النقطة الزمنية */}
+              <button 
+                onClick={() => setSelectedTheory(theory)}
+                className={`absolute -right-[1.1rem] top-0 w-8 h-8 rounded-full border-4 border-white dark:border-slate-800 shadow-sm flex items-center justify-center transition-transform group-hover:scale-125
+                  ${theory.color === 'blue' ? 'bg-blue-500' : ''}
+                  ${theory.color === 'purple' ? 'bg-purple-500' : ''}
+                  ${theory.color === 'green' ? 'bg-green-500' : ''}
+                  ${theory.color === 'orange' ? 'bg-orange-500' : ''}
+                  ${theory.color === 'yellow' ? 'bg-yellow-500' : ''}
+                `}
+              ></button>
 
-              {/* البطاقة */}
-              <div className="bg-slate-50 dark:bg-slate-900/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-700 hover:shadow-md transition-shadow relative overflow-hidden">
-                
-                {/* زخرفة خلفية */}
-                <div className={`absolute top-0 left-0 w-1 h-full 
-                   ${theory.color === 'blue' ? 'bg-blue-500' : ''}
-                   ${theory.color === 'purple' ? 'bg-purple-500' : ''}
-                   ${theory.color === 'green' ? 'bg-green-500' : ''}
-                   ${theory.color === 'orange' ? 'bg-orange-500' : ''}
-                   ${theory.color === 'yellow' ? 'bg-yellow-500' : ''}
-                `}></div>
-
-                <div className="flex flex-col md:flex-row md:items-center justify-between mb-4">
-                  <h3 className="text-xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
+              {/* البطاقة المختصرة */}
+              <div 
+                onClick={() => setSelectedTheory(theory)}
+                className="bg-slate-50 dark:bg-slate-900/50 p-5 rounded-2xl border border-slate-100 dark:border-slate-700 hover:shadow-lg transition-all cursor-pointer hover:-translate-x-2 relative overflow-hidden group-hover:border-indigo-200 dark:group-hover:border-indigo-900"
+              >
+                <div className="flex justify-between items-start mb-2">
+                  <h3 className="text-lg font-bold text-slate-800 dark:text-white flex items-center gap-2">
                     {theory.title}
                   </h3>
-                  <span className="inline-block px-3 py-1 bg-slate-200 dark:bg-slate-700 rounded-full text-xs font-mono font-bold text-slate-600 dark:text-slate-300 mt-2 md:mt-0 w-fit">
+                  <span className="text-xs font-mono font-bold px-2 py-1 bg-white dark:bg-slate-800 rounded border border-slate-200 dark:border-slate-600">
                     {theory.year}
                   </span>
                 </div>
-                
-                <div className="mb-4 flex items-center gap-2 text-sm text-slate-500 dark:text-slate-400">
-                  <User size={14} />
-                  <strong>الرواد:</strong> {theory.pioneers}
-                </div>
-
-                <p className="text-slate-700 dark:text-slate-300 leading-relaxed text-sm md:text-base">
-                  {theory.desc}
+                <p className="text-slate-600 dark:text-slate-400 text-sm mb-3">
+                  {theory.shortDesc}
                 </p>
+                <div className="flex items-center gap-2 text-xs text-indigo-600 dark:text-indigo-400 font-bold">
+                  <BookOpen size={14} />
+                  <span>انقر للتفاصيل الكاملة...</span>
+                </div>
               </div>
             </div>
           ))}
-
         </div>
       </div>
+
+      {/* 2. النافذة المنبثقة (MODAL) للتفاصيل */}
+      {selectedTheory && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in">
+          <div 
+            className="bg-white dark:bg-slate-900 w-full max-w-2xl max-h-[85vh] rounded-3xl shadow-2xl overflow-hidden flex flex-col animate-scale-in border border-slate-200 dark:border-slate-700"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* رأس النافذة */}
+            <div className={`p-6 text-white flex justify-between items-start shrink-0
+               ${selectedTheory.color === 'blue' ? 'bg-blue-600' : ''}
+               ${selectedTheory.color === 'purple' ? 'bg-purple-600' : ''}
+               ${selectedTheory.color === 'green' ? 'bg-green-600' : ''}
+               ${selectedTheory.color === 'orange' ? 'bg-orange-600' : ''}
+               ${selectedTheory.color === 'yellow' ? 'bg-yellow-600' : ''}
+            `}>
+              <div>
+                <h2 className="text-2xl md:text-3xl font-bold mb-1 flex items-center gap-2">
+                  {selectedTheory.icon} {selectedTheory.title}
+                </h2>
+                <div className="flex items-center gap-2 text-white/90 text-sm">
+                  <HistoryIcon size={16} />
+                  <span>تاريخ الظهور: {selectedTheory.year}</span>
+                </div>
+              </div>
+              <button 
+                onClick={() => setSelectedTheory(null)}
+                className="bg-white/20 hover:bg-white/30 text-white rounded-full p-2 transition-colors"
+              >
+                <X size={24} />
+              </button>
+            </div>
+
+            {/* محتوى النافذة (قابل للتمرير) */}
+            <div className="p-6 overflow-y-auto custom-scrollbar">
+              
+              {/* الرواد */}
+              <div className="mb-6 flex items-start gap-3 bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl">
+                <div className="p-2 bg-slate-200 dark:bg-slate-700 rounded-lg text-slate-700 dark:text-slate-200">
+                  <User size={20} />
+                </div>
+                <div>
+                  <h4 className="font-bold text-slate-800 dark:text-white mb-1">أبرز الرواد</h4>
+                  <p className="text-slate-600 dark:text-slate-300">{selectedTheory.pioneers}</p>
+                </div>
+              </div>
+
+              {/* المبدأ العام */}
+              <div className="mb-8">
+                <h3 className="text-lg font-bold text-slate-800 dark:text-white mb-3 flex items-center gap-2 border-b pb-2 dark:border-slate-700">
+                  <Lightbulb className="text-yellow-500" /> المبدأ الأساسي
+                </h3>
+                <p className="text-slate-700 dark:text-slate-300 leading-relaxed text-lg text-justify">
+                  {selectedTheory.details.principle}
+                </p>
+              </div>
+
+              {/* المفاهيم المفتاحية */}
+              <div className="mb-8">
+                <h3 className="text-lg font-bold text-slate-800 dark:text-white mb-3 flex items-center gap-2 border-b pb-2 dark:border-slate-700">
+                  <Database className="text-indigo-500" /> المفاهيم المركزية
+                </h3>
+                <ul className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {selectedTheory.details.concepts.map((concept: string, idx: number) => (
+                    <li key={idx} className="flex items-start gap-2 text-slate-700 dark:text-slate-300 text-sm bg-slate-50 dark:bg-slate-800 p-3 rounded-lg border border-slate-100 dark:border-slate-700">
+                      <span className="text-indigo-500 mt-1">•</span> {concept}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* أدوار المدرس والمتعلم */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                <div className="bg-green-50 dark:bg-green-900/10 p-4 rounded-xl border border-green-100 dark:border-green-800/30">
+                  <h4 className="font-bold text-green-800 dark:text-green-400 mb-2 flex items-center gap-2">
+                    <UserCheck size={18} /> دور المدرس
+                  </h4>
+                  <p className="text-sm text-green-700 dark:text-green-300 leading-relaxed">
+                    {selectedTheory.details.teacherRole}
+                  </p>
+                </div>
+                
+                <div className="bg-blue-50 dark:bg-blue-900/10 p-4 rounded-xl border border-blue-100 dark:border-blue-800/30">
+                  <h4 className="font-bold text-blue-800 dark:text-blue-400 mb-2 flex items-center gap-2">
+                    <GraduationCap size={18} /> دور المتعلم
+                  </h4>
+                  <p className="text-sm text-blue-700 dark:text-blue-300 leading-relaxed">
+                    {selectedTheory.details.studentRole}
+                  </p>
+                </div>
+              </div>
+
+              {/* التطبيق التربوي */}
+              <div className="bg-slate-900 text-slate-300 p-4 rounded-xl text-sm">
+                <strong className="text-white block mb-1">🏗️ تطبيقات في الفصل:</strong>
+                {selectedTheory.details.application}
+              </div>
+
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
