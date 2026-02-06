@@ -6,12 +6,12 @@ import {
   BookOpen, Share2, Layers, CheckCircle, Brain, Lightbulb, Box, 
   Activity, Quote, ArrowRight, Sun, Moon, Sprout, Droplets, 
   Microscope, Globe, MonitorPlay, Zap, FlaskConical, Scale, 
-  AlertTriangle, Target, MousePointerClick, Network, Split, GitGraph, ShieldCheck,
+  AlertTriangle, Target, MousePointerClick, Network, Split, GitGraph, ShieldCheck, Briefcase,
   Rabbit, Cat, Leaf, Utensils, Pencil, Search, Library, X 
 } from 'lucide-react';
 
 // ------------------- TYPES -------------------
-type Section = 'formulation' | 'conceptMap' | 'didacticMeans' | 'exam' | 'glossary';
+type Section = 'formulation' | 'conceptMap' | 'didacticMeans' | 'exam' | 'glossary' | 'simulator';
 
 // ------------------- MAIN COMPONENT -------------------
 export default function DidacticModulePage() {
@@ -83,6 +83,7 @@ export default function DidacticModulePage() {
             
             {/* ... نهاية القائمة ... */}
             <NavButton label="5. القاموس" icon={<Library size={18} />} isActive={activeSection === 'glossary'} onClick={() => setActiveSection('glossary')} activeColor="bg-orange-500" />
+            
           </div>
         </div>
       </header>
@@ -392,6 +393,18 @@ export default function DidacticModulePage() {
                colorClass="bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300"
              />
              <DidacticGlossary />
+          </div>
+        )}
+        {/* ================= القسم 6: محاكي الوضعيات ================= */}
+        {activeSection === 'simulator' && (
+          <div className="animate-fade-in">
+             <SectionHeader 
+               title="مختبر الوضعيات المهنية" 
+               subtitle="كيف تتصرف داخل القسم؟ اختبر ردود أفعالك التربوية"
+               icon={<Briefcase className="text-indigo-500" size={32} />}
+               colorClass="bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300"
+             />
+             <ProfessionalSimulator />
           </div>
         )}
       </main>
@@ -1078,6 +1091,144 @@ function DidacticGlossary() {
          </div>,
          document.body // هذا يضمن ظهور النافذة في جسم الصفحة مباشرة
        )}
+    </div>
+  );
+}
+// ------------------- SIMULATOR COMPONENT (محاكي الوضعيات) -------------------
+function ProfessionalSimulator() {
+  const [currentScenario, setCurrentScenario] = useState(0);
+  const [showFeedback, setShowFeedback] = useState(false);
+  const [selectedOption, setSelectedOption] = useState<number | null>(null);
+
+  const scenarios = [
+    {
+      title: "العنف المدرسي",
+      situation: "أثناء شرحك للدرس، قام تلميذ بضرب زميله بشكل مفاجئ، مما أحدث فوضى عارمة في القسم. كيف تتصرف فوراً؟",
+      options: [
+        { id: 1, text: "أقوم بطرد التلميذ المعتدي فوراً لاستعادة الهدوء وحماية الآخرين.", isCorrect: false },
+        { id: 2, text: "أوقف الدرس، أتدخل لفك النزاع بحزم دون عنف، أطمئن الضحية، وأكتب تقريراً للإدارة بعد الحصة.", isCorrect: true },
+        { id: 3, text: "أتجاهل الأمر وأستمر في الشرح حتى لا يضيع وقت الحصة.", isCorrect: false }
+      ],
+      feedback: "الجواب الصحيح هو (2). الطرد ممنوع قانونياً (الهدر المدرسي). التجاهل يعتبر إخلالاً بالواجب. الإجراء السليم هو التدخل الفوري للحماية (Securité) ثم اتخاذ الإجراءات الإدارية لاحقاً (تقرير)."
+    },
+    {
+      title: "رفض التعلم",
+      situation: "تلميذ في الصفوف الخلفية يرفض إخراج أدواته والكتابة، ويضع رأسه على الطاولة طوال الحصة.",
+      options: [
+        { id: 1, text: "أجبره على الكتابة وأهدده بخصم النقط.", isCorrect: false },
+        { id: 2, text: "أتركه وشأنه ما دام لا يشوش على الآخرين.", isCorrect: false },
+        { id: 3, text: "أقترب منه بهدوء، أسأله عن السبب (قد يكون مريضاً أو يعاني مشكلة)، وأحاول تحفيزه بالمشاركة الشفهية.", isCorrect: true }
+      ],
+      feedback: "الجواب الصحيح هو (3). التهديد يولد العناد (تصعيد). التجاهل إهمال. المقاربة التربوية تقتضي فهم السبب (التواصل) وتنويع البيداغوجيا (الفارقية) لدمجه."
+    },
+    {
+      title: "الغش في الامتحان",
+      situation: "ضبطت تلميذاً يستعمل الهاتف النقال للنقل أثناء فرض مراقب.",
+      options: [
+        { id: 1, text: "أسحب منه الورقة والهاتف فوراً، وأمنحه صفراً، وأطرده.", isCorrect: false },
+        { id: 2, text: "أسحب منه الهاتف ووسيلة الغش، أترك له الورقة ليكمل الامتحان، وأكتب تقريراً في الموضوع للإدارة.", isCorrect: true },
+        { id: 3, text: "أنبهه شفوياً فقط وأتركه يكمل.", isCorrect: false }
+      ],
+      feedback: "الجواب الصحيح هو (2). سحب الورقة والطرد إجراء غير قانوني في الفرض (يحرم التلميذ من حقه في التمدرس). الإجراء هو حجز وسيلة الغش ورفع تقرير لمجلس الانضباط ليتخذ القرار."
+    }
+  ];
+
+  const handleSelect = (idx: number) => {
+    setSelectedOption(idx);
+    setShowFeedback(true);
+  };
+
+  const nextScenario = () => {
+    if (currentScenario < scenarios.length - 1) {
+      setCurrentScenario(curr => curr + 1);
+      setShowFeedback(false);
+      setSelectedOption(null);
+    } else {
+      alert("انتهت الوضعيات! أحسنت.");
+      setCurrentScenario(0);
+      setShowFeedback(false);
+      setSelectedOption(null);
+    }
+  };
+
+  const currentData = scenarios[currentScenario];
+
+  return (
+    <div className="max-w-3xl mx-auto animate-fade-in p-4">
+      {/* بطاقة الوضعية */}
+      <div className="bg-white dark:bg-slate-800 rounded-3xl shadow-xl overflow-hidden border-2 border-slate-100 dark:border-slate-700">
+        
+        {/* الرأس */}
+        <div className="bg-slate-900 text-white p-6 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
+          <div className="relative z-10 flex items-center justify-between">
+             <h2 className="text-2xl font-bold flex items-center gap-2">
+               <AlertTriangle className="text-yellow-400" />
+               وضعية مهنية: {currentData.title}
+             </h2>
+             <span className="bg-white/20 px-3 py-1 rounded-full text-sm">
+               {currentScenario + 1} / {scenarios.length}
+             </span>
+          </div>
+        </div>
+
+        {/* جسم الوضعية */}
+        <div className="p-8">
+          <p className="text-xl text-slate-700 dark:text-slate-300 font-medium leading-relaxed mb-8">
+            {currentData.situation}
+          </p>
+
+          {/* الخيارات */}
+          <div className="space-y-4">
+            {currentData.options.map((opt, idx) => (
+              <button
+                key={idx}
+                disabled={showFeedback}
+                onClick={() => handleSelect(idx)}
+                className={`w-full text-right p-5 rounded-xl border-2 transition-all flex items-center gap-4 group
+                  ${showFeedback 
+                    ? (opt.isCorrect 
+                        ? 'border-green-500 bg-green-50 dark:bg-green-900/20' 
+                        : (selectedOption === idx ? 'border-red-500 bg-red-50 dark:bg-red-900/20' : 'border-slate-200 opacity-50')
+                      )
+                    : 'border-slate-200 dark:border-slate-700 hover:border-indigo-500 hover:shadow-md bg-white dark:bg-slate-800'
+                  }
+                `}
+              >
+                <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm shrink-0
+                  ${showFeedback && opt.isCorrect ? 'bg-green-500 text-white' : 'bg-slate-100 text-slate-500 group-hover:bg-indigo-100 group-hover:text-indigo-600'}
+                `}>
+                  {idx + 1}
+                </div>
+                <span className="text-lg font-medium text-slate-800 dark:text-slate-200">
+                  {opt.text}
+                </span>
+              </button>
+            ))}
+          </div>
+
+          {/* التغذية الراجعة (التصحيح) */}
+          {showFeedback && (
+            <div className="mt-8 animate-scale-in">
+              <div className={`p-6 rounded-2xl border-r-4 ${currentData.options[selectedOption!].isCorrect ? 'bg-green-50 border-green-500' : 'bg-red-50 border-red-500'}`}>
+                <h4 className={`font-bold text-lg mb-2 ${currentData.options[selectedOption!].isCorrect ? 'text-green-800' : 'text-red-800'}`}>
+                   {currentData.options[selectedOption!].isCorrect ? 'تصرف سليم تربوياً ✅' : 'تصرف يحتاج مراجعة ❌'}
+                </h4>
+                <p className="text-slate-700 leading-7">
+                  {currentData.feedback}
+                </p>
+              </div>
+              
+              <button 
+                onClick={nextScenario}
+                className="mt-6 w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-lg shadow-lg shadow-indigo-200 dark:shadow-none transition-all"
+              >
+                الوضعية التالية ←
+              </button>
+            </div>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
