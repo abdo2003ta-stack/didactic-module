@@ -15,7 +15,7 @@ import {
 type Section = 'formulation' | 'conceptMap' | 'didacticMeans' | 'exam' | 'glossary' | 'simulator' | 'triangle' | 'timeline';
 
 // ------------------- MAIN COMPONENT -------------------
-export default function DidacticModulePage() {
+function DidacticModulePage() {
   const [activeSection, setActiveSection] = useState<Section>('didacticMeans');
   const [isDark, setIsDark] = useState(true); // يبدأ مظلم
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -445,6 +445,8 @@ export default function DidacticModulePage() {
     </div>
   );
 }
+
+export default DidacticModulePage;
 
 // =================== HELPER COMPONENTS ===================
 
@@ -1555,117 +1557,139 @@ function ProfessionalSimulator() {
     </div>
   );
 }
-// ------------------- COMPONENT: INTERACTIVE TRIANGLE (المثلث التفاعلي) -------------------
+// ------------------- COMPONENT: INTERACTIVE TRIANGLE (المثلث الديدكتيكي - مصحح) -------------------
+import React, { useState } from 'react';
+import { BookOpen, UserCheck, Users, Info } from 'lucide-react';
+
 function DidacticTriangle() {
   const [activePart, setActivePart] = useState<string | null>(null);
 
   const info = {
-    teacher: { title: "المدرس (Enseignant)", desc: "القطب المسؤول عن نقل المعرفة. مهامه: التخطيط، التدبير، والتقويم. يواجه إكراهات المؤسسة والمنهاج." },
-    student: { title: "المتعلم (Apprenant)", desc: "قطب الرحى في العملية التعليمية. يجب مراعاة تمثلاته، وسيكولوجيته، ومنطقة نموه القريب." },
-    knowledge: { title: "المعرفة (Savoir)", desc: "المادة الدراسية المراد تدريسها. تخضع للنقل الديدكتيكي لتصبح قابلة للتدريس." },
-    transposition: { title: "النقل الديدكتيكي", desc: "المحور الرابط بين المدرس والمعرفة. هي عملية تحويل المعرفة العالمة إلى معرفة مدرسة." },
-    contract: { title: "العقد الديدكتيكي", desc: "المحور الرابط بين المدرس والمتعلم. مجموع القواعد الضمنية التي تحدد واجبات وحقوق كل طرف." },
-    representations: { title: "التمثلات / استراتيجيات التعلم", desc: "المحور الرابط بين المتعلم والمعرفة. كيف يبني المتعلم المعرفة في ذهنه؟ وما هي العوائق التي تواجهه؟" }
+    // الأقطاب
+    teacher: { title: "المدرس (Enseignant)", desc: "القطب البيداغوجي. دوره: النقل الديدكتيكي، تدبير العقد، وتيسير التعلم." },
+    student: { title: "المتعلم (Apprenant)", desc: "القطب السيكولوجي. يبني المعرفة انطلاقاً من تمثلاته (النظرية البنائية)." },
+    knowledge: { title: "المعرفة (Savoir)", desc: "القطب الإبستمولوجي. المادة الدراسية التي خضعت للنقل لتصبح قابلة للتدريس." },
+    
+    // المحاور (العلاقات)
+    transposition: { title: "النقل الديدكتيكي (Transposition)", desc: "العلاقة بين (المدرس ↔ المعرفة). هي عملية تحويل 'المعرفة العالمة' (Savoir savant) إلى 'معرفة مدرسة' (Savoir enseigné) لتناسب مستوى المتعلمين." },
+    contract: { title: "العقد الديدكتيكي (Contrat)", desc: "العلاقة بين (المدرس ↔ المتعلم). مجموع القواعد الضمنية والصريحة التي تحدد واجبات وحقوق كل طرف في العملية التعليمية." },
+    representations: { title: "التمثلات / التعلم (Représentations)", desc: "العلاقة بين (المتعلم ↔ المعرفة). هنا يحدث الصراع المعرفي. المتعلم لا يأتي بذهن فارغ، بل بتمثلات سابقة يجب هدمها لبناء معرفة جديدة." }
   };
 
   return (
     <div className="max-w-4xl mx-auto animate-fade-in p-4">
       <div className="bg-white dark:bg-slate-900 rounded-3xl shadow-xl border-2 border-slate-100 dark:border-slate-700 overflow-hidden relative">
         
-        {/* العنوان */}
-        <div className="bg-slate-100 dark:bg-slate-800 p-6 text-center">
-           <h2 className="text-2xl font-bold text-slate-800 dark:text-white mb-2">المثلث الديدكتيكي التفاعلي</h2>
-           <p className="text-slate-500 dark:text-slate-400 text-sm">اضغط على العناصر أو الأسهم لفهم العلاقات</p>
+        {/* رأس البطاقة */}
+        <div className="bg-slate-100 dark:bg-slate-800 p-6 flex justify-between items-center">
+           <div>
+             <h2 className="text-2xl font-bold text-slate-800 dark:text-white mb-1">المثلث الديدكتيكي (Jean Houssaye)</h2>
+             <p className="text-slate-500 dark:text-slate-400 text-sm">اضغط على العناصر لفهم التفاعلات</p>
+           </div>
+           <Info className="text-slate-400" />
         </div>
 
-        <div className="p-8 relative min-h-[500px] flex flex-col items-center justify-center">
+        <div className="p-8 relative min-h-[550px] flex flex-col items-center">
           
-          {/* SVG الرسم البياني */}
-          <div className="relative w-full max-w-md aspect-square mx-auto mb-8 select-none">
+          {/* حاوية الرسم البياني */}
+          <div className="relative w-full max-w-[400px] h-[350px] mx-auto mb-8 select-none mt-8">
             
-            {/* المحور: النقل الديدكتيكي (يسار) */}
-            <div 
-               onClick={() => setActivePart('transposition')}
-               className="absolute top-1/2 left-0 -translate-y-1/2 w-4 h-64 bg-transparent cursor-pointer group flex items-center justify-center z-10 hover:scale-110 transition-transform"
-               style={{ transform: 'rotate(-30deg) translate(40px, -60px)' }}
-            >
-               <div className="bg-blue-100 dark:bg-blue-900/30 px-3 py-1 rounded text-xs font-bold text-blue-600 dark:text-blue-300 rotate-90 whitespace-nowrap border border-blue-200 dark:border-blue-700 shadow-sm">
-                 النقل الديدكتيكي
-               </div>
-               <div className="absolute inset-0 border-l-4 border-dashed border-blue-300 dark:border-blue-700 opacity-50"></div>
-            </div>
+            {/* 1. خطوط الربط (SVG) خلف العناصر */}
+            <svg className="absolute inset-0 w-full h-full pointer-events-none z-0" viewBox="0 0 400 350">
+               {/* المثلث */}
+               <path d="M200,40 L40,310 L360,310 Z" fill="none" stroke="#cbd5e1" strokeWidth="2" strokeDasharray="5,5" className="dark:stroke-slate-600"/>
+            </svg>
 
-            {/* المحور: التمثلات (يمين) */}
-            <div 
-               onClick={() => setActivePart('representations')}
-               className="absolute top-1/2 right-0 -translate-y-1/2 w-4 h-64 bg-transparent cursor-pointer group flex items-center justify-center z-10 hover:scale-110 transition-transform"
-               style={{ transform: 'rotate(30deg) translate(-40px, -60px)' }}
-            >
-               <div className="bg-green-100 dark:bg-green-900/30 px-3 py-1 rounded text-xs font-bold text-green-600 dark:text-green-300 -rotate-90 whitespace-nowrap border border-green-200 dark:border-green-700 shadow-sm">
-                 التمثلات / التعلم
-               </div>
-               <div className="absolute inset-0 border-r-4 border-dashed border-green-300 dark:border-green-700 opacity-50"></div>
-            </div>
-
-            {/* المحور: العقد الديدكتيكي (أسفل) */}
-            <div 
-               onClick={() => setActivePart('contract')}
-               className="absolute bottom-10 left-1/2 -translate-x-1/2 w-64 h-8 bg-transparent cursor-pointer group flex items-center justify-center z-10 hover:scale-110 transition-transform"
-            >
-               <div className="bg-red-100 dark:bg-red-900/30 px-3 py-1 rounded text-xs font-bold text-red-600 dark:text-red-300 whitespace-nowrap border border-red-200 dark:border-red-700 shadow-sm">
-                 العقد الديدكتيكي
-               </div>
-               <div className="absolute bottom-0 left-0 right-0 border-b-4 border-dashed border-red-300 dark:border-red-700 opacity-50"></div>
-            </div>
-
-            {/* قمة: المعرفة */}
+            {/* ================= الأقطاب (الرؤوس) ================= */}
+            
+            {/* قمة: المعرفة (Top Center) */}
             <button 
               onClick={() => setActivePart('knowledge')}
-              className="absolute top-0 left-1/2 -translate-x-1/2 w-24 h-24 bg-white dark:bg-slate-800 rounded-full border-4 border-blue-500 shadow-lg flex flex-col items-center justify-center hover:bg-blue-50 dark:hover:bg-slate-700 transition-all z-20 hover:scale-110"
+              className={`absolute top-0 left-1/2 -translate-x-1/2 w-24 h-24 rounded-full border-4 shadow-lg flex flex-col items-center justify-center transition-all z-20 hover:scale-110 
+                ${activePart === 'knowledge' ? 'bg-blue-100 border-blue-600 scale-110' : 'bg-white dark:bg-slate-800 border-blue-500 hover:bg-blue-50'}
+              `}
             >
-              <BookOpen size={24} className="text-blue-500 mb-1" />
+              <BookOpen size={24} className="text-blue-600 mb-1" />
               <span className="text-xs font-bold text-slate-700 dark:text-slate-200">المعرفة</span>
             </button>
 
-            {/* زاوية: المدرس */}
+            {/* أسفل اليسار: المدرس (Bottom Left) */}
             <button 
               onClick={() => setActivePart('teacher')}
-              className="absolute bottom-0 left-0 w-24 h-24 bg-white dark:bg-slate-800 rounded-full border-4 border-red-500 shadow-lg flex flex-col items-center justify-center hover:bg-red-50 dark:hover:bg-slate-700 transition-all z-20 hover:scale-110"
+              className={`absolute bottom-0 left-0 w-24 h-24 rounded-full border-4 shadow-lg flex flex-col items-center justify-center transition-all z-20 hover:scale-110
+                ${activePart === 'teacher' ? 'bg-red-100 border-red-600 scale-110' : 'bg-white dark:bg-slate-800 border-red-500 hover:bg-red-50'}
+              `}
             >
-              <UserCheck size={24} className="text-red-500 mb-1" />
+              <UserCheck size={24} className="text-red-600 mb-1" />
               <span className="text-xs font-bold text-slate-700 dark:text-slate-200">المدرس</span>
             </button>
 
-            {/* زاوية: المتعلم */}
+            {/* أسفل اليمين: المتعلم (Bottom Right) */}
             <button 
               onClick={() => setActivePart('student')}
-              className="absolute bottom-0 right-0 w-24 h-24 bg-white dark:bg-slate-800 rounded-full border-4 border-green-500 shadow-lg flex flex-col items-center justify-center hover:bg-green-50 dark:hover:bg-slate-700 transition-all z-20 hover:scale-110"
+              className={`absolute bottom-0 right-0 w-24 h-24 rounded-full border-4 shadow-lg flex flex-col items-center justify-center transition-all z-20 hover:scale-110
+                ${activePart === 'student' ? 'bg-green-100 border-green-600 scale-110' : 'bg-white dark:bg-slate-800 border-green-500 hover:bg-green-50'}
+              `}
             >
-              <Users size={24} className="text-green-500 mb-1" />
+              <Users size={24} className="text-green-600 mb-1" />
               <span className="text-xs font-bold text-slate-700 dark:text-slate-200">المتعلم</span>
             </button>
 
-            {/* خطوط الرسم (SVG للخلفية) */}
-            <svg className="absolute inset-0 w-full h-full pointer-events-none opacity-20 dark:opacity-40" viewBox="0 0 400 400">
-               <polygon points="200,50 50,350 350,350" fill="none" stroke="currentColor" strokeWidth="2" className="text-slate-400"/>
-            </svg>
+
+            {/* ================= المحاور (الأزرار الجانبية) ================= */}
+
+            {/* اليسار: النقل الديدكتيكي (بين المدرس والمعرفة) */}
+            <div 
+               onClick={() => setActivePart('transposition')}
+               className="absolute top-1/2 left-[10%] -translate-y-1/2 cursor-pointer z-10 hover:scale-110 transition-transform group"
+            >
+               <div className={`px-3 py-2 rounded-xl shadow-md border text-sm font-bold rotate-[-55deg] whitespace-nowrap backdrop-blur-sm
+                 ${activePart === 'transposition' ? 'bg-purple-600 text-white border-purple-600' : 'bg-white/90 dark:bg-slate-800/90 text-purple-600 border-purple-200 dark:border-purple-900'}
+               `}>
+                 النقل الديدكتيكي ⚡
+               </div>
+            </div>
+
+            {/* اليمين: التمثلات (بين المتعلم والمعرفة) */}
+            <div 
+               onClick={() => setActivePart('representations')}
+               className="absolute top-1/2 right-[10%] -translate-y-1/2 cursor-pointer z-10 hover:scale-110 transition-transform group"
+            >
+               <div className={`px-3 py-2 rounded-xl shadow-md border text-sm font-bold rotate-[55deg] whitespace-nowrap backdrop-blur-sm
+                 ${activePart === 'representations' ? 'bg-orange-600 text-white border-orange-600' : 'bg-white/90 dark:bg-slate-800/90 text-orange-600 border-orange-200 dark:border-orange-900'}
+               `}>
+                 التمثلات / التعلم 🧠
+               </div>
+            </div>
+
+            {/* الأسفل: العقد الديدكتيكي (بين المدرس والمتعلم) */}
+            <div 
+               onClick={() => setActivePart('contract')}
+               className="absolute bottom-[20px] left-1/2 -translate-x-1/2 cursor-pointer z-10 hover:scale-110 transition-transform group"
+            >
+               <div className={`px-4 py-2 rounded-xl shadow-md border text-sm font-bold whitespace-nowrap backdrop-blur-sm
+                 ${activePart === 'contract' ? 'bg-teal-600 text-white border-teal-600' : 'bg-white/90 dark:bg-slate-800/90 text-teal-600 border-teal-200 dark:border-teal-900'}
+               `}>
+                 📜 العقد الديدكتيكي
+               </div>
+            </div>
+
           </div>
 
-          {/* صندوق الشرح */}
-          <div className={`w-full transition-all duration-500 ${activePart ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}`}>
-             {activePart && (
-               <div className="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-2xl border border-slate-200 dark:border-slate-600 text-center animate-scale-in">
-                 <h3 className="text-xl font-bold text-slate-800 dark:text-white mb-2">
+          {/* صندوق الشرح الديناميكي */}
+          <div className="w-full mt-4 h-32 flex items-center justify-center">
+             {activePart ? (
+               <div className="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-2xl border border-slate-200 dark:border-slate-600 text-center animate-scale-in w-full shadow-inner">
+                 <h3 className="text-lg font-bold text-indigo-600 dark:text-indigo-400 mb-2">
                    {info[activePart as keyof typeof info].title}
                  </h3>
-                 <p className="text-slate-600 dark:text-slate-300 leading-relaxed">
+                 <p className="text-slate-700 dark:text-slate-300 leading-relaxed text-sm md:text-base">
                    {info[activePart as keyof typeof info].desc}
                  </p>
                </div>
-             )}
-             {!activePart && (
-               <div className="text-center text-slate-400 mt-4 animate-pulse">
-                 انقر على أحد العناصر أعلاه للإظهار التفاصيل
+             ) : (
+               <div className="text-center text-slate-400 animate-pulse bg-slate-50 dark:bg-slate-900/30 p-4 rounded-xl w-full border border-dashed border-slate-300">
+                 👈 انقر على أي جزء من المثلث لإظهار التفاصيل العلمية
                </div>
              )}
           </div>
@@ -1675,6 +1699,7 @@ function DidacticTriangle() {
     </div>
   );
 }
+
 // ------------------- COMPONENT: TIMELINE (خط الزمن للنظريات) -------------------
 function TheoriesTimeline() {
   const theories = [
