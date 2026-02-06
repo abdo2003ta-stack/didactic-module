@@ -385,35 +385,7 @@ export default function DidacticModulePage() {
       <footer className="bg-slate-900 text-slate-400 py-12 mt-24 border-t border-slate-800 text-center">
          <p>© {new Date().getFullYear()} بوابة عبد الله الطلال.AET</p>
          {/* الزر العائم (FAB) - انسخ هذا الكود وضعه بدلاً من القديم */}
-      <div className="fixed bottom-8 right-8 z-40 flex flex-col gap-2">
-        <div className="group relative">
-           {/* القائمة المنبثقة */}
-           <div className="absolute bottom-16 right-0 bg-white dark:bg-slate-800 rounded-2xl shadow-2xl p-2 w-56 border border-slate-100 dark:border-slate-700 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none group-hover:pointer-events-auto flex flex-col gap-1">
-              
-              {/* الأزرار القديمة */}
-              <button onClick={() => { setActiveSection('formulation'); window.scrollTo(0,0); }} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg text-sm text-right flex items-center gap-2">
-                 <Brain size={14} className="text-blue-500"/> صياغة المفهوم
-              </button>
-              <button onClick={() => { setActiveSection('conceptMap'); window.scrollTo(0,0); }} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg text-sm text-right flex items-center gap-2">
-                 <Share2 size={14} className="text-purple-500"/> الخريطة المفهومية
-              </button>
-              <button onClick={() => { setActiveSection('didacticMeans'); window.scrollTo(0,0); }} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg text-sm text-right flex items-center gap-2">
-                 <Box size={14} className="text-teal-500"/> الوسائل الديدكتيكية
-              </button>
-
-              {/* +++++ هذا هو الزر الجديد الذي أضفناه للامتحان +++++ */}
-              <button onClick={() => { setActiveSection('exam'); window.scrollTo(0,0); }} className="p-2 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg text-sm text-right flex items-center gap-2 border-t border-slate-100 dark:border-slate-700 mt-1 pt-2 font-bold text-red-600 dark:text-red-400">
-                 <Target size={14} className="text-red-500"/> الامتحان الشامل (20 سؤال)
-              </button>
-
-           </div>
-
-           {/* الزر الرئيسي الدائري */}
-           <button className="bg-indigo-600 hover:bg-indigo-700 text-white p-4 rounded-full shadow-lg transition-transform hover:scale-110 flex items-center justify-center">
-             <Layers size={24} />
-           </button>
-        </div>
-      </div>
+      
       </footer>
     </div>
   );
