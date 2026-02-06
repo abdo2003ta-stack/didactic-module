@@ -21,25 +21,6 @@ const AnimatedBackground = () => (
     <div className="absolute -bottom-32 left-1/3 w-96 h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-4000"></div>
   </div>
 );
-// مكون الزر ثلاثي الأبعاد
-const PushButton = ({ onClick, children, color = "indigo", disabled = false }: { onClick?: () => void; children: React.ReactNode; color?: string; disabled?: boolean }) => {
-  return (
-    <button 
-      onClick={onClick}
-      disabled={disabled}
-      className={`relative group inline-block focus:outline-none ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
-    >
-      {/* 1. طبقة الظل السفلية (العمق) */}
-      <span className={`absolute inset-0 translate-x-0 translate-y-1.5 bg-${color}-800 rounded-xl transition-transform group-hover:translate-y-2 group-active:translate-y-1.5`}></span>
-      
-      {/* 2. طبقة الزر العلوية (الواجهة) */}
-      <span className={`relative flex items-center justify-center px-6 py-3 bg-${color}-600 border-2 border-${color}-700 rounded-xl font-bold text-white transition-all transform -translate-y-1 group-hover:-translate-y-2 group-active:translate-y-0 group-active:border-b-0`}>
-        {children}
-      </span>
-    </button>
-  );
-};
-
 // ------------------- TYPES -------------------
 type Section = 'formulation' | 'conceptMap' | 'didacticMeans' | 'exam' | 'glossary' | 'simulator' | 'triangle' | 'timeline' | 'methods' | 'flashcards';
 
@@ -113,8 +94,7 @@ function DidacticModulePage() {
           <p className="text-lg md:text-xl text-indigo-100 font-light max-w-3xl mx-auto mt-4 opacity-90">
              من إعداد عبد الله AET
           </p>
-          
-          <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border border-white/20 dark:border-slate-700/30 shadow-2xl rounded-full px-6 py-3 flex items-center gap-4 z-50 transition-all duration-300 hover:scale-105 hover:bg-white/90 dark:hover:bg-slate-900/90">
+          <div className="mt-12 flex flex-wrap justify-center gap-4">
             <NavButton label="صياغة المفهوم" icon={<Brain size={18} />} isActive={activeSection === 'formulation'} onClick={() => setActiveSection('formulation')} activeColor="bg-blue-600" />
             <NavButton label="الخريطة المفهومية" icon={<Share2 size={18} />} isActive={activeSection === 'conceptMap'} onClick={() => setActiveSection('conceptMap')} activeColor="bg-purple-600" />
             <NavButton label="الوسائل الديدكتيكية" icon={<Box size={18} />} isActive={activeSection === 'didacticMeans'} onClick={() => setActiveSection('didacticMeans')} activeColor="bg-teal-600" />
