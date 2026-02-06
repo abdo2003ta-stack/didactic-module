@@ -10,6 +10,17 @@ import {
   Rabbit, Cat, Leaf, Utensils, Pencil, Search, Library, X, UserCheck, Users,
   History as HistoryIcon, Database, User, Info, GraduationCap, Mic, MessageCircle, Shuffle, BrainCircuit, RotateCcw, ArrowLeft, ListChecks, ChevronRight
 } from 'lucide-react';
+// مكون الخلفية المتحركة
+const AnimatedBackground = () => (
+  <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
+    {/* كرة بنفسجية */}
+    <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
+    {/* كرة زرقاء */}
+    <div className="absolute top-0 right-1/4 w-96 h-96 bg-indigo-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
+    {/* كرة وردية */}
+    <div className="absolute -bottom-32 left-1/3 w-96 h-96 bg-pink-300 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-4000"></div>
+  </div>
+);
 
 // ------------------- TYPES -------------------
 type Section = 'formulation' | 'conceptMap' | 'didacticMeans' | 'exam' | 'glossary' | 'simulator' | 'triangle' | 'timeline' | 'methods' | 'flashcards';
@@ -39,6 +50,28 @@ function DidacticModulePage() {
   }, [isDark]);
 
   return (
+    <div className="min-h-screen relative ..."> {/* تأكد من وجود relative هنا */}
+      
+      <AnimatedBackground /> {/* 👈 أضفها هنا في البداية */}
+      
+      {/* ستايل الحركة ضروري جداً */}
+      <style>{`
+        @keyframes blob {
+          0% { transform: translate(0px, 0px) scale(1); }
+          33% { transform: translate(30px, -50px) scale(1.1); }
+          66% { transform: translate(-20px, 20px) scale(0.9); }
+          100% { transform: translate(0px, 0px) scale(1); }
+        }
+        .animate-blob {
+          animation: blob 7s infinite;
+        }
+        .animation-delay-2000 {
+          animation-delay: 2s;
+        }
+        .animation-delay-4000 {
+          animation-delay: 4s;
+        }
+      `}</style>
     <div className={`min-h-screen transition-colors duration-300 ${isDark ? 'bg-slate-950 text-slate-200' : 'bg-slate-50 text-slate-800'}`} dir="rtl">
       <div className="fixed top-0 left-0 w-full h-1.5 z-[60] bg-transparent">
         <div 
@@ -444,6 +477,7 @@ function DidacticModulePage() {
          {/* الزر العائم (FAB) - انسخ هذا الكود وضعه بدلاً من القديم */}
       
       </footer>
+    </div>
     </div>
   );
 }
