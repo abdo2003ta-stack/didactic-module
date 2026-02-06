@@ -8,7 +8,7 @@ import {
   Microscope, Globe, MonitorPlay, Zap, FlaskConical, Scale, 
   AlertTriangle, Target, MousePointerClick, Network, Split, GitGraph, ShieldCheck, Briefcase, Trophy, RefreshCw,
   Rabbit, Cat, Leaf, Utensils, Pencil, Search, Library, X, UserCheck, Users,
-  History as HistoryIcon, Database, User, Info, GraduationCap, Mic, MessageCircle, Shuffle, BrainCircuit, RotateCcw, ArrowLeft
+  History as HistoryIcon, Database, User, Info, GraduationCap, Mic, MessageCircle, Shuffle, BrainCircuit, RotateCcw, ArrowLeft, ListChecks
 } from 'lucide-react';
 
 // ------------------- TYPES -------------------
@@ -2005,79 +2005,291 @@ function TheoriesTimeline() {
     </div>
   );
 }
+// ------------------- COMPONENT: ADVANCED TEACHING METHODS -------------------
+
 function TeachingMethods() {
+  const [selectedMethod, setSelectedMethod] = useState<any>(null);
+
+  // === قاعدة بيانات التقنيات المفصلة ===
   const methods = [
     {
+      id: 1,
       title: "العصف الذهني (Brainstorming)",
-      icon: <BrainCircuit size={24} />,
-      color: "text-purple-600 bg-purple-100 dark:bg-purple-900/30",
-      desc: "تقنية لإنتاج أكبر عدد من الأفكار حول موضوع معين بحرية تامة دون نقد.",
-      steps: ["طرح المشكلة", "إطلاق العنان للأفكار", "عدم النقد", "تجميع وتصنيف الأفكار"]
+      icon: <BrainCircuit size={32} />,
+      color: "purple",
+      shortDesc: "استمطار الأفكار بحرية تامة دون نقد لإيجاد حلول إبداعية.",
+      details: {
+        definition: "تقنية جماعية أبدعها أليكس أوزبورن، تهدف إلى إنتاج أكبر عدد ممكن من الأفكار حول موضوع معين في جو من الحرية وغياب النقد.",
+        steps: [
+          "طرح المشكلة: يوضح المشط الموضوع بدقة.",
+          "التسخين: كسر الجليد وتشجيع المشاركة.",
+          "إنتاج الأفكار: السماح بتدفق الأفكار (الكم قبل الكيف) ومنع النقد تماماً.",
+          "تجميع وتصنيف الأفكار: غربلة الأفكار المتشابهة.",
+          "التقويم: اختيار الأفكار الصالحة للتطبيق."
+        ],
+        objectives: [
+          "تنمية التفكير الإبداعي.",
+          "تحرير المتعلم من الخجل والخوف من الخطأ.",
+          "قبول الاختلاف والرأي الآخر."
+        ],
+        tip: "القاعدة الذهبية: 'ممنوع النقد' أثناء مرحلة توليد الأفكار."
+      }
     },
     {
-      title: "فيليبس 6 × 6",
-      icon: <Users size={24} />,
-      color: "text-blue-600 bg-blue-100 dark:bg-blue-900/30",
-      desc: "تقسيم القسم إلى مجموعات من 6 تلاميذ، يتداولون لمدة 6 دقائق للوصول لقرار موحد.",
-      steps: ["تشكيل المجموعات", "تحديد المسير والمقرر", "النقاش (6 د)", "عرض التقارير"]
+      id: 2,
+      title: "فيليبس 6 × 6 (Phillips 66)",
+      icon: <Users size={32} />,
+      color: "blue",
+      shortDesc: "مجموعات من 6 أفراد يتداولون لمدة 6 دقائق.",
+      details: {
+        definition: "تقنية لتنشيط المجموعات الكبيرة، حيث يتم تقسيم الفصل إلى مجموعات صغيرة (6 أعضاء) لمناقشة موضوع محدد في وقت قصير (6 دقائق).",
+        steps: [
+          "تشكيل المجموعات: تقسيم القسم إلى مجموعات من 6 أفراد.",
+          "توزيع المهام: تعيين مسير (ينظم النقاش) ومقرر (يدون النتائج) لكل مجموعة.",
+          "النقاش: التداول حول المشكلة المطروحة لمدة 6 دقائق بالضبط.",
+          "عرض التقارير: يقدم كل مقرر خلاصة مجموعته.",
+          "التركيب: يجمع المدرس الخلاصات في ملخص عام."
+        ],
+        objectives: [
+          "اقتصاد الوقت وتشغيل الجميع في آن واحد.",
+          "تنمية روح العمل الجماعي والمسؤولية.",
+          "التدرب على اتخاذ القرار بسرعة."
+        ],
+        tip: "فعالة جداً في الأقسام المكتظة لاستطلاع الرأي بسرعة."
+      }
     },
     {
+      id: 3,
       title: "لعب الأدوار (Jeu de rôle)",
-      icon: <Mic size={24} />,
-      color: "text-orange-600 bg-orange-100 dark:bg-orange-900/30",
-      desc: "تقمص المتعلمين لشخصيات في وضعية محاكاة للواقع لاكتساب مهارات اجتماعية.",
-      steps: ["تحديد السيناريو", "توزيع الأدوار", "التمثيل", "المناقشة والتحليل"]
+      icon: <Mic size={32} />,
+      color: "orange",
+      shortDesc: "تقمص شخصيات في وضعية محاكاة للواقع.",
+      details: {
+        definition: "تقنية تعتمد على المحاكاة، حيث يتقمص المتعلمون أدواراً لشخصيات في وضعية افتراضية تشبه الواقع، لاكتساب مهارات اجتماعية أو لغوية.",
+        steps: [
+          "السيناريو: تحديد الموضوع والشخصيات.",
+          "توزيع الأدوار: اختيار الممثلين والملاحظين.",
+          "التمثيل: أداء المشهد بتلقائية ودون نص مكتوب مسبقاً (غالباً).",
+          "المناقشة والتحليل: يناقش الفصل الأداء، السلوكات، والمواقف المعبر عنها (وليس الممثلين كأشخاص).",
+          "الاستنتاج: استخلاص العبرة أو المهارة المستهدفة."
+        ],
+        objectives: [
+          "تنمية التعبير الشفهي والتواصل.",
+          "فهم مشاعر الآخرين (Empathy).",
+          "تعديل السلوك واكتساب مهارات اجتماعية."
+        ],
+        tip: "يجب على المدرس حماية الممثلين من سخرية زملائهم أثناء النقاش."
+      }
     },
     {
-      title: "الزوبعة / المناقشة",
-      icon: <MessageCircle size={24} />,
-      color: "text-green-600 bg-green-100 dark:bg-green-900/30",
-      desc: "تبادل الآراء بين المدرس والمتعلمين أو بين المتعلمين أنفسهم حول قضية معينة.",
-      steps: ["إثارة القضية", "توجيه النقاش", "احترام الرأي الآخر", "الخروج بخلاصة"]
+      id: 4,
+      title: "حل المشكلات (Résolution de problèmes)",
+      icon: <Shuffle size={32} />,
+      color: "red",
+      shortDesc: "وضع المتعلم أمام عائق يدفعه للبحث والتقصي.",
+      details: {
+        definition: "بيداغوجيا تضع المتعلم أمام وضعية مشكلة (عائق معرفي) لا يملك حلاً جاهزاً لها، مما يدفعه لاستنفار موارده والبحث لبناء معرفة جديدة.",
+        steps: [
+          "الإحساس بالمشكلة: الشعور بوجود تناقض أو حاجة.",
+          "تحديد المشكلة: صياغتها في سؤال دقيق.",
+          "صياغة الفرضيات: تخمين حلول أولية.",
+          "التمحيص والبحث: اختبار الفرضيات (تجربة، وثائق...).",
+          "النتيجة والتعميم: الوصول للحل وصياغة القاعدة."
+        ],
+        objectives: [
+          "تنمية الروح العلمية والمنهجية.",
+          "بناء المعرفة ذاتياً (البنائية).",
+          "الربط بين التعلم والواقع."
+        ],
+        tip: "يجب أن تكون المشكلة دالة (ذات معنى للمتعلم) وليست تعجيزية."
+      }
     },
     {
-      title: "حل المشكلات",
-      icon: <Shuffle size={24} />,
-      color: "text-red-600 bg-red-100 dark:bg-red-900/30",
-      desc: "وضع المتعلم أمام عائق معرفي يدفعه للبحث وتقصي الحلول لبناء المعرفة.",
-      steps: ["الإحساس بالمشكلة", "صياغة الفرضيات", "التمحيص والبحث", "الاستنتاج"]
+      id: 5,
+      title: "المناقشة / الزوبعة (Débat)",
+      icon: <MessageCircle size={32} />,
+      color: "green",
+      shortDesc: "تبادل الآراء والحجج حول قضية خلافية.",
+      details: {
+        definition: "حوار منظم بين المدرس والمتعلمين أو بين المتعلمين أنفسهم حول قضية مثيرة للجدل، بهدف تبادل الآراء وتعديلها.",
+        steps: [
+          "الإعداد: إخبار المتعلمين بالموضوع للتحضير القبلي.",
+          "إطلاق النقاش: طرح سؤال استفزازي أو عرض وضعية.",
+          "توجيه النقاش: تدخل المدرس لتنظيم الكلمة وضمان الاحترام.",
+          "التركيب: تدوين النقاط المتفق عليها والنقاط الخلافية."
+        ],
+        objectives: [
+          "قبول الاختلاف واحترام الرأي الآخر.",
+          "القدرة على الإقناع والدفاع عن الرأي بالحجة.",
+          "تنمية مهارات الاستماع والتواصل."
+        ],
+        tip: "دور المدرس هنا هو 'منشط' (Animateur) محايد لا يفرض رأيه."
+      }
     },
     {
-      title: "القسم المعكوس",
-      icon: <MonitorPlay size={24} />,
-      color: "text-teal-600 bg-teal-100 dark:bg-teal-900/30",
-      desc: "يتعلم الطالب الدرس في البيت (فيديو/نص) ويخصص وقت القسم للتطبيقات.",
-      steps: ["إرسال الموارد قبلياً", "التعلم الذاتي منزلياً", "التطبيق جماعياً في القسم"]
+      id: 6,
+      title: "القسم المعكوس (Classe inversée)",
+      icon: <MonitorPlay size={32} />,
+      color: "teal",
+      shortDesc: "التعلم الذاتي في المنزل، والتطبيق في الفصل.",
+      details: {
+        definition: "استراتيجية تقلب الطريقة التقليدية: يتلقى المتعلم المعارف في المنزل (عبر فيديوهات أو نصوص)، ويخصص وقت الفصل للتمارين والمشاريع.",
+        steps: [
+          "خارج الفصل (قبلياً): المتعلم يشاهد شريط فيديو أو يقرأ نصاً.",
+          "بداية الحصة: التأكد من الفهم (أسئلة سريعة).",
+          "أثناء الحصة: إنجاز تمارين تطبيقية، أعمال مجموعات، ومشاريع.",
+          "التقويم: التأكد من تملك الكفايات."
+        ],
+        objectives: [
+          "مراعاة الفروق الفردية (التعلم بالوتيرة الخاصة).",
+          "استغلال وقت الفصل للتفاعل النشط بدل الإلقاء.",
+          "تنمية الاستقلالية والتعلم الذاتي."
+        ],
+        tip: "تتطلب توفر وسائل تكنولوجية وانخراط الأسر."
+      }
     }
   ];
 
+  // دوال مساعدة للألوان
+  const getColorClass = (color: string, type: 'bg' | 'text' | 'border') => {
+    const map: any = {
+      purple: { bg: 'bg-purple-100 dark:bg-purple-900/30', text: 'text-purple-600 dark:text-purple-400', border: 'border-purple-200' },
+      blue: { bg: 'bg-blue-100 dark:bg-blue-900/30', text: 'text-blue-600 dark:text-blue-400', border: 'border-blue-200' },
+      orange: { bg: 'bg-orange-100 dark:bg-orange-900/30', text: 'text-orange-600 dark:text-orange-400', border: 'border-orange-200' },
+      red: { bg: 'bg-red-100 dark:bg-red-900/30', text: 'text-red-600 dark:text-red-400', border: 'border-red-200' },
+      green: { bg: 'bg-green-100 dark:bg-green-900/30', text: 'text-green-600 dark:text-green-400', border: 'border-green-200' },
+      teal: { bg: 'bg-teal-100 dark:bg-teal-900/30', text: 'text-teal-600 dark:text-teal-400', border: 'border-teal-200' },
+    };
+    return map[color][type];
+  };
+
   return (
     <div className="max-w-6xl mx-auto p-4 animate-fade-in">
+      
+      {/* شبكة البطاقات المختصرة */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {methods.map((method, idx) => (
-          <div key={idx} className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-lg border border-slate-100 dark:border-slate-700 hover:-translate-y-2 transition-transform duration-300 group">
+        {methods.map((method) => (
+          <div 
+            key={method.id} 
+            onClick={() => setSelectedMethod(method)}
+            className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-lg border border-slate-100 dark:border-slate-700 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 cursor-pointer group relative overflow-hidden"
+          >
+            {/* شريط جانبي ملون */}
+            <div className={`absolute left-0 top-0 bottom-0 w-1 ${getColorClass(method.color, 'bg').replace('/30', '')}`}></div>
+
             <div className="flex items-center gap-4 mb-4">
-              <div className={`p-3 rounded-xl ${method.color} transition-transform group-hover:rotate-12`}>
+              <div className={`p-4 rounded-xl ${getColorClass(method.color, 'bg')} ${getColorClass(method.color, 'text')} transition-transform group-hover:scale-110 group-hover:rotate-6`}>
                 {method.icon}
               </div>
-              <h3 className="text-xl font-bold text-slate-800 dark:text-white">{method.title}</h3>
+              <h3 className="text-xl font-bold text-slate-800 dark:text-white group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">
+                {method.title}
+              </h3>
             </div>
-            <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-4 min-h-[60px]">
-              {method.desc}
+            
+            <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-4">
+              {method.shortDesc}
             </p>
-            <div className="bg-slate-50 dark:bg-slate-900/50 rounded-xl p-3">
-              <span className="text-xs font-bold text-slate-400 uppercase mb-2 block tracking-wider">المراحل:</span>
-              <div className="flex flex-wrap gap-2">
-                {method.steps.map((step, i) => (
-                  <span key={i} className="text-xs bg-white dark:bg-slate-700 px-2 py-1 rounded border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-200">
-                    {step}
-                  </span>
-                ))}
-              </div>
+            
+            <div className="flex justify-end">
+               <span className="text-xs font-bold text-slate-400 flex items-center gap-1 group-hover:translate-x-[-5px] transition-transform">
+                 إضغط للتفاصيل <CheckCircle size={12} />
+               </span>
             </div>
           </div>
         ))}
       </div>
+
+      {/* النافذة المنبثقة (MODAL) */}
+      {selectedMethod && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/70 backdrop-blur-sm animate-fade-in" onClick={() => setSelectedMethod(null)}>
+          <div 
+            className="bg-white dark:bg-slate-900 w-full max-w-2xl max-h-[85vh] rounded-3xl shadow-2xl overflow-hidden flex flex-col animate-scale-in border border-slate-200 dark:border-slate-700"
+            onClick={(e) => e.stopPropagation()}
+          >
+            
+            {/* Header */}
+            <div className={`p-6 flex justify-between items-start shrink-0 ${getColorClass(selectedMethod.color, 'bg')}`}>
+              <div className="flex items-center gap-4">
+                <div className={`p-3 bg-white/50 dark:bg-black/20 rounded-xl ${getColorClass(selectedMethod.color, 'text')}`}>
+                  {selectedMethod.icon}
+                </div>
+                <div>
+                  <h2 className="text-2xl font-bold text-slate-900 dark:text-white">
+                    {selectedMethod.title}
+                  </h2>
+                  <span className="text-xs font-bold uppercase tracking-wider opacity-70">تقنية تنشيط</span>
+                </div>
+              </div>
+              <button 
+                onClick={() => setSelectedMethod(null)}
+                className="bg-white/50 hover:bg-white/80 p-2 rounded-full transition-colors"
+              >
+                <X size={20} className="text-slate-800" />
+              </button>
+            </div>
+
+            {/* Content (Scrollable) */}
+            <div className="p-6 overflow-y-auto custom-scrollbar space-y-8">
+              
+              {/* التعريف */}
+              <section>
+                <h3 className="text-lg font-bold text-slate-800 dark:text-white mb-3 flex items-center gap-2">
+                  <Lightbulb className="text-yellow-500" /> التعريف الأكاديمي
+                </h3>
+                <p className="text-slate-700 dark:text-slate-300 text-lg leading-relaxed bg-slate-50 dark:bg-slate-800/50 p-4 rounded-xl border border-slate-100 dark:border-slate-700">
+                  {selectedMethod.details.definition}
+                </p>
+              </section>
+
+              {/* المراحل */}
+              <section>
+                <h3 className="text-lg font-bold text-slate-800 dark:text-white mb-4 flex items-center gap-2">
+                  <ListChecks className="text-indigo-500" /> المراحل والخطوات
+                </h3>
+                <div className="space-y-3">
+                  {selectedMethod.details.steps.map((step: string, idx: number) => (
+                    <div key={idx} className="flex gap-4 items-start group">
+                      <div className={`w-8 h-8 rounded-full flex items-center justify-center font-bold text-white shrink-0 shadow-md ${selectedMethod.color === 'purple' ? 'bg-purple-500' : selectedMethod.color === 'blue' ? 'bg-blue-500' : selectedMethod.color === 'orange' ? 'bg-orange-500' : selectedMethod.color === 'red' ? 'bg-red-500' : selectedMethod.color === 'green' ? 'bg-green-500' : 'bg-teal-500'}`}>
+                        {idx + 1}
+                      </div>
+                      <p className="mt-1 text-slate-700 dark:text-slate-300 leading-relaxed font-medium">
+                        {step}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </section>
+
+              {/* الأهداف */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <section className="bg-green-50 dark:bg-green-900/10 p-4 rounded-xl border border-green-100 dark:border-green-800/30">
+                  <h3 className="font-bold text-green-800 dark:text-green-400 mb-2 flex items-center gap-2">
+                    <Target size={18} /> الأهداف البيداغوجية
+                  </h3>
+                  <ul className="space-y-2">
+                    {selectedMethod.details.objectives.map((obj: string, i: number) => (
+                      <li key={i} className="text-sm text-green-700 dark:text-green-300 flex items-start gap-2">
+                        <span className="mt-1.5 w-1.5 h-1.5 rounded-full bg-green-500 shrink-0"></span>
+                        {obj}
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+
+                <section className="bg-yellow-50 dark:bg-yellow-900/10 p-4 rounded-xl border border-yellow-100 dark:border-yellow-800/30">
+                  <h3 className="font-bold text-yellow-800 dark:text-yellow-400 mb-2 flex items-center gap-2">
+                    <Lightbulb size={18} /> نصيحة للمدرس
+                  </h3>
+                  <p className="text-sm text-yellow-700 dark:text-yellow-300 italic leading-relaxed">
+                    "{selectedMethod.details.tip}"
+                  </p>
+                </section>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
