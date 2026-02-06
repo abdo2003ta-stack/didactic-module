@@ -8,11 +8,11 @@ import {
   Microscope, Globe, MonitorPlay, Zap, FlaskConical, Scale, 
   AlertTriangle, Target, MousePointerClick, Network, Split, GitGraph, ShieldCheck, Briefcase, Trophy, RefreshCw,
   Rabbit, Cat, Leaf, Utensils, Pencil, Search, Library, X, UserCheck, Users,
-  History as HistoryIcon, Database, User, Info, GraduationCap
+  History as HistoryIcon, Database, User, Info, GraduationCap, Mic, MessageCircle, Shuffle, BrainCircuit, RotateCcw, ArrowLeft
 } from 'lucide-react';
 
 // ------------------- TYPES -------------------
-type Section = 'formulation' | 'conceptMap' | 'didacticMeans' | 'exam' | 'glossary' | 'simulator' | 'triangle' | 'timeline';
+type Section = 'formulation' | 'conceptMap' | 'didacticMeans' | 'exam' | 'glossary' | 'simulator' | 'triangle' | 'timeline' | 'methods' | 'flashcards';
 
 // ------------------- MAIN COMPONENT -------------------
 function DidacticModulePage() {
@@ -69,13 +69,13 @@ function DidacticModulePage() {
           </p>
           
           <div className="mt-12 flex flex-wrap justify-center gap-4">
-            <NavButton label="1. صياغة المفهوم" icon={<Brain size={18} />} isActive={activeSection === 'formulation'} onClick={() => setActiveSection('formulation')} activeColor="bg-blue-600" />
-            <NavButton label="2. الخريطة المفهومية" icon={<Share2 size={18} />} isActive={activeSection === 'conceptMap'} onClick={() => setActiveSection('conceptMap')} activeColor="bg-purple-600" />
-            <NavButton label="3. الوسائل الديدكتيكية" icon={<Box size={18} />} isActive={activeSection === 'didacticMeans'} onClick={() => setActiveSection('didacticMeans')} activeColor="bg-teal-600" />
+            <NavButton label="صياغة المفهوم" icon={<Brain size={18} />} isActive={activeSection === 'formulation'} onClick={() => setActiveSection('formulation')} activeColor="bg-blue-600" />
+            <NavButton label="الخريطة المفهومية" icon={<Share2 size={18} />} isActive={activeSection === 'conceptMap'} onClick={() => setActiveSection('conceptMap')} activeColor="bg-purple-600" />
+            <NavButton label="الوسائل الديدكتيكية" icon={<Box size={18} />} isActive={activeSection === 'didacticMeans'} onClick={() => setActiveSection('didacticMeans')} activeColor="bg-teal-600" />
             {/* ... الأزرار الثلاثة الموجودة سابقاً ... */}
             
             <NavButton 
-              label="4. الامتحان الشامل" 
+              label="الامتحان الشامل" 
               icon={<Target size={18} />} 
               isActive={activeSection === 'exam'} 
               onClick={() => setActiveSection('exam')} 
@@ -83,10 +83,18 @@ function DidacticModulePage() {
             />
             
             {/* ... نهاية القائمة ... */}
-            <NavButton label="5. القاموس" icon={<Library size={18} />} isActive={activeSection === 'glossary'} onClick={() => setActiveSection('glossary')} activeColor="bg-orange-500" />
-            <NavButton label="6. الوضعيات" icon={<Briefcase size={18} />} isActive={activeSection === 'simulator'} onClick={() => setActiveSection('simulator')} activeColor="bg-indigo-500" />
-            <NavButton label="7. المثلث" icon={<Network size={18} />} isActive={activeSection === 'triangle'} onClick={() => setActiveSection('triangle')} activeColor="bg-teal-500" />
-            <NavButton label="8. التاريخ" icon={<HistoryIcon size={18} />} isActive={activeSection === 'timeline'} onClick={() => setActiveSection('timeline')} activeColor="bg-purple-500" />
+            <NavButton label="القاموس" icon={<Library size={18} />} isActive={activeSection === 'glossary'} onClick={() => setActiveSection('glossary')} activeColor="bg-orange-500" />
+            <NavButton label="الوضعيات" icon={<Briefcase size={18} />} isActive={activeSection === 'simulator'} onClick={() => setActiveSection('simulator')} activeColor="bg-indigo-500" />
+            <NavButton label="المثلث" icon={<Network size={18} />} isActive={activeSection === 'triangle'} onClick={() => setActiveSection('triangle')} activeColor="bg-teal-500" />
+            <NavButton label=" التاريخ" icon={<HistoryIcon size={18} />} isActive={activeSection === 'timeline'} onClick={() => setActiveSection('timeline')} activeColor="bg-purple-500" />
+            <NavButton label="التنشيط" icon={<Mic size={18} />} isActive={activeSection === 'methods'} onClick={() => setActiveSection('methods')} activeColor="bg-orange-500" />
+            <NavButton 
+  label="البطاقات" 
+  icon={<Layers size={18} />} 
+  isActive={activeSection === 'flashcards'} 
+  onClick={() => setActiveSection('flashcards')} 
+  activeColor="bg-indigo-600" 
+/>
           </div>
         </div>
       </header>
@@ -435,6 +443,31 @@ function DidacticModulePage() {
              <TheoriesTimeline />
           </div>
         )}
+        {activeSection === 'methods' && (
+  <div className="animate-fade-in">
+     <SectionHeader 
+       title="تقنيات التنشيط" 
+       subtitle="كيف أدرس؟ طرق التدريس الحديثة والفعالة"
+       icon={<Shuffle className="text-orange-500" size={32} />}
+       colorClass="bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300"
+     />
+     <TeachingMethods />
+  </div>
+)}
+       {activeSection === 'flashcards' && (
+  <div className="animate-fade-in">
+     {/* ترويسة القسم */}
+     <SectionHeader 
+       title="المراجعة السريعة" 
+       subtitle="بنك المعلومات: 50 مفهوماً أساسياً في علوم التربية"
+       icon={<Layers className="text-indigo-600" size={32} />}
+       colorClass="bg-indigo-100 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-300"
+     />
+     
+     {/* استدعاء المكون */}
+     <FlashcardsMarathon />
+  </div>
+)}
       </main>
       
       <footer className="bg-slate-900 text-slate-400 py-12 mt-24 border-t border-slate-800 text-center">
@@ -1969,6 +2002,305 @@ function TheoriesTimeline() {
           </div>
         </div>
       )}
+    </div>
+  );
+}
+function TeachingMethods() {
+  const methods = [
+    {
+      title: "العصف الذهني (Brainstorming)",
+      icon: <BrainCircuit size={24} />,
+      color: "text-purple-600 bg-purple-100 dark:bg-purple-900/30",
+      desc: "تقنية لإنتاج أكبر عدد من الأفكار حول موضوع معين بحرية تامة دون نقد.",
+      steps: ["طرح المشكلة", "إطلاق العنان للأفكار", "عدم النقد", "تجميع وتصنيف الأفكار"]
+    },
+    {
+      title: "فيليبس 6 × 6",
+      icon: <Users size={24} />,
+      color: "text-blue-600 bg-blue-100 dark:bg-blue-900/30",
+      desc: "تقسيم القسم إلى مجموعات من 6 تلاميذ، يتداولون لمدة 6 دقائق للوصول لقرار موحد.",
+      steps: ["تشكيل المجموعات", "تحديد المسير والمقرر", "النقاش (6 د)", "عرض التقارير"]
+    },
+    {
+      title: "لعب الأدوار (Jeu de rôle)",
+      icon: <Mic size={24} />,
+      color: "text-orange-600 bg-orange-100 dark:bg-orange-900/30",
+      desc: "تقمص المتعلمين لشخصيات في وضعية محاكاة للواقع لاكتساب مهارات اجتماعية.",
+      steps: ["تحديد السيناريو", "توزيع الأدوار", "التمثيل", "المناقشة والتحليل"]
+    },
+    {
+      title: "الزوبعة / المناقشة",
+      icon: <MessageCircle size={24} />,
+      color: "text-green-600 bg-green-100 dark:bg-green-900/30",
+      desc: "تبادل الآراء بين المدرس والمتعلمين أو بين المتعلمين أنفسهم حول قضية معينة.",
+      steps: ["إثارة القضية", "توجيه النقاش", "احترام الرأي الآخر", "الخروج بخلاصة"]
+    },
+    {
+      title: "حل المشكلات",
+      icon: <Shuffle size={24} />,
+      color: "text-red-600 bg-red-100 dark:bg-red-900/30",
+      desc: "وضع المتعلم أمام عائق معرفي يدفعه للبحث وتقصي الحلول لبناء المعرفة.",
+      steps: ["الإحساس بالمشكلة", "صياغة الفرضيات", "التمحيص والبحث", "الاستنتاج"]
+    },
+    {
+      title: "القسم المعكوس",
+      icon: <MonitorPlay size={24} />,
+      color: "text-teal-600 bg-teal-100 dark:bg-teal-900/30",
+      desc: "يتعلم الطالب الدرس في البيت (فيديو/نص) ويخصص وقت القسم للتطبيقات.",
+      steps: ["إرسال الموارد قبلياً", "التعلم الذاتي منزلياً", "التطبيق جماعياً في القسم"]
+    }
+  ];
+
+  return (
+    <div className="max-w-6xl mx-auto p-4 animate-fade-in">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {methods.map((method, idx) => (
+          <div key={idx} className="bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-lg border border-slate-100 dark:border-slate-700 hover:-translate-y-2 transition-transform duration-300 group">
+            <div className="flex items-center gap-4 mb-4">
+              <div className={`p-3 rounded-xl ${method.color} transition-transform group-hover:rotate-12`}>
+                {method.icon}
+              </div>
+              <h3 className="text-xl font-bold text-slate-800 dark:text-white">{method.title}</h3>
+            </div>
+            <p className="text-slate-600 dark:text-slate-300 text-sm leading-relaxed mb-4 min-h-[60px]">
+              {method.desc}
+            </p>
+            <div className="bg-slate-50 dark:bg-slate-900/50 rounded-xl p-3">
+              <span className="text-xs font-bold text-slate-400 uppercase mb-2 block tracking-wider">المراحل:</span>
+              <div className="flex flex-wrap gap-2">
+                {method.steps.map((step, i) => (
+                  <span key={i} className="text-xs bg-white dark:bg-slate-700 px-2 py-1 rounded border border-slate-200 dark:border-slate-600 text-slate-600 dark:text-slate-200">
+                    {step}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+// ------------------- COMPONENT: 50+ FLASHCARDS MARATHON -------------------
+
+// === قاعدة البيانات: 50 بطاقة ===
+const flashcardsData = [
+  // --- مفاهيم عامة ---
+  { category: "مفاهيم", term: "البيداغوجيا (Pédagogie)", def: "نظرية تربوية تهتم بالمتعلم وبكل ما يعيق تعلمه، وتركز على العلاقة الوجدانية والمعرفية بين المدرس والمتعلم بشكل عام." },
+  { category: "مفاهيم", term: "الديداكتيك (Didactique)", def: "شق من البيداغوجيا يهتم بالتدريس (فن التدريس). يركز على المادة الدراسية، محتوياتها، طرق نقلها، والمشاكل الخاصة بتعليمها." },
+  { category: "مفاهيم", term: "الكفاية (Compétence)", def: "قدرة المتعلم على تعبئة مجموعة مدمجة من الموارد (معارف، مهارات، مواقف) لحل وضعية مشكلة مركبة." },
+  { category: "مفاهيم", term: "القدرة (Capacité)", def: "نشاط ذهني مستعرض لا يرتبط بمادة محددة (مثل: التحليل، التركيب، النقد)، وهي جزء من الكفاية." },
+  { category: "مفاهيم", term: "المهارة (Habileté)", def: "التمكن من أداء مهمة محددة بدقة وسرعة وتكيف (غالباً ما تكون حركية أو تقنية)." },
+  { category: "مفاهيم", term: "الموارد (Ressources)", def: "مجموع المعارف والمفاهيم والمهارات والاتجاهات التي يمتلكها المتعلم ويوظفها لحل المشكلات." },
+  { category: "مفاهيم", term: "الإدماج (Intégration)", def: "سيرورة يربط خلالها المتعلم بين موارده المكتسبة سابقاً لحل وضعية جديدة ومعقدة." },
+  { category: "مفاهيم", term: "النقل الديدكتيكي", def: "عملية تحويل المعرفة العالمة (Savoir savant) إلى معرفة قابلة للتدريس (Savoir enseigné) لتناسب مستوى المتعلمين." },
+  { category: "مفاهيم", term: "العقد الديدكتيكي", def: "مجموع القواعد الضمنية والصريحة التي تحدد التزامات وحقوق كل من المدرس والمتعلم تجاه المعرفة." },
+  { category: "مفاهيم", term: "التمثلات (Représentations)", def: "الأفكار والتصورات المسبقة التي يحملها المتعلم حول موضوع معين، وقد تكون خاطئة وتستوجب التصحيح." },
+
+  // --- النظريات ---
+  { category: "نظريات", term: "المدرسة السلوكية", def: "نظرية ترى أن التعلم هو تغير في السلوك الخارجي نتيجة مثير واستجابة وتعزيز. (بافلوف، سكينر، واطسن)." },
+  { category: "نظريات", term: "المدرسة الجشطالتية", def: "نظرية ترى أن التعلم يعتمد على الإدراك الكلي للموقف (الاستبصار) وليس على الأجزاء المنفصلة. (كوهلر، كوفكا)." },
+  { category: "نظريات", term: "المدرسة البنائية", def: "نظرية تعتبر أن المتعلم يبني معرفته ذاتياً من خلال التفاعل مع الموضوع وعمليات الاستيعاب والتلاءم. (بياجيه)." },
+  { category: "نظريات", term: "المدرسة السوسيوبنائية", def: "تؤكد أن التعلم يحدث من خلال التفاعل الاجتماعي مع الآخرين. (فيجوتسكي)." },
+  { category: "نظريات", term: "الذكاءات المتعددة", def: "نظرية لجاردنر تؤكد عدم وجود ذكاء واحد، بل توجد 8 أنواع (لغوي، منطقي، حركي، موسيقي...)." },
+  { category: "نظريات", term: "منطقة النمو القريب (ZPD)", def: "المسافة بين ما يستطيع المتعلم فعله بمفرده، وما يستطيع فعله بمساعدة راشد أو أقران." },
+  { category: "نظريات", term: "الصراع المعرفي", def: "حالة شك وحيرة تحدث عندما تصطدم تمثلات المتعلم بمعلومات جديدة تناقضها، مما يدفعه للبحث عن توازن جديد." },
+  
+  // --- بيداغوجيات ---
+  { category: "بيداغوجيا", term: "بيداغوجيا الخطأ", def: "تعتبر الخطأ استراتيجية للتعلم وليس فشلاً. يجب تشخيصه وفهم أسبابه لمعالجته." },
+  { category: "بيداغوجيا", term: "البيداغوجيا الفارقية", def: "مقاربة تربوية تستخدم طرائق وتقنيات متنوعة لتراعي الفروق الفردية بين المتعلمين داخل نفس القسم." },
+  { category: "بيداغوجيا", term: "بيداغوجيا اللعب", def: "استغلال غريزة اللعب عند الطفل لاكتساب المعارف والمهارات في جو من المتعة." },
+  { category: "بيداغوجيا", term: "بيداغوجيا المشروع", def: "تعتمد على إنجاز مشروع ملموس يدمج فيه المتعلمون معارفهم ومهاراتهم لتحقيق هدف محدد." },
+  { category: "بيداغوجيا", term: "حل المشكلات", def: "وضع المتعلم أمام وضعية مشكلة تستفز تفكيره وتدفعه للبحث والتقصي لإيجاد الحل." },
+  { category: "بيداغوجيا", term: "القسم المعكوس", def: "طريقة يدرس فيها الطالب المحتوى في المنزل (فيديو/نص) ويخصص وقت القسم للتطبيقات والنقاش." },
+
+  // --- التقويم والتخطيط ---
+  { category: "تخطيط_تقويم", term: "التخطيط", def: "عملية استباقية لتنظيم العملية التعليمية، تتضمن تحديد الأهداف، المحتوى، الوسائل، والزمن." },
+  { category: "تخطيط_تقويم", term: "التدبير", def: "تنفيذ ما تم تخطيطه داخل الفصل، ويشمل تدبير الزمن، الفضاء، والتفاعلات." },
+  { category: "تخطيط_تقويم", term: "التقويم التشخيصي", def: "يجرى في بداية التعلم لقياس المكتسبات القبلية وتحديد مواطن القوة والضعف." },
+  { category: "تخطيط_تقويم", term: "التقويم التكويني", def: "يجرى أثناء العملية التعليمية لتتبع تقدم المتعلم وتعديل مسار التدريس." },
+  { category: "تخطيط_تقويم", term: "التقويم الإجمالي", def: "يجرى في نهاية التعلم للحكم على مدى تحقق الأهداف واتخاذ قرارات (النجاح/الرسوب)." },
+  { category: "تخطيط_تقويم", term: "الدعم والمواكبة", def: "إجراءات بيداغوجية تهدف إلى سد الثغرات وتجاوز التعثرات المرصودة لدى المتعلمين." },
+  { category: "تخطيط_تقويم", term: "المعالجة", def: "تدخل فوري أو مؤجل لتصحيح أخطاء محددة تم رصدها خلال التقويم." },
+  { category: "تخطيط_تقويم", term: "جذاذة الدرس", def: "وثيقة تخطيطية يسطر فيها المدرس أهداف الدرس ومراحله والأنشطة والوسائل والتقويم." },
+
+  // --- الحياة المدرسية والتشريع ---
+  { category: "تشريع", term: "الميثاق الوطني للتربية والتكوين", def: "وثيقة الإصلاح الكبرى (1999)، وضعت الأسس للمدرسة المغربية الجديدة وشعارها: من أجل مدرسة جديدة." },
+  { category: "تشريع", term: "الكتاب الأبيض", def: "وثيقة مرجعية أصدرتها الوزارة (2002) لتحديد المناهج الدراسية وتوزيع الحصص." },
+  { category: "تشريع", term: "المخطط الاستعجالي", def: "خطة تدخل (2009-2012) جاءت لتسريع وتيرة الإصلاح وتدارك التعثرات." },
+  { category: "تشريع", term: "الرؤية الاستراتيجية 2015-2030", def: "خارطة طريق وضعها المجلس الأعلى، شعارها: من أجل مدرسة الإنصاف والجودة والارتقاء." },
+  { category: "تشريع", term: "القانون الإطار 51.17", def: "أول قانون ملزم يلزم الدولة والمجتمع بتنفيذ مقتضيات الرؤية الاستراتيجية." },
+  { category: "تشريع", term: "مشروع المؤسسة المندمج", def: "الإطار المنهجي لتنزيل الإصلاح محلياً، يقوم على التشخيص التشاركي وتحديد الأولويات." },
+  { category: "تشريع", term: "مجلس التدبير", def: "أعلى هيئة تقريرية بالمؤسسة، يتولى التدبير الإداري والمالي ويوافق على النظام الداخلي." },
+  { category: "تشريع", term: "المجلس التربوي", def: "يهتم بالأنشطة التربوية والموازية والتنسيق بين المواد والمناهج." },
+  { category: "تشريع", term: "المجالس التعليمية", def: "تعقد لكل مادة، تدرس المناهج والكتب المدرسية وتوحد طرق التدريس والتقويم." },
+  { category: "تشريع", term: "مجالس الأقسام", def: "تدرس نتائج التلاميذ وتتخذ قرارات التوجيه والانتقال والتأديب." },
+  { category: "تشريع", term: "الحياة المدرسية", def: "كل الأوقات التي يقضيها المتعلم داخل المؤسسة، وتشمل الأنشطة الصفية والموازية." },
+  { category: "تشريع", term: "العنف المدرسي", def: "كل سلوك عدواني يصدر داخل الفضاء المدرسي، قد يكون جسدياً أو نفسياً أو رمزياً." },
+  { category: "تشريع", term: "التربية الدامجة", def: "نظام تربوي يتيح للأطفال في وضعية إعاقة التعلم في أقسام عادية مع أقرانهم." },
+  { category: "تشريع", term: "التناوب اللغوي", def: "مقاربة بيداغوجية تهدف إلى تدريس بعض المواد العلمية أو أجزاء منها بلغة أجنبية." },
+  { category: "تشريع", term: "المهارات الحياتية", def: "قدرات نفسية واجتماعية تساعد الفرد على التكيف والتعامل بإيجابية مع تحديات الحياة." },
+  { category: "تشريع", term: "الأسناد الديدكتيكية", def: "كل الوسائل والأدوات (نصوص، صور، خرائط، تكنولوجيا) التي تساعد في عملية التدريس." },
+  { category: "تشريع", term: "المنهاج الدراسي", def: "تصور متكامل للعملية التعليمية يشمل الأهداف، المحتوى، الطرق، والتقويم (أعم من المقرر)." },
+  { category: "تشريع", term: "المقرر الدراسي", def: "لائحة المواضيع والدروس التي يجب تدريسها في مادة معينة خلال سنة دراسية." },
+];
+
+function FlashcardsMarathon() {
+  const [cards, setCards] = useState(flashcardsData);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isFlipped, setIsFlipped] = useState(false);
+  const [direction, setDirection] = useState(0); // 1 for next, -1 for prev
+
+  // أيقونات للتصنيفات
+  const getIcon = (category: string) => {
+    switch(category) {
+      case 'مفاهيم': return <BookOpen />;
+      case 'نظريات': return <Brain />;
+      case 'بيداغوجيا': return <Layers />;
+      case 'تشريع': return <Scale />;
+      case 'تخطيط_تقويم': return <CheckCircle />;
+      default: return <BookOpen />;
+    }
+  };
+
+  const getCategoryColor = (category: string) => {
+    switch(category) {
+      case 'مفاهيم': return 'from-blue-500 to-indigo-600';
+      case 'نظريات': return 'from-purple-500 to-pink-600';
+      case 'بيداغوجيا': return 'from-orange-400 to-red-500';
+      case 'تشريع': return 'from-emerald-500 to-teal-600';
+      case 'تخطيط_تقويم': return 'from-cyan-500 to-blue-600';
+      default: return 'from-slate-500 to-slate-700';
+    }
+  };
+
+  const handleNext = () => {
+    if (currentIndex < cards.length - 1) {
+      setIsFlipped(false);
+      setDirection(1);
+      setTimeout(() => setCurrentIndex(prev => prev + 1), 200);
+    }
+  };
+
+  const handlePrev = () => {
+    if (currentIndex > 0) {
+      setIsFlipped(false);
+      setDirection(-1);
+      setTimeout(() => setCurrentIndex(prev => prev - 1), 200);
+    }
+  };
+
+  const handleShuffle = () => {
+    setIsFlipped(false);
+    // خوارزمية فيشر-ييتس للخلط
+    const shuffled = [...flashcardsData].sort(() => Math.random() - 0.5);
+    setCards(shuffled);
+    setCurrentIndex(0);
+  };
+
+  const handleReset = () => {
+    setIsFlipped(false);
+    setCards(flashcardsData);
+    setCurrentIndex(0);
+  };
+
+  const currentCard = cards[currentIndex];
+
+  return (
+    <div className="max-w-2xl mx-auto p-4 animate-fade-in flex flex-col items-center">
+      
+      {/* Header Info */}
+      <div className="text-center mb-6">
+        <h2 className="text-2xl font-bold text-slate-800 dark:text-white flex items-center justify-center gap-2">
+          <RotateCcw className="text-indigo-500" /> ماراثون المراجعة
+        </h2>
+        <p className="text-slate-500 text-sm">بنك يضم 50 مفهوماً أساسياً للامتحان</p>
+      </div>
+
+      {/* Progress & Controls */}
+      <div className="w-full flex justify-between items-center mb-4 px-2">
+        <span className="text-sm font-mono font-bold text-slate-400">
+          بطاقة {currentIndex + 1} / {cards.length}
+        </span>
+        <div className="flex gap-2">
+          <button onClick={handleReset} title="إعادة ترتيب" className="p-2 text-slate-400 hover:text-indigo-500 bg-slate-100 dark:bg-slate-800 rounded-full">
+            <RotateCcw size={16} />
+          </button>
+          <button onClick={handleShuffle} title="خلط البطاقات" className="p-2 text-white bg-indigo-500 hover:bg-indigo-600 rounded-full shadow-md transition-transform active:scale-95">
+             <Shuffle size={16} />
+          </button>
+        </div>
+      </div>
+
+      {/* THE CARD */}
+      <div 
+        className="relative w-full aspect-[16/10] cursor-pointer group perspective-1000"
+        onClick={() => setIsFlipped(!isFlipped)}
+      >
+        <div className={`relative w-full h-full duration-500 transform-style-3d transition-all ${isFlipped ? 'rotate-y-180' : ''}`}>
+          
+          {/* Front Face */}
+          <div className={`absolute inset-0 backface-hidden rounded-3xl shadow-2xl flex flex-col items-center justify-center p-8 text-white bg-gradient-to-br ${getCategoryColor(currentCard.category)} border-4 border-white/20`}>
+            
+            <div className="absolute top-6 right-6 p-2 bg-white/20 backdrop-blur-sm rounded-full">
+               {getIcon(currentCard.category)}
+            </div>
+            
+            <span className="text-xs font-bold uppercase tracking-widest bg-black/20 px-3 py-1 rounded-full mb-6">
+              {currentCard.category}
+            </span>
+            
+            <h3 className="text-3xl md:text-4xl font-black text-center leading-tight drop-shadow-md">
+              {currentCard.term}
+            </h3>
+            
+            <p className="absolute bottom-6 text-xs opacity-80 animate-pulse flex items-center gap-1">
+              إضغط لقلب البطاقة <RotateCcw size={12} />
+            </p>
+          </div>
+
+          {/* Back Face */}
+          <div className="absolute inset-0 backface-hidden rotate-y-180 bg-white dark:bg-slate-800 rounded-3xl shadow-2xl flex flex-col items-center justify-center p-8 border-2 border-slate-100 dark:border-slate-700 text-center">
+            
+            <div className={`mb-4 p-3 rounded-full bg-slate-100 dark:bg-slate-700 text-${getCategoryColor(currentCard.category).split('-')[1]}-500`}>
+              {getIcon(currentCard.category)}
+            </div>
+            
+            <h4 className="text-xl font-bold text-slate-800 dark:text-white mb-4 border-b pb-2 px-8 border-slate-100 dark:border-slate-700">
+               {currentCard.term}
+            </h4>
+            
+            <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed font-medium">
+              {currentCard.def}
+            </p>
+
+          </div>
+        </div>
+      </div>
+
+      {/* Navigation Buttons */}
+      <div className="flex items-center gap-8 mt-8">
+        <button 
+          onClick={handlePrev} 
+          disabled={currentIndex === 0}
+          className="p-4 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 disabled:opacity-50 transition-colors shadow-sm"
+        >
+          <ArrowRight size={28} />
+        </button>
+
+        <button 
+          onClick={handleNext}
+          disabled={currentIndex === cards.length - 1}
+          className="p-4 rounded-full bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg shadow-indigo-200 dark:shadow-none transition-transform hover:scale-110 active:scale-95 disabled:opacity-50 disabled:scale-100"
+        >
+          <ArrowLeft size={28} />
+        </button>
+      </div>
+      
+      <p className="mt-4 text-xs text-slate-400">
+        نصيحة: استخدم زر "الخلط" <Shuffle size={10} className="inline"/> لتغيير الترتيب واختبار ذاكرتك.
+      </p>
+
     </div>
   );
 }
