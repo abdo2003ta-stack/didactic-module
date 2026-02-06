@@ -10,7 +10,7 @@ import {
 } from 'lucide-react';
 
 // ------------------- TYPES -------------------
-type Section = 'formulation' | 'conceptMap' | 'didacticMeans';
+type Section = 'formulation' | 'conceptMap' | 'didacticMeans' | 'exam';
 
 // ------------------- MAIN COMPONENT -------------------
 export default function DidacticModulePage() {
@@ -349,10 +349,60 @@ export default function DidacticModulePage() {
             <QuickQuiz section="didacticMeans" />
           </div>
         )}
+
+        {/* ================= القسم 4: الامتحان الشامل ================= */}
+        {activeSection === 'exam' && (
+          <div className="animate-fade-in max-w-3xl mx-auto text-center">
+            <div className="mb-8">
+              <div className="inline-flex p-6 rounded-full bg-red-100 dark:bg-red-900/30 text-red-600 mb-6 shadow-lg">
+                <Target size={48} />
+              </div>
+              <h2 className="text-4xl font-extrabold text-slate-800 dark:text-white mb-4">الامتحان النهائي الشامل</h2>
+              <p className="text-lg text-slate-600 dark:text-slate-300">
+                20 سؤالاً متدرج الصعوبة لاختبار ضبطك للمفاهيم الديدكتيكية.
+                <br/>
+                <span className="text-sm opacity-70">(تذكر: النقل الديدكتيكي، المثلث، العقد، الوضعيات...)</span>
+              </p>
+            </div>
+
+            {/* هنا يتم استدعاء الأسئلة */}
+            <QuickQuiz section="exam" />
+          </div>
+        )}
       </main>
 
       <footer className="bg-slate-900 text-slate-400 py-12 mt-24 border-t border-slate-800 text-center">
-         <p>© {new Date().getFullYear()} بوابة الديدكتيك الرقمية - نسخة التعليم الابتدائي.</p>
+         <p>© {new Date().getFullYear()} بوابة عبد الله الطلال.AET</p>
+         {/* الزر العائم (FAB) - انسخ هذا الكود وضعه بدلاً من القديم */}
+      <div className="fixed bottom-8 right-8 z-40 flex flex-col gap-2">
+        <div className="group relative">
+           {/* القائمة المنبثقة */}
+           <div className="absolute bottom-16 right-0 bg-white dark:bg-slate-800 rounded-2xl shadow-2xl p-2 w-56 border border-slate-100 dark:border-slate-700 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none group-hover:pointer-events-auto flex flex-col gap-1">
+              
+              {/* الأزرار القديمة */}
+              <button onClick={() => { setActiveSection('formulation'); window.scrollTo(0,0); }} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg text-sm text-right flex items-center gap-2">
+                 <Brain size={14} className="text-blue-500"/> صياغة المفهوم
+              </button>
+              <button onClick={() => { setActiveSection('conceptMap'); window.scrollTo(0,0); }} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg text-sm text-right flex items-center gap-2">
+                 <Share2 size={14} className="text-purple-500"/> الخريطة المفهومية
+              </button>
+              <button onClick={() => { setActiveSection('didacticMeans'); window.scrollTo(0,0); }} className="p-2 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg text-sm text-right flex items-center gap-2">
+                 <Box size={14} className="text-teal-500"/> الوسائل الديدكتيكية
+              </button>
+
+              {/* +++++ هذا هو الزر الجديد الذي أضفناه للامتحان +++++ */}
+              <button onClick={() => { setActiveSection('exam'); window.scrollTo(0,0); }} className="p-2 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg text-sm text-right flex items-center gap-2 border-t border-slate-100 dark:border-slate-700 mt-1 pt-2 font-bold text-red-600 dark:text-red-400">
+                 <Target size={14} className="text-red-500"/> الامتحان الشامل (20 سؤال)
+              </button>
+
+           </div>
+
+           {/* الزر الرئيسي الدائري */}
+           <button className="bg-indigo-600 hover:bg-indigo-700 text-white p-4 rounded-full shadow-lg transition-transform hover:scale-110 flex items-center justify-center">
+             <Layers size={24} />
+           </button>
+        </div>
+      </div>
       </footer>
     </div>
   );
@@ -580,7 +630,138 @@ function QuickQuiz({ section }: { section: string }) {
       ],
       correct: 1,
       feedback: "صحيح! الوسيلة تكتسب صفتها من وظيفتها البيداغوجية لحظة الاستعمال."
-    }
+    },
+    // ... (تأكد من وجود فاصلة بعد القائمة التي تسبق هذا الكود) ...
+
+    exam: [
+      // --- المستوى 1: تذكر ومفاهيم أساسية ---
+      {
+        question: "1. ما هو تعريف 'الديدكتيك' باختصار؟",
+        options: ["علم التربية العام", "فن التدريس ومنهجية تدريس مادة معينة", "علم النفس التربوي"],
+        correct: 1,
+        feedback: "صحيح. الديدكتيك يهتم بكيفية تدريس المادة الدراسية تحديداً."
+      },
+      {
+        question: "2. ما هي أقطاب 'المثلث الديدكتيكي'؟",
+        options: ["المدرس، المتعلم، الإدارة", "المدرس، المتعلم، المعرفة", "المدرسة، الأسرة، المجتمع"],
+        correct: 1,
+        feedback: "أحسنت. المثلث يربط بين الفواعل الثلاثة الأساسية في العملية التعليمية."
+      },
+      {
+        question: "3. ماذا نسمي المعرفة الموجودة في الكتب الجامعية والمراكز البحثية؟",
+        options: ["المعرفة العالمة (Savoir Savant)", "المعرفة المدرسة", "المعرفة المبتذلة"],
+        correct: 0,
+        feedback: "صحيح. هي المعرفة الخام قبل أن تخضع للنقل الديدكتيكي."
+      },
+      {
+        question: "4. من هو المسؤول عن تحويل المعرفة العالمة إلى معرفة واجب تدريسها؟",
+        options: ["المدرس داخل القسم", "النوسفير (الخبراء والمفتشون)", "مدير المدرسة"],
+        correct: 1,
+        feedback: "ممتاز. النوسفير هو الغلاف الجوي الخارجي الذي يختار المنهاج."
+      },
+      {
+        question: "5. ما هو الهدف من استخدام 'الوسائل الديدكتيكية' في الابتدائي؟",
+        options: ["تزيين القسم", "إضاعة الوقت", "تجسيد المفاهيم المجردة وتقريبها"],
+        correct: 2,
+        feedback: "بالضبط. الطفل يحتاج للملموس ليفهم المجرد."
+      },
+
+      // --- المستوى 2: الفهم والاستيعاب ---
+      {
+        question: "6. ما الفرق بين الديدكتيك والبيداغوجيا؟",
+        options: ["لا يوجد فرق", "الديدكتيك يهتم بالمادة (المعرفي)، والبيداغوجيا تهتم بالعلاقة (التواصلي/التربوي)", "البيداغوجيا فرع من الديدكتيك"],
+        correct: 1,
+        feedback: "رائع. الديدكتيك 'موضوعاتي' (Subject-specific)، والبيداغوجيا 'عامة'."
+      },
+      {
+        question: "7. ماذا نقصد بـ 'العقد الديدكتيكي'؟",
+        options: ["عقد عمل يوقعه المدرس", "مجموع القواعد الضمنية التي تحدد أدوار المدرس والمتعلم تجاه المعرفة", "اتفاقية بين المدرسة والآباء"],
+        correct: 1,
+        feedback: "صحيح (Brousseau). هو التوقعات المتبادلة بين الطرفين."
+      },
+      {
+        question: "8. لماذا نعتبر 'التمثلات' (Representations) مهمة؟",
+        options: ["لأنها أخطاء يجب مسحها", "لأنها بنية تفكير المتعلم التي يجب الانطلاق منها لتصحيحها", "لأنها تدل على ذكاء التلميذ"],
+        correct: 1,
+        feedback: "أحسنت. التعلم هو سيرورة هدم وبناء للتمثلات."
+      },
+      {
+        question: "9. في الخريطة المفهومية، ماذا يمثل الرابط بين مفهومين؟",
+        options: ["خطاً فقط", "فعلاً أو كلمة ربط توضح العلاقة", "لوناً جميلاً"],
+        correct: 1,
+        feedback: "ممتاز. بدون 'كلمة ربط'، لا تتكون لدينا 'قضية' ذات معنى."
+      },
+      {
+        question: "10. ما هي 'اليقظة الديدكتيكية'؟",
+        options: ["أن لا ينام المدرس في القسم", "قدرة المدرس على الانتباه للصعوبات غير المتوقعة وتعديل خطته فورياً", "مراقبة المدير للمدرسين"],
+        correct: 1,
+        feedback: "صحيح. هي وعي المدرس المستمر بما يحدث لحظياً أثناء الدرس."
+      },
+
+      // --- المستوى 3: التحليل والتطبيق ---
+      {
+        question: "11. تلميذ أجاب إجابة خاطئة، لكنها منطقية من وجهة نظره. هذا يسمى:",
+        options: ["غباء", "عائقاً إبستيمولوجياً", "قلة انتباه"],
+        correct: 1,
+        feedback: "صحيح (Bachelard). الخطأ هنا جزء من مسار المعرفة وليس فشلاً."
+      },
+      {
+        question: "12. عندما يقوم المدرس بحل التمرين بدلاً من التلميذ لأنه تأخر، فهذا يعتبر:",
+        options: ["مساعدة مشكورة", "انزلاقاً ديدكتيكياً (أثر جوردان)", "تدبيراً جيداً للوقت"],
+        correct: 1,
+        feedback: "ممتاز. هذا يسمى 'أثر جوردان'، حيث يتنازل المدرس عن هدف التعلم لإنهاء الدرس."
+      },
+      {
+        question: "13. في 'نظرية الوضعيات'، مرحلة 'الصياغة' (Formulation) تتطلب:",
+        options: ["العمل الفردي الصامت", "العمل في مجموعات لتبادل الرسائل وصياغة الحل", "كتابة الدرس في الدفتر"],
+        correct: 1,
+        feedback: "أحسنت. الصياغة تتطلب مرسلاً ومستقبلاً ولغة مشتركة."
+      },
+      {
+        question: "14. عملية 'نزع السياق' (Décontextualisation) تعني:",
+        options: ["إعطاء أمثلة من الواقع", "تجريد المعلومة من ظروف اكتشافها لتصبح عامة", "نسيان الدرس"],
+        correct: 1,
+        feedback: "صحيح. هي الخطوة الثانية في النقل الديدكتيكي."
+      },
+      {
+        question: "15. المدرس الذي يعتمد فقط على الكتاب المدرسي دون تصرف، يغفل مرحلة:",
+        options: ["المعرفة العالمة", "المعرفة المدرسة (تخطيط المدرس)", "المعرفة المكتسبة"],
+        correct: 1,
+        feedback: "بالضبط. الكتاب هو 'معرفة واجب تدريسها'، والمدرس يجب أن يحولها لـ 'معرفة مدرسة'."
+      },
+
+      // --- المستوى 4: التركيب والوضعيات المعقدة ---
+      {
+        question: "16. مفهوم 'التفويض' (Dévolution) عند بروسو يعني:",
+        options: ["أن يشرح المدرس كل شيء", "أن يورط المدرس المتعلم في الوضعية ليتحمل مسؤولية الحل", "أن يفوض المدرس تلميذاً للشرح"],
+        correct: 1,
+        feedback: "رائع. الديفوليوسيون هو نقل مسؤولية التعلم للمتعلم."
+      },
+      {
+        question: "17. أي نوع من التقويم يهتم بـ 'توجيه' المتعلم وعلاج الثغرات أثناء الدرس؟",
+        options: ["التقويم التشخيصي", "التقويم التكويني", "التقويم الإشهادي"],
+        correct: 1,
+        feedback: "صحيح. التقويم التكويني يلازم العملية التعليمية."
+      },
+      {
+        question: "18. المثلث الديدكتيكي 'الموسع' يضيف قطباً رابعاً هو:",
+        options: ["الأسرة", "الوضعية/السياق", "التكنولوجيا"],
+        correct: 1,
+        feedback: "أحسنت. لا يمكن فهم التفاعل دون استحضار 'الوضعية' أو السياق."
+      },
+      {
+        question: "19. 'أثر توباز' (Effet Topaze) يحدث عندما:",
+        options: ["يصعب المدرس الأسئلة", "يلمح المدرس للإجابة حتى لا يحرج التلميذ، فيضيع التعلم", "يغادر التلميذ القسم"],
+        correct: 1,
+        feedback: "ممتاز. المدرس يقوم بالعمل بدلاً من التلميذ بشكل خفي."
+      },
+      {
+        question: "20. الغاية القصوى من الديدكتيك هي الوصول بالمتعلم إلى:",
+        options: ["الحفظ التام", "الاستقلالية والقدرة على إعادة استثمار المعرفة (النقل الديدكتيكي الداخلي)", "الحصول على نقطة جيدة"],
+        correct: 1,
+        feedback: "ختامها مسك! الهدف هو أن يصبح المتعلم قادراً على استخدام المعرفة في سياقات جديدة."
+      }
+    ]
   };
 
   const currentQuiz = quizzes[section];
