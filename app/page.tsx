@@ -6,8 +6,9 @@ import {
   Activity, Quote, ArrowRight, Sun, Moon, Sprout, Droplets, 
   Microscope, Globe, MonitorPlay, Zap, FlaskConical, Scale, 
   AlertTriangle, Target, MousePointerClick, Network, Split, GitGraph, ShieldCheck,
-  Rabbit, Cat, Leaf, Utensils, Pencil, Search, Library // <--- تمت الإضافة هنا
+  Rabbit, Cat, Leaf, Utensils, Pencil, Search, Library, X  // <--- تمت الإضافة هنا
 } from 'lucide-react';
+
 // ------------------- TYPES -------------------
 type Section = 'formulation' | 'conceptMap' | 'didacticMeans' | 'exam' | 'glossary';
 
@@ -895,90 +896,139 @@ function QuickQuiz({ section }: { section: string }) {
     </div>
   );
 }
-// ------------------- GLOSSARY COMPONENT (القاموس) -------------------
+// ------------------- GLOSSARY COMPONENT (القاموس التفاعلي) -------------------
 function DidacticGlossary() {
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedTerm, setSelectedTerm] = useState<any>(null); // حالة لتخزين المصطلح المختار
 
   const terms = [
     // --- المفاهيم الأساسية ---
     { term: "الديدكتيك (Didactique)", def: "الدراسة العلمية لمحتويات التدريس وطرق نقلها واستيعابها، مع التركيز على طبيعة المعرفة والصعوبات الخاصة بكل مادة دراسية." },
-    { term: "المثلث الديدكتيكي (Triangle Didactique)", def: "نسق يربط بين ثلاثة أقطاب رئيسية: المدرس، المتعلم، والمعرفة. وتتولد عنه ثلاثة محاور: المحور الإبستيمولوجي (نقل المعرفة)، المحور البيداغوجي (العلاقة التربوية)، ومحور التعلم (اكتساب المعرفة)." },
-    { term: "النقل الديدكتيكي (Transposition Didactique)", def: "سيرورة تحويل 'المعرفة العالمة' (كما أنتجها العلماء) إلى 'معرفة واجب تدريسها' (في المنهاج)، ثم إلى 'معرفة مُدرَّسة' (في القسم)، وأخيراً إلى 'معرفة مكتسبة' (لدى المتعلم)." },
-    { term: "العقد الديدكتيكي (Contrat Didactique)", def: "مجموع القواعد الضمنية والصريحة التي تحدد واجبات وحقوق كل من المدرس والمتعلم تجاه المعرفة، وأي خلل فيها يؤدي إلى تعثر العملية التعليمية." },
+    { term: "المثلث الديدكتيكي", def: "نسق يربط بين ثلاثة أقطاب رئيسية: المدرس، المتعلم، والمعرفة. وتتولد عنه ثلاثة محاور: المحور الإبستيمولوجي، المحور البيداغوجي، ومحور التعلم." },
+    { term: "النقل الديدكتيكي", def: "سيرورة تحويل 'المعرفة العالمة' (الأكاديمية) إلى 'معرفة واجب تدريسها' (المنهاج)، ثم إلى 'معرفة مُدرَّسة' (القسم)، وأخيراً 'معرفة مكتسبة'." },
+    { term: "العقد الديدكتيكي", def: "مجموع القواعد الضمنية والصريحة التي تحدد واجبات وحقوق كل من المدرس والمتعلم تجاه المعرفة." },
     
     // --- نظريات التعلم والبناء ---
-    { term: "التمثلات (Représentations)", def: "بنيات معرفية قبلية يحملها المتعلم لتفسير الظواهر، قد تكون خاطئة أو ناقصة، ويعتبر الانطلاق منها شرطاً أساسياً لبناء المعرفة الجديدة." },
-    { term: "العائق الإبستيمولوجي (Obstacle Épistémologique)", def: "صعوبات تعترض المتعلم ليست ناتجة عن ضعف قدراته، بل تكمن في طبيعة المعرفة نفسها أو في تاريخ تطورها (مثل الانتقال من الأعداد الصحيحة إلى العشرية)." },
-    { term: "الصراع المعرفي (Conflit Cognitif)", def: "حالة من اللاتوازن تحدث في ذهن المتعلم عندما تصطدم مكتسباته السابقة بمعطيات جديدة تناقضها، مما يدفعه للبحث عن توازن جديد (التعلم)." },
-    { term: "منطقة النمو القريب (ZPD)", def: "المسافة الفاصلة بين ما يستطيع المتعلم إنجازه بمفرده، وما يستطيع إنجازه بمساعدة راشد أو أقران أكثر كفاءة (مفهوم لفيجوتسكي)." },
+    { term: "التمثلات (Représentations)", def: "بنيات معرفية قبلية يحملها المتعلم لتفسير الظواهر، قد تكون خاطئة، ويعتبر الانطلاق منها شرطاً أساسياً لبناء المعرفة الجديدة." },
+    { term: "العائق الإبستيمولوجي", def: "صعوبات تعترض المتعلم ليست ناتجة عن ضعف قدراته، بل تكمن في طبيعة المعرفة نفسها أو تطورها التاريخي." },
+    { term: "الصراع المعرفي", def: "حالة اضطراب تحدث عندما تصطدم مكتسبات المتعلم السابقة بمعلومات جديدة تناقضها، مما يدفعه للبحث عن توازن جديد (التعلم)." },
+    { term: "منطقة النمو القريب (ZPD)", def: "المسافة الفاصلة بين ما يستطيع المتعلم إنجازه بمفرده، وما يستطيع إنجازه بمساعدة راشد أو أقران (فيجوتسكي)." },
     
-    // --- هندسة التعلمات (الوضعية) ---
-    { term: "الوضعية المشكلة (Situation-Problème)", def: "سياق تعليمي يواجه فيه المتعلم لغزاً أو تحدياً لا يملك حلاً جاهزاً له، مما يضطره لتعبئة موارده وبناء معارف جديدة للوصول للحل." },
-    { term: "الوضعية الديدكتيكية", def: "الوضعية التي يخطط لها المدرس بقصد تعليم معرفة محددة، ويكون فيها التفاعل مباشراً بين المدرس والمتعلم." },
-    { term: "الوضعية أ-ديدكتيكية (Situation A-didactique)", def: "مرحلة ينسحب فيها المدرس مؤقتاً، ويترك المتعلم يواجه المشكلة بمفرده (أو مع جماعة) دون تدخل مباشر، ليتحمل مسؤولية التعلم." },
-    { term: "التفويض (Dévolution)", def: "العملية التي يقوم من خلالها المدرس بتوريط المتعلم في الوضعية، وجعله يشعر بأن المشكلة تخصه وأنه المسؤول عن حلها." },
-    { term: "المأسسة (Institutionnalisation)", def: "المرحلة التي يتدخل فيها المدرس بعد البحث لتثبيت النتائج الصحيحة وإعطائها صبغة رسمية (قانون، قاعدة، خلاصة) لتصبح معرفة مشتركة." },
+    // --- هندسة التعلمات ---
+    { term: "الوضعية المشكلة", def: "سياق تعليمي يضع المتعلم أمام عائق معرفي لا يملك حلاً جاهزاً له، مما يدفعه للبحث وبناء المعرفة." },
+    { term: "الوضعية أ-ديدكتيكية", def: "مرحلة ينسحب فيها المدرس مؤقتاً، ويترك المتعلم يواجه المشكلة بمفرده ليتحمل مسؤولية الحل." },
+    { term: "التفويض (Dévolution)", def: "العملية التي يسلم بها المدرس مسؤولية حل المشكلة للمتعلم ليتبناها كقضية شخصية." },
+    { term: "المأسسة (Institutionnalisation)", def: "تثبيت النتائج الصحيحة وإعطائها صبغة رسمية لتصبح معرفة مشتركة في القسم." },
     
-    // --- التخطيط والأهداف ---
-    { term: "القدرة (Capacité)", def: "نشاط ذهني مستعرض وقابل للتطوير (مثل: التحليل، التركيب، المقارنة) لا يرتبط بمحتوى دراسي محدد." },
-    { term: "المهارة (Habileté)", def: "القدرة على أداء مهمة محددة بدقة وسرعة وفعالية، وغالباً ما تكون ذات طابع تطبيقي أو حركي." },
-    { term: "الكفالة (Compétence)", def: "قدرة المتعلم على تعبئة مجموعة مدمجة من الموارد (معارف، مهارات، مواقف) لحل وضعية معقدة تنتمي لفئة من الوضعيات." },
-    { term: "الهدف التعلمي", def: "ممارسة قدرة على محتوى معين. ويجب أن يكون محدداً، قابلاً للملاحظة والقياس، وواضح الصياغة." },
+    // --- التخطيط والتقويم ---
+    { term: "القدرة (Capacité)", def: "نشاط ذهني مستعرض وقابل للتطوير (مثل التحليل، التركيب) لا يرتبط بمحتوى محدد." },
+    { term: "الكفالة (Compétence)", def: "قدرة المتعلم على تعبئة مجموعة مدمجة من الموارد لحل وضعية معقدة." },
+    { term: "التقويم التكويني", def: "إجراء عملي يرافق العملية التعليمية بهدف اكتشاف التعثرات وتصحيحها فوراً." },
+    { term: "البيداغوجيا الفارقية", def: "مقاربة تربوية تأخذ بعين الاعتبار الفروق الفردية بين المتعلمين (الذكاء، الإيقاع، الميول)." },
     
-    // --- التقويم والدعم ---
-    { term: "التقويم التشخيصي", def: "يجرى في بداية التعلم لقياس المكتسبات القبلية والتمثلات، لتوجيه التخطيط وبناء الدرس." },
-    { term: "التقويم التكويني", def: "عملية مستمرة تلازم التدريس، تهدف لتتبع تقدم المتعلم واكتشاف ثغراته ومعالجتها فوراً قبل تراكمها." },
-    { term: "التقويم الإجمالي (الجزائي)", def: "يتم في نهاية مرحلة تعليمية لإصدار حكم على مستوى المتعلم (نجاح/رسوب) ومنحه درجة." },
-    { term: "البيداغوجيا الفارقية", def: "تنويع طرائق التدريس والوسائل والوضعيات لتلائم الفروق الفردية بين المتعلمين داخل نفس الفصل." },
-    
-    // --- الظواهر الديدكتيكية (الانزلاقات) ---
-    { term: "أثر توباز (Effet Topaze)", def: "عندما يقوم المدرس بتبسيط السؤال أو التلميح للإجابة بشكل مبالغ فيه حتى لا يقع التلميذ في الخطأ، مما يفقد التعلم معناه." },
-    { term: "أثر جوردان (Effet Jourdain)", def: "عندما يفسر المدرس إجابة تافهة أو خاطئة من التلميذ على أنها دليل على فهم عميق، لتجنب الاعتراف بالفشل." },
-    { term: "الانزلاق الميتا-معرفي", def: "عندما يستبدل المدرس موضوع المعرفة بتقنية أو وسيلة، فيصبح التركيز على الوسيلة بدلاً من المفهوم المراد تدريسه." },
-    { term: "الشيخوخة البيولوجية للمعرفة", def: "تغير المعرفة وتطورها مع الزمن، مما يستوجب تحديث المناهج لتواكب المستجدات العلمية." },
-    
-    // --- مفاهيم إضافية ---
-    { term: "المتغير الديدكتيكي", def: "عنصر في الوضعية المشكلة (مثل حجم الأرقام، الوقت المتاح، الأدوات) يقوم المدرس بتغييره لزيادة صعوبة المهمة أو تسهيلها." },
-    { term: "الوسائل الديدكتيكية", def: "جميع الدعامات المادية (صور، نماذج، تكنولوجيا) التي يوظفها المدرس لتسهيل عملية التعلم." },
-    { term: "النوسفير (Noosphère)", def: "مجتمع الخبراء والمفتشين واللجان التي تحدد ما يجب تدريسه وتضع المناهج." },
-    { term: "التغذية الراجعة (Feedback)", def: "المعلومات التي يتلقاها المتعلم حول أدائه، وتساعده على تعديل مساره وتصحيح أخطائه." }
-  ].sort((a, b) => a.term.localeCompare(b.term, 'ar')); // ترتيب أبجدي تلقائي
+    // --- انزلاقات ---
+    { term: "أثر توباز (Effet Topaze)", def: "عندما يلمح المدرس للإجابة حتى لا يحرج التلميذ، فيضيع التعلم الحقيقي." },
+    { term: "أثر جوردان (Effet Jourdain)", def: "عندما يفسر المدرس إجابة تافهة من التلميذ على أنها دليل فهم عميق." },
+    { term: "النوسفير (Noosphère)", def: "الغلاف الجوي المعرفي (الخبراء والمفتشون) الذين يختارون المعرفة الواجب تدريسها." }
+  ].sort((a, b) => a.term.localeCompare(b.term, 'ar'));
 
-  // تصفية النتائج حسب البحث
   const filteredTerms = terms.filter(item => 
     item.term.includes(searchTerm) || item.def.includes(searchTerm)
   );
 
   return (
-    <div className="animate-fade-in max-w-4xl mx-auto min-h-[500px]">
+    <div className="animate-fade-in max-w-5xl mx-auto min-h-[500px]">
+       
        {/* شريط البحث */}
-       <div className="relative mb-12">
+       <div className="relative mb-8 sticky top-4 z-10">
          <div className="absolute inset-y-0 right-0 flex items-center pr-4 pointer-events-none">
            <Search className="text-orange-500" size={24} />
          </div>
          <input 
            type="text" 
-           placeholder="ابحث عن مصطلح (مثلاً: العقد، النقل...)" 
-           className="w-full p-4 pr-12 rounded-2xl border-2 border-orange-100 dark:border-slate-700 bg-white dark:bg-slate-800 shadow-lg focus:outline-none focus:border-orange-500 transition-colors text-lg"
+           placeholder="ابحث عن مصطلح..." 
+           className="w-full p-4 pr-12 rounded-2xl border-2 border-orange-100 dark:border-slate-700 bg-white/90 backdrop-blur-md dark:bg-slate-800/90 shadow-lg focus:outline-none focus:border-orange-500 transition-all text-lg"
            onChange={(e) => setSearchTerm(e.target.value)}
          />
        </div>
 
-       {/* شبكة البطاقات */}
-       <div className="grid md:grid-cols-2 gap-6">
+       {/* شبكة البطاقات (معاينة) */}
+       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
          {filteredTerms.length > 0 ? (
            filteredTerms.map((item, idx) => (
-             <div key={idx} className="bg-white dark:bg-slate-900 p-6 rounded-2xl border-r-4 border-orange-500 shadow-sm hover:shadow-md transition-shadow">
-               <h3 className="font-bold text-lg text-slate-800 dark:text-orange-100 mb-2">{item.term}</h3>
-               <p className="text-slate-600 dark:text-slate-400 text-sm leading-7">{item.def}</p>
+             <div 
+               key={idx} 
+               onClick={() => setSelectedTerm(item)}
+               className="cursor-pointer group bg-white dark:bg-slate-800 p-6 rounded-2xl border border-slate-100 dark:border-slate-700 hover:border-orange-400 dark:hover:border-orange-500 shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 relative overflow-hidden"
+             >
+               {/* زخرفة خلفية */}
+               <div className="absolute top-0 left-0 w-16 h-16 bg-orange-50 dark:bg-orange-900/20 rounded-full -translate-x-8 -translate-y-8 group-hover:scale-150 transition-transform duration-500"></div>
+               
+               <div className="relative z-10">
+                 <h3 className="font-bold text-lg text-slate-800 dark:text-orange-100 mb-2 group-hover:text-orange-600 dark:group-hover:text-orange-400 transition-colors">
+                   {item.term}
+                 </h3>
+                 <p className="text-slate-500 dark:text-slate-400 text-sm line-clamp-2">
+                   {item.def}
+                 </p>
+                 <span className="text-xs text-orange-500 font-bold mt-4 inline-block opacity-0 group-hover:opacity-100 transition-opacity transform translate-y-2 group-hover:translate-y-0">
+                   اقرأ المزيد ←
+                 </span>
+               </div>
              </div>
            ))
          ) : (
-           <div className="col-span-2 text-center text-slate-400 py-10">
+           <div className="col-span-3 text-center text-slate-400 py-10">
              لا توجد نتائج مطابقة لبحثك.
            </div>
          )}
        </div>
+
+       {/* النافذة المنبثقة (MODAL) */}
+       {selectedTerm && (
+         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+           {/* الخلفية المعتمة */}
+           <div 
+             className="absolute inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity"
+             onClick={() => setSelectedTerm(null)}
+           ></div>
+
+           {/* محتوى النافذة */}
+           <div className="bg-white dark:bg-slate-900 w-full max-w-lg p-8 rounded-3xl shadow-2xl relative animate-fade-in border-t-8 border-orange-500 transform scale-100 transition-transform">
+             <button 
+               onClick={() => setSelectedTerm(null)}
+               className="absolute top-4 left-4 p-2 bg-slate-100 dark:bg-slate-800 rounded-full hover:bg-red-100 hover:text-red-600 transition-colors"
+             >
+               <X size={20} />
+             </button>
+
+             <div className="mb-6">
+               <div className="inline-block px-3 py-1 bg-orange-100 dark:bg-orange-900/30 text-orange-600 dark:text-orange-400 rounded-full text-xs font-bold mb-3">
+                 مصطلح ديدكتيكي
+               </div>
+               <h2 className="text-3xl font-extrabold text-slate-900 dark:text-white mb-4 leading-tight">
+                 {selectedTerm.term}
+               </h2>
+               <div className="w-16 h-1 bg-orange-500 rounded-full"></div>
+             </div>
+             
+             <div className="bg-slate-50 dark:bg-slate-800/50 p-6 rounded-2xl border border-slate-100 dark:border-slate-700">
+               <p className="text-lg text-slate-700 dark:text-slate-300 leading-8 text-justify">
+                 {selectedTerm.def}
+               </p>
+             </div>
+
+             <div className="mt-6 text-center">
+                <button 
+                  onClick={() => setSelectedTerm(null)}
+                  className="px-8 py-3 bg-slate-900 dark:bg-white text-white dark:text-slate-900 rounded-xl font-bold hover:opacity-90 transition-opacity shadow-lg"
+                >
+                  حسناً، فهمت
+                </button>
+             </div>
+           </div>
+         </div>
+       )}
     </div>
   );
 }
