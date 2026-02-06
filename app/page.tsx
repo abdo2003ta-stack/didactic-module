@@ -6,7 +6,7 @@ import {
   BookOpen, Share2, Layers, CheckCircle, Brain, Lightbulb, Box, 
   Activity, Quote, ArrowRight, Sun, Moon, Sprout, Droplets, 
   Microscope, Globe, MonitorPlay, Zap, FlaskConical, Scale, 
-  AlertTriangle, Target, MousePointerClick, Network, Split, GitGraph, ShieldCheck, Briefcase,
+  AlertTriangle, Target, MousePointerClick, Network, Split, GitGraph, ShieldCheck, Briefcase,Trophy, RefreshCw,
   Rabbit, Cat, Leaf, Utensils, Pencil, Search, Library, X 
 } from 'lucide-react';
 
@@ -1094,18 +1094,19 @@ function DidacticGlossary() {
     </div>
   );
 }
-// ------------------- SIMULATOR COMPONENT (المحاكي المطور + 10 وضعيات + عشوائية) -------------------
+// ------------------- SIMULATOR COMPONENT (نظام الدفعات - وضعيات جديدة) -------------------
 function ProfessionalSimulator() {
   // الحالة (State)
-  const [shuffledScenarios, setShuffledScenarios] = useState<any[]>([]);
-  const [currentScenario, setCurrentScenario] = useState(0);
+  const [round, setRound] = useState(0); // رقم الجولة (0 = العشرة الأولى، 1 = العشرة الثانية)
+  const [currentScenarioIndex, setCurrentScenarioIndex] = useState(0); // رقم السؤال داخل الجولة
   const [showFeedback, setShowFeedback] = useState(false);
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
-  const [isFinished, setIsFinished] = useState(false);
+  const [isRoundFinished, setIsRoundFinished] = useState(false);
   const [score, setScore] = useState(0);
 
-  // قاعدة بيانات الوضعيات (10 وضعيات)
-  const allScenarios = [
+  // === قاعدة البيانات الكبرى (20 وضعية) ===
+  const allDatabase = [
+    // --- المجموعة 1 (الوضعيات الكلاسيكية) ---
     {
       id: 1,
       title: "العنف المدرسي",
@@ -1178,10 +1179,10 @@ function ProfessionalSimulator() {
       situation: "سقط تلميذ داخل القسم وأصيب بجرح في رأسه.",
       options: [
         { text: "أحمله فوراً بسيارتي إلى المستشفى.", isCorrect: false },
-        { text: "أخبر المدير فوراً (للاتصال بالإسعاف) وأقدم الإسعافات الأولية البسيطة دون تحريكه بعنف.", isCorrect: true },
+        { text: "أخبر المدير فوراً (للاتصال بالإسعاف) وأقدم الإسعافات الأولية البسيطة دون تحريكه.", isCorrect: true },
         { text: "أتصل بأسرته لتأتي لأخذه.", isCorrect: false }
       ],
-      feedback: "الجواب الصحيح هو (2). نقل المصاب مسؤولية الوقاية المدنية (لتجنب مضاعفات النقل). دورك هو الإشعار وحماية التلميذ."
+      feedback: "الجواب الصحيح هو (2). نقل المصاب مسؤولية الوقاية المدنية. دورك هو الإشعار، الحماية، وكتابة تقرير مفصل عن الحادثة."
     },
     {
       id: 8,
@@ -1190,7 +1191,7 @@ function ProfessionalSimulator() {
       options: [
         { text: "أنهره وأطلب منه الجلوس.", isCorrect: false },
         { text: "أتجاهل الإجابة وأطلب من تلميذ نجيب تصحيحها.", isCorrect: false },
-        { text: "أمنع الضحك، وأستثمر الخطأ لمعرفة تمثلاته وبناء المعرفة الصحيحة (بيداغوجيا الخطأ).", isCorrect: true }
+        { text: "أمنع الضحك، وأستثمر الخطأ لمعرفة تمثلاته وبناء المعرفة الصحيحة.", isCorrect: true }
       ],
       feedback: "الجواب الصحيح هو (3). الخطأ هو منطلق للتعلم وليس جريمة. يجب تثمين المحاولة وحماية التلميذ من التنمر."
     },
@@ -1215,28 +1216,136 @@ function ProfessionalSimulator() {
         { text: "أعاقب المجموعة بالعنف.", isCorrect: false }
       ],
       feedback: "الجواب الصحيح هو (2). المدرس مربي قبل كل شيء. يجب معالجة الظاهرة تربوياً (التحسيس) وقانونياً (الميثاق)."
+    },
+
+    // --- المجموعة 2 (الوضعيات الجديدة - ستظهر عند الضغط على زر التجديد) ---
+    {
+      id: 11,
+      title: "الحياد الإيديولوجي",
+      situation: "طرح تلميذ سؤالاً سياسياً حساساً لا علاقة له بالدرس، وانقسم القسم بين مؤيد ومعارض.",
+      options: [
+        { text: "أبدي رأيي الشخصي بصراحة وأقنعهم به.", isCorrect: false },
+        { text: "أذكرهم بضرورة احترام الاختلاف، وأوضح بلباقة أن المكان مخصص للعلم وليس للنقاش السياسي.", isCorrect: true },
+        { text: "أطرد التلميذ الذي طرح السؤال لأنه يثير الفتنة.", isCorrect: false }
+      ],
+      feedback: "الجواب الصحيح هو (2). المدرس ملزم بالحياد (Neutralité). دورك هو تعليم قيم الحوار وقبول الآخر دون الانجرار لنقاشات إيديولوجية."
+    },
+    {
+      id: 12,
+      title: "السرقة داخل القسم",
+      situation: "اشتكى تلميذ من سرقة أدواته المدرسية أثناء الاستراحة، واتهم تلميذاً آخر.",
+      options: [
+        { text: "أفتش محفظة المتهم بالقوة أمام الجميع.", isCorrect: false },
+        { text: "أطلب من الجميع إفراغ محافظهم.", isCorrect: false },
+        { text: "أعالج الأمر بحكمة: أتحدث عن الأمانة، وأطلب ممن أخذها (دون تحديد) إعادتها سراً أو وضعها فوق المكتب لاحقاً.", isCorrect: true }
+      ],
+      feedback: "الجواب الصحيح هو (3). التفتيش الذاتي ليس من اختصاص المدرس (إجراء قانوني حساس). الحل التربوي هو منح فرصة للتراجع وحفظ ماء الوجه."
+    },
+    {
+      id: 13,
+      title: "الهدية",
+      situation: "جاءك ولي أمر تلميذ بهدية قيمة جداً بمناسبة نهاية الأسدس.",
+      options: [
+        { text: "أقبل الهدية لأنها تعبير عن الامتنان.", isCorrect: false },
+        { text: "أعتذر بلباقة عن قبولها موضحاً أنني أقوم بواجبي المهني، تفادياً لأي شبهة أو إحراج.", isCorrect: true },
+        { text: "أقبلها وأخفيها حتى لا يراها أحد.", isCorrect: false }
+      ],
+      feedback: "الجواب الصحيح هو (2). أخلاقيات المهنة تمنع قبول الهدايا التي قد تُفسر على أنها رشوة أو محاباة (Rapport d'autorité)."
+    },
+    {
+      id: 14,
+      title: "انقطاع التكنولوجيا",
+      situation: "خططت لدرس يعتمد كلياً على جهاز العرض (Data show)، لكنه تعطل فجأة.",
+      options: [
+        { text: "ألغي الحصة وأطلق سراح التلاميذ.", isCorrect: false },
+        { text: "أنتقل فوراً للخطة البديلة (Plan B) واستعمل السبورة والكتاب المدرسي.", isCorrect: true },
+        { text: "أقضي الحصة في محاولة إصلاحه.", isCorrect: false }
+      ],
+      feedback: "الجواب الصحيح هو (2). التخطيط الجيد يفترض دائماً وجود بديل. لا يجب أن يتوقف التعلم بسبب عطل تقني."
+    },
+    {
+      id: 15,
+      title: "العقاب الجماعي",
+      situation: "صدر ضجيج مجهول المصدر من القسم، ولم يعترف أحد.",
+      options: [
+        { text: "أعاقب القسم كاملاً بتمارين إضافية أو خصم نقط.", isCorrect: false },
+        { text: "أوقف الدرس وأشرح أن هذا السلوك يضيع حقهم في التعلم، وأرفض مبدأ العقاب الجماعي.", isCorrect: true },
+        { text: "أطرد المشاغبين المحتملين.", isCorrect: false }
+      ],
+      feedback: "الجواب الصحيح هو (2). العقاب الجماعي ممنوع قانونياً وتربوياً (لأنه يظلم البريء). الحل هو المسؤولية الأخلاقية."
+    },
+    {
+      id: 16,
+      title: "المدير والبيداغوجيا",
+      situation: "طلب منك المدير تغيير طريقة جلوس التلاميذ، لكنك ترى أن طريقتك (المجموعات) أنسب لنشاطك.",
+      options: [
+        { text: "أرفض طلبه بحدة لأنه تدخل في اختصاصي.", isCorrect: false },
+        { text: "أشرح له مبرراتي البيداغوجية بلباقة، فالأستاذ هو المسؤول عن اختياراته البيداغوجية داخل الفصل.", isCorrect: true },
+        { text: "أغير الطريقة فوراً طاعة لرئيسي.", isCorrect: false }
+      ],
+      feedback: "الجواب الصحيح هو (2). السلطة البيداغوجية داخل الفصل هي للأستاذ (حرية التدريس)، مع احترام التوجيهات الرسمية."
+    },
+    {
+      id: 17,
+      title: "عدم إحضار اللوازم",
+      situation: "تلميذ يأتي باستمرار دون دفتر ولا كتاب بسبب فقر أسرته المدقع.",
+      options: [
+        { text: "أطرده حتى يحضر أدواته.", isCorrect: false },
+        { text: "أنسق مع الإدارة أو جمعية الآباء لتوفير اللوازم له في إطار الدعم الاجتماعي.", isCorrect: true },
+        { text: "أوبخه أمام زملائه ليتحرك.", isCorrect: false }
+      ],
+      feedback: "الجواب الصحيح هو (2). المدرسة يجب أن تكون دامجة. دورك هو تفعيل الشراكات والمساعدة الاجتماعية لضمان تكافؤ الفرص."
+    },
+    {
+      id: 18,
+      title: "الهاتف يرن",
+      situation: "رن هاتفك الشخصي بصوت عالٍ أثناء الشرح، ونسيت وضعه على الصامت.",
+      options: [
+        { text: "أجيب على المكالمة أمام التلاميذ.", isCorrect: false },
+        { text: "أعتذر للتلاميذ، أغلقه فوراً، وأتمم الدرس، لأكون قدوة في احترام الوقت.", isCorrect: true },
+        { text: "أغلقه وأتظاهر بأن شيئاً لم يحدث.", isCorrect: false }
+      ],
+      feedback: "الجواب الصحيح هو (2). الاعتذار يعلم التلاميذ ثقافة الاعتراف بالخطأ. أنت القدوة (Role Model)."
+    },
+    {
+      id: 19,
+      title: "الطفل الانعزالي",
+      situation: "تلميذ يرفض العمل في مجموعات ويفضل العمل بمفرده دائماً.",
+      options: [
+        { text: "أجبره على الاندماج بالقوة.", isCorrect: false },
+        { text: "أحترم رغبته في البداية، ثم أدمجه تدريجياً عبر مهام بسيطة تتطلب ثنائيات.", isCorrect: true },
+        { text: "أخصم له نقط المشاركة.", isCorrect: false }
+      ],
+      feedback: "الجواب الصحيح هو (2). الدمج القسري قد يؤدي لنتائج عكسية. التدرج (Progressivité) هو المفتاح."
+    },
+    {
+      id: 20,
+      title: "السؤال المحرج",
+      situation: "طرح عليك تلميذ سؤالاً في الدرس ولم تعرف الإجابة عنه.",
+      options: [
+        { text: "أخترع إجابة حتى لا تهتز صورتي.", isCorrect: false },
+        { text: "أعترف بصدق أنني لست متأكداً الآن، وأعدهم بالبحث عن الجواب للحصة القادمة (أو نبحث جماعة).", isCorrect: true },
+        { text: "أتجاهل السؤال وأغير الموضوع.", isCorrect: false }
+      ],
+      feedback: "الجواب الصحيح هو (2). الأستاذ ليس موسوعة شاملة. هذا يعلم التلاميذ الأمانة العلمية ومنهجية البحث."
     }
   ];
 
-  // دالة الخلط العشوائي (Fisher-Yates Shuffle)
-  const shuffleQuestions = () => {
-    const shuffled = [...allScenarios].sort(() => Math.random() - 0.5);
-    setShuffledScenarios(shuffled);
-    setCurrentScenario(0);
-    setShowFeedback(false);
-    setSelectedOption(null);
-    setIsFinished(false);
-    setScore(0);
-  };
+  // تحديد عدد الأسئلة في كل جولة
+  const QUESTIONS_PER_ROUND = 10;
+  
+  // استخراج الأسئلة الحالية بناءً على الجولة
+  const currentBatch = allDatabase.slice(
+    round * QUESTIONS_PER_ROUND, 
+    (round + 1) * QUESTIONS_PER_ROUND
+  );
 
-  // عند تحميل المكون لأول مرة، قم بخلط الأسئلة
-  useEffect(() => {
-    shuffleQuestions();
-  }, []);
+  // هل انتهت كل الأسئلة في قاعدة البيانات؟
+  const isGameOver = currentBatch.length === 0;
 
   // التعامل مع اختيار الجواب
   const handleSelect = (idx: number, isCorrect: boolean) => {
-    if (showFeedback) return; // منع تغيير الجواب بعد الاختيار
+    if (showFeedback) return;
     setSelectedOption(idx);
     setShowFeedback(true);
     if (isCorrect) setScore(prev => prev + 1);
@@ -1244,49 +1353,98 @@ function ProfessionalSimulator() {
 
   // الانتقال للسؤال التالي
   const nextScenario = () => {
-    if (currentScenario < shuffledScenarios.length - 1) {
-      setCurrentScenario(curr => curr + 1);
+    if (currentScenarioIndex < currentBatch.length - 1) {
+      setCurrentScenarioIndex(curr => curr + 1);
       setShowFeedback(false);
       setSelectedOption(null);
     } else {
-      setIsFinished(true);
+      setIsRoundFinished(true);
     }
   };
 
-  // شاشة النهاية (إعادة المحاولة)
-  if (isFinished) {
+  // تحميل دفعة جديدة من الأسئلة
+  const loadNextBatch = () => {
+    setRound(prev => prev + 1);
+    setCurrentScenarioIndex(0);
+    setShowFeedback(false);
+    setSelectedOption(null);
+    setIsRoundFinished(false);
+    // يمكن تصفير النقاط أو تركها تراكمية، هنا سنصفرها للجولة الجديدة
+    setScore(0);
+    window.scrollTo(0, 0);
+  };
+
+  // إعادة البدء من الصفر
+  const restartGame = () => {
+    setRound(0);
+    setCurrentScenarioIndex(0);
+    setShowFeedback(false);
+    setSelectedOption(null);
+    setIsRoundFinished(false);
+    setScore(0);
+  };
+
+  // شاشة النهاية (عندما تنتهي قاعدة البيانات بالكامل)
+  if (isGameOver) {
     return (
       <div className="max-w-3xl mx-auto animate-scale-in p-8 text-center bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 mt-8">
-        <div className="mb-6 inline-block p-6 rounded-full bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600">
-          <Briefcase size={48} />
+        <div className="mb-6 inline-block p-6 rounded-full bg-yellow-100 text-yellow-600">
+          <Trophy size={64} />
         </div>
-        <h2 className="text-3xl font-bold text-slate-800 dark:text-white mb-4">انتهت الجولة التدريبية!</h2>
-        <p className="text-xl text-slate-600 dark:text-slate-300 mb-8">
-          لقد أجبت بشكل صحيح على <span className="font-bold text-indigo-600 text-2xl">{score}</span> من <span className="font-bold text-2xl">{shuffledScenarios.length}</span> وضعيات.
+        <h2 className="text-3xl font-bold text-slate-800 dark:text-white mb-4">ختمت اللعبة! 👑</h2>
+        <p className="text-lg text-slate-600 dark:text-slate-300 mb-8">
+          لقد أتممت جميع الوضعيات المهنية المتوفرة ({allDatabase.length} وضعية).
         </p>
-        
-        <button 
-          onClick={shuffleQuestions}
-          className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-white transition-all duration-200 bg-indigo-600 font-lg rounded-xl hover:bg-indigo-700 hover:shadow-lg hover:-translate-y-1"
-        >
-          <span className="mr-2"><Activity size={20}/></span>
-          إعادة المحاولة (وضعيات جديدة)
-          <div className="absolute inset-0 rounded-xl ring-2 ring-white/20 group-hover:ring-white/40 animate-pulse"></div>
+        <button onClick={restartGame} className="px-8 py-3 bg-slate-900 text-white rounded-xl font-bold">
+          العودة للبداية
         </button>
       </div>
     );
   }
 
-  // التأكد من وجود بيانات قبل العرض
-  if (shuffledScenarios.length === 0) return null;
+  // شاشة نهاية الجولة (زر للمرور للمستوى التالي)
+  if (isRoundFinished) {
+    const isLastRound = (round + 1) * QUESTIONS_PER_ROUND >= allDatabase.length;
 
-  const currentData = shuffledScenarios[currentScenario];
+    return (
+      <div className="max-w-3xl mx-auto animate-scale-in p-8 text-center bg-white dark:bg-slate-800 rounded-3xl shadow-xl border border-slate-200 dark:border-slate-700 mt-8">
+        <div className="mb-6 inline-block p-6 rounded-full bg-indigo-100 dark:bg-indigo-900/40 text-indigo-600">
+          <CheckCircle size={48} />
+        </div>
+        <h2 className="text-3xl font-bold text-slate-800 dark:text-white mb-4">أحسنت العمل!</h2>
+        <p className="text-xl text-slate-600 dark:text-slate-300 mb-8">
+          نتيجتك في هذه الجولة: <span className="font-bold text-indigo-600 text-2xl">{score}</span> / {currentBatch.length}
+        </p>
+        
+        {isLastRound ? (
+           <button 
+             onClick={restartGame}
+             className="px-8 py-4 bg-green-600 hover:bg-green-700 text-white rounded-xl font-bold text-lg shadow-lg transition-all"
+           >
+             <RefreshCw className="inline ml-2" size={20}/>
+             إعادة التدريب من البداية
+           </button>
+        ) : (
+           <button 
+             onClick={loadNextBatch}
+             className="group relative inline-flex items-center justify-center px-8 py-4 font-bold text-white transition-all duration-200 bg-indigo-600 font-lg rounded-xl hover:bg-indigo-700 hover:shadow-lg hover:-translate-y-1"
+           >
+             <span className="mr-2"><Activity size={20}/></span>
+             تحميل وضعيات جديدة ومختلفة
+             <div className="absolute inset-0 rounded-xl ring-2 ring-white/20 group-hover:ring-white/40 animate-pulse"></div>
+           </button>
+        )}
+      </div>
+    );
+  }
+
+  const currentData = currentBatch[currentScenarioIndex];
 
   return (
     <div className="max-w-3xl mx-auto p-4">
       {/* بطاقة الوضعية */}
       <div 
-        key={currentScenario} // هذا المفتاح مهم جداً لإعادة تشغيل الأنيميشن عند تغيير السؤال
+        key={currentData.id} // المفتاح لتفعيل الأنيميشن عند كل سؤال جديد
         className="bg-white dark:bg-slate-800 rounded-3xl shadow-xl overflow-hidden border-2 border-slate-100 dark:border-slate-700 animate-fade-in"
       >
         
@@ -1295,12 +1453,15 @@ function ProfessionalSimulator() {
           <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"></div>
           <div className="relative z-10 flex items-center justify-between">
              <h2 className="text-xl md:text-2xl font-bold flex items-center gap-2">
-               <AlertTriangle className="text-yellow-400" />
+               <Briefcase className="text-orange-400" />
                {currentData.title}
              </h2>
-             <span className="bg-white/20 px-3 py-1 rounded-full text-sm font-mono">
-               {currentScenario + 1} / {shuffledScenarios.length}
-             </span>
+             <div className="flex gap-2 items-center">
+                <span className="text-xs bg-indigo-600 px-2 py-1 rounded">المستوى {round + 1}</span>
+                <span className="bg-white/20 px-3 py-1 rounded-full text-sm font-mono">
+                  {currentScenarioIndex + 1} / {currentBatch.length}
+                </span>
+             </div>
           </div>
         </div>
 
@@ -1356,7 +1517,7 @@ function ProfessionalSimulator() {
                 onClick={nextScenario}
                 className="mt-6 w-full py-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-lg shadow-lg shadow-indigo-200 dark:shadow-none transition-all flex items-center justify-center gap-2 hover:-translate-y-1"
               >
-                {currentScenario < shuffledScenarios.length - 1 ? 'الوضعية التالية' : 'إظهار النتيجة النهائية'} 
+                {currentScenarioIndex < currentBatch.length - 1 ? 'الوضعية التالية' : 'عرض النتيجة'} 
                 <ArrowRight className="rotate-180" size={20} />
               </button>
             </div>
