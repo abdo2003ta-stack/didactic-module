@@ -72,17 +72,6 @@ function DidacticModulePage() {
             <NavButton label="صياغة المفهوم" icon={<Brain size={18} />} isActive={activeSection === 'formulation'} onClick={() => setActiveSection('formulation')} activeColor="bg-blue-600" />
             <NavButton label="الخريطة المفهومية" icon={<Share2 size={18} />} isActive={activeSection === 'conceptMap'} onClick={() => setActiveSection('conceptMap')} activeColor="bg-purple-600" />
             <NavButton label="الوسائل الديدكتيكية" icon={<Box size={18} />} isActive={activeSection === 'didacticMeans'} onClick={() => setActiveSection('didacticMeans')} activeColor="bg-teal-600" />
-            {/* ... الأزرار الثلاثة الموجودة سابقاً ... */}
-            
-            <NavButton 
-              label="الامتحان الشامل" 
-              icon={<Target size={18} />} 
-              isActive={activeSection === 'exam'} 
-              onClick={() => setActiveSection('exam')} 
-              activeColor="bg-red-600" 
-            />
-            
-            {/* ... نهاية القائمة ... */}
             <NavButton label="القاموس" icon={<Library size={18} />} isActive={activeSection === 'glossary'} onClick={() => setActiveSection('glossary')} activeColor="bg-orange-500" />
             <NavButton label="الوضعيات" icon={<Briefcase size={18} />} isActive={activeSection === 'simulator'} onClick={() => setActiveSection('simulator')} activeColor="bg-indigo-500" />
             <NavButton label="المثلث" icon={<Network size={18} />} isActive={activeSection === 'triangle'} onClick={() => setActiveSection('triangle')} activeColor="bg-teal-500" />
@@ -372,26 +361,6 @@ function DidacticModulePage() {
                 </div>
             </div>
             <QuickQuiz section="didacticMeans" />
-          </div>
-        )}
-
-        {/* ================= القسم 4: الامتحان الشامل ================= */}
-        {activeSection === 'exam' && (
-          <div className="animate-fade-in max-w-3xl mx-auto text-center">
-            <div className="mb-8">
-              <div className="inline-flex p-6 rounded-full bg-red-100 dark:bg-red-900/30 text-red-600 mb-6 shadow-lg">
-                <Target size={48} />
-              </div>
-              <h2 className="text-4xl font-extrabold text-slate-800 dark:text-white mb-4">الامتحان النهائي الشامل</h2>
-              <p className="text-lg text-slate-600 dark:text-slate-300">
-                20 سؤالاً متدرج الصعوبة لاختبار ضبطك للمفاهيم الديدكتيكية.
-                <br/>
-                <span className="text-sm opacity-70">(تذكر: النقل الديدكتيكي، المثلث، العقد، الوضعيات...)</span>
-              </p>
-            </div>
-
-            {/* هنا يتم استدعاء الأسئلة */}
-            <QuickQuiz section="exam" />
           </div>
         )}
         {/* ================= القسم 5: القاموس ================= */}
